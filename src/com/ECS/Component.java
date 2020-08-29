@@ -7,4 +7,8 @@ public class Component {
     class PositionComponent{
 
     }
+
+    class RenderComponent{
+
+    }
 }

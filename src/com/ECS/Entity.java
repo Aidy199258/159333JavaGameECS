@@ -1,25 +1,36 @@
 package com.ECS;
 
-public class Entity {
-    public static int Life;
-    public static int CoinNumb;
+import java.util.ArrayList;
+import java.util.List;
 
-    public void addPlayer(PlayerEntity player, int life){
+public class Entity {
+
+
+
+
+    //Add new player
+    public void add(PlayerEntity player){
         player.setLife(PlayerEntity.STARTLIFE);
 
 
     }
-    public void addPlatform(){
 
-    }
+    //Add new Coin
+    public void add(CoinEntity coin){
 
-    public void addCoin(CoinEntity coin){
         coin.setCoinNumb(CoinEntity.STARTCOIN);
     }
 
-    static class PlayerEntity{
+    //Add new platform
+    public void add(PlatformEntity platform){
+
+    }
+
+
+    public static class PlayerEntity{
         public static final int STARTLIFE = 1;
         private int _Life = 0;
+        public int Life;
 
         public int getLife(){
             Life = _Life;
@@ -28,12 +39,16 @@ public class Entity {
         public void setLife(int life){
             _Life = life;
         }
+        PlayerEntity(int life){
+            this.setLife(life);
+        }
 
     }
 
-    class CoinEntity{
+    public static class CoinEntity{
         public static final int STARTCOIN = 1;
         private int _CoinNumb = 0;
+        public int CoinNumb;
 
 
         public int getCoinNumb() {
@@ -43,7 +58,19 @@ public class Entity {
 
         public void setCoinNumb(int coinNumb) {
             _CoinNumb = coinNumb;
+
         }
+
+        public void getACoin(){
+            int CoinNumb = getCoinNumb();
+            CoinNumb++;
+            setCoinNumb(CoinNumb);
+        }
+
+        CoinEntity(int coinNumb){
+            this.setCoinNumb(coinNumb);
+        }
+
     }
 
     class PlatformEntity{

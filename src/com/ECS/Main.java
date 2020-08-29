@@ -1,6 +1,8 @@
 package com.ECS;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -35,7 +37,17 @@ public class Main {
         new Main();
 
 
-        Entity.PlayerEntity player = new Entity.PlayerEntity();
+        Entity player = new Entity();
+
+        player.add(new Entity.PlayerEntity(1));
+        player.add(new Entity.CoinEntity(0));
+
+
+        //List of entities - game players
+        List<Entity> entities = new ArrayList<Entity>();
+
+        entities.add(player);
+
 
 
 
