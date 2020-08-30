@@ -1,79 +1,67 @@
 package com.ECS;
 
+import javax.swing.*;
+import java.lang.System;
 import java.util.ArrayList;
 import java.util.List;
+import  java.lang.*;
 
-public class Entity {
-
-
-
-
-    //Add new player
-    public void add(PlayerEntity player){
-        player.setLife(PlayerEntity.STARTLIFE);
+public class Main {
 
 
+    public static  Game_Panel game_panel;
+
+    public Main() {
+
+        //Testing
+
+        JFrame frame = new JFrame();
+        game_panel = new Game_Panel();
+
+
+
+        frame.add(game_panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("159333 Java Game");
+
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
     }
 
-    //Add new Coin
-    public void add(CoinEntity coin){
 
-        coin.setCoinNumb(CoinEntity.STARTCOIN);
-    }
+    // Main Function
+    public static void main(String args[]) {
 
-    //Add new platform
-    public void add(PlatformEntity platform){
+        // Create the Game
 
-    }
+        //Run Game Panel
+        new Main();
 
 
-    public static class PlayerEntity{
-        public static final int STARTLIFE = 1;
-        private int _Life = 0;
-        public int Life;
+        Entity player = new Entity();
+        //Adding playerEntity part to the Entity
+        Entity.PlayerEntity playerE = new Entity.PlayerEntity();
+        player.addEntity(playerE, Entity.PlayerEntity.STARTLIFE);
 
-        public int getLife(){
-            Life = _Life;
-            return Life;
-        }
-        public void setLife(int life){
-            _Life = life;
-        }
-        PlayerEntity(int life){
-            this.setLife(life);
-        }
-
-    }
-
-    public static class CoinEntity{
-        public static final int STARTCOIN = 1;
-        private int _CoinNumb = 0;
-        public int CoinNumb;
+        //Adding coinEntity part to the Entity
+        player.addEntity(new Entity.CoinEntity(0));
 
 
-        public int getCoinNumb() {
-            CoinNumb = _CoinNumb;
-            return CoinNumb;
-        }
+        //Testing getting life value for the player
+        System.out.println("Player's life: "+ player.getEntity(playerE));
+        
 
-        public void setCoinNumb(int coinNumb) {
-            _CoinNumb = coinNumb;
+        //List of entities - game players
+        List<Entity> entities = new ArrayList<Entity>();
 
-        }
 
-        public void getACoin(){
-            int CoinNumb = getCoinNumb();
-            CoinNumb++;
-            setCoinNumb(CoinNumb);
-        }
+        entities.add(player);
 
-        CoinEntity(int coinNumb){
-            this.setCoinNumb(coinNumb);
-        }
 
-    }
 
-    class PlatformEntity{
+
+
 
 
     }
