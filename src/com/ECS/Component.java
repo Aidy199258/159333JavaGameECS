@@ -40,7 +40,11 @@ public  abstract class Component {
     }
 
     public class Collide{
+        //get bounding shape of Entity
+        Area getShape();
 
+        //two object collide, eg: player collide item, platforms..
+        void collide(Collidable other);
     }
 
 
