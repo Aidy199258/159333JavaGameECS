@@ -5,28 +5,38 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public  abstract class Component {
-    public static int GRAVITY = 1500;
+    private Entity entity;
 
     public class MoveComponent{
 
     }
 
     public class Velocity{
-        public int speed_x;
-        public int speed_y;
+        public float speed_x;
+        public float speed_y;
+        public Velocity(float x, float y){
+            speed_x = x;
+            speed_y = y;
+        }
     }
 
     public class PositionComponent{
-        public  float mX, mY;
-        public PositionComponent(float X, float Y){
+        public  float mX, mY, mA;
+        public PositionComponent(float X, float Y, float A){
             mX = X;
             mY = Y;
+            mA = A;
         }
     }
     public class Input{
         public boolean right;
         public boolean left;
         public boolean jump;
+        public Input(boolean R, boolean L, boolean J){
+            right = R;
+            left = L;
+            jump = J;
+        }
     }
 
     public class Collide{
