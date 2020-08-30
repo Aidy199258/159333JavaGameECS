@@ -1,8 +1,10 @@
 package com.ECS;
 
 import javax.swing.*;
+import java.lang.System;
 import java.util.ArrayList;
 import java.util.List;
+import  java.lang.*;
 
 public class Main {
 
@@ -38,15 +40,24 @@ public class Main {
 
 
         Entity player = new Entity();
+        //Adding playerEntity part to the Entity
+        Entity.PlayerEntity playerE = new Entity.PlayerEntity();
+        player.addEntity(playerE, Entity.PlayerEntity.STARTLIFE);
 
-        player.add(new Entity.PlayerEntity(1));
-        player.add(new Entity.CoinEntity(0));
+        //Adding coinEntity part to the Entity
+        player.addEntity(new Entity.CoinEntity(0));
 
+
+        //Testing getting life value for the player
+        System.out.println("Player's life: "+ player.getEntity(playerE));
+        
 
         //List of entities - game players
         List<Entity> entities = new ArrayList<Entity>();
 
+
         entities.add(player);
+
 
 
 
