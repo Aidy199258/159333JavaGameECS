@@ -9,14 +9,14 @@ public class Entity {
 
 
     //Add new player
-    public void add(PlayerEntity player){
-        player.setLife(PlayerEntity.STARTLIFE);
+    public void addEntity(PlayerEntity player, int life){
+        player.PlayerEntity(life);
 
 
     }
 
     //Add new Coin
-    public void add(CoinEntity coin){
+    public void addEntity(CoinEntity coin){
 
         coin.setCoinNumb(CoinEntity.STARTCOIN);
     }
@@ -27,21 +27,44 @@ public class Entity {
     }
 
 
+    public int getEntity(PlayerEntity playerE){
+
+        return playerE.PlayerEntity();
+    }
+
+    public void setEntity(PlayerEntity playerE, int value){
+        playerE.PlayerEntity(value);
+    }
+
+
     public static class PlayerEntity{
         public static final int STARTLIFE = 1;
         private int _Life = 0;
-        public int Life;
+        //public int Life;
 
-        public int getLife(){
-            Life = _Life;
-            return Life;
+        //Get Life value
+        public int PlayerEntity(){
+            return _Life;
         }
+
+        //Set life for player
+        public void PlayerEntity(int life){
+            _Life = life;
+        }
+        /*
+
+        public int getLife(PlayerEntity playerE){
+            return playerE._Life;
+            //Life = _Life;
+            //return Life;
+        }
+
         public void setLife(int life){
             _Life = life;
         }
-        PlayerEntity(int life){
-            this.setLife(life);
-        }
+
+         */
+
 
     }
 
