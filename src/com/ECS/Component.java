@@ -7,8 +7,15 @@ import java.awt.event.KeyListener;
 public  abstract class Component {
     private Entity entity;
 
-    public class MoveComponent{
+    interface MoveComponent{
+        // Called whenever a key is pressed
+        void keyPressed(KeyEvent event);
 
+        // Called whenever a key is released
+        void keyReleased(KeyEvent event);
+
+        // Called whenever a key is pressed and immediately released
+        void keyTyped(KeyEvent event);
     }
 
     public class Velocity{
@@ -28,15 +35,7 @@ public  abstract class Component {
             mA = A;
         }
     }
-    public class Input{
-        public boolean right;
-        public boolean left;
-        public boolean jump;
-        public Input(boolean R, boolean L, boolean J){
-            right = R;
-            left = L;
-            jump = J;
-        }
+
     }
 
     public class Collide{
