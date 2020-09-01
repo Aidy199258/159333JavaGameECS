@@ -1,10 +1,12 @@
 package com.ECS;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import java.awt.geom.Rectangle2D;
 
 
 public  abstract class Component {
@@ -96,4 +98,43 @@ class Collide extends  Component{
 public class RenderComponent{
 
     }
+
+
+
+    class PlatformComponent extends Component{
+
+        // Shape
+        protected double mW, mH, mX, mY;
+        // Bounding Box
+        Area mBoundingBox, mArea;
+        AffineTransform mTransform;
+
+        // Sprite
+        Image sprite;
+
+        public PlatformComponent(double x, double y, double w, double h) {
+            // Set Position and Size
+            mX = x;
+            mY = y;
+            mW = w;
+            mH = h;
+
+            // Initialise Bounding Box
+            mBoundingBox = new Area(new Rectangle2D.Double(-mW/2, -mH/2, mW, mH));
+            mArea = new Area();
+            mTransform = new AffineTransform();
+            mTransform.translate(mX, mY);
+
+            // Load sprite
+            //sprite = LoadImageSystem("Pictures/platform/platform.png");
+        }
+
+
+
+
+
+
+
+    }
+
 }

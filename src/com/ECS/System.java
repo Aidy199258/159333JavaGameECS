@@ -1,9 +1,11 @@
 package com.ECS;
 
-import javax.swing.*;
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 
 public class System {
 
@@ -73,5 +75,26 @@ public static long jumpingTime = 200;
         }
     }
 
-}
 
+
+    }
+
+//System to load image
+class LoadImageSystem extends System{
+
+    public Image LoadImageSystem(String filename) {
+        try {
+            // Load Image
+            Image image = ImageIO.read(new File(filename));
+
+            // Return Image
+            return image;
+        } catch (IOException e) {
+            // Show Error Message
+            java.lang.System.out.println("Error: could not load image " + filename);
+            java.lang.System.exit(1);
+        }
+        return null;
+    }
+
+}
