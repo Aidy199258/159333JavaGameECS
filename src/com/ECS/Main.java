@@ -11,14 +11,13 @@ public class Main {
 
     public static  Game_Panel game_panel;
 
-    public Main() {
-
+    //Starting Game Panel
+    public static void startGamePanel(){
         //Testing
 
         JFrame frame = new JFrame();
-        game_panel = new Game_Panel();
-
-
+        ////Default WIDTH and HEIGHT
+        game_panel = new Game_Panel(Game_Panel.WIDTH,Game_Panel.HEIGHT);
 
         frame.add(game_panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,8 +26,8 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-    }
 
+    }
 
     // Main Function
     public static void main(String args[]) {
@@ -36,8 +35,9 @@ public class Main {
         // Create the Game
 
         //Run Game Panel
-        new Main();
+        //new Main();
 
+        startGamePanel();
 
         // Create an entity for the player
         Entity entity = new Entity();
