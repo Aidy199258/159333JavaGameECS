@@ -9,9 +9,8 @@ import java.awt.event.KeyListener;
 
 public  abstract class Component {
 
-
 }
-/*
+
 
 //this component called when a key is pressed
 class MoveComponent extends Component {
@@ -24,7 +23,7 @@ class MoveComponent extends Component {
     // Called whenever a key is pressed and immediately released
     void keyTyped(KeyEvent event);
 }
-*/
+
 
 // Player Component - Holds Player specific information
 class PlayerComponent extends Component {
@@ -80,7 +79,7 @@ class PositionComponent extends  Component {
     }
 }
 
-/*
+
 class Collide extends  Component{
         //get bounding shape of Entity
         Area shape;
@@ -97,6 +96,4 @@ class Collide extends  Component{
 public class RenderComponent{
 
     }
-
- */
-
+}
