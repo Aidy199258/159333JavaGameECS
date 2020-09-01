@@ -5,10 +5,11 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 
+
 public class Game_Panel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    public static final int WIDTH = 1500, HEIGHT = 900;
+    public static final int WIDTH = 900, HEIGHT = 600;
     public static int width;
     public static int height;
     private Thread thread ;
@@ -47,10 +48,51 @@ public class Game_Panel extends JPanel {
     }
     public void run(){
         init();
+        final double GAME_HERTZ = 60.0;
+        final double TBU = 1000000000/GAME_HERTZ;//Time before Update
+        final int MUBR = 5;//Must Update Before Render
+
+        double LastUpdateTime = java.lang.System.nanoTime();
+        double LastRenderTime;
+        final double TARGET_FPS = 60;
+        final double TTBR = 1000000000/TARGET_FPS;//Total time before render
+
+        int FrameCount = 0;
+        int LastSecondTime = (int)(LastUpdateTime/1000000000);
+        int OldFrameCount = 0;
+
+
         while(running){
-            update();
+            double now = java.lang.System.nanoTime();
+            int UpdateCount = 0;
+            while(((now - LastUpdateTime)>TBU)&&(UpdateCount<MUBR)){
+                update();
+                input();
+                render();
+                draw();
+
+            }
+            if((now - LastUpdateTime)>TBU){
+                LastUpdateTime = now - TBU;
+            }
+
+            input();
             render();
             draw();
+            LastRenderTime = now;
+            FrameCount++;
+
+            int ThisSecond = (int) (LastUpdateTime/1000000000);
+            if (ThisSecond > LastSecondTime){
+                if(FrameCount!=OldFrameCount){
+                    java.lang.System.out.println("New Second"+ThisSecond+" "+FrameCount);
+                    OldFrameCount = FrameCount;
+                }
+                FrameCount = 0;
+                LastSecondTime = ThisSecond;
+            }
+
+
 
         }
     }
@@ -59,10 +101,22 @@ public class Game_Panel extends JPanel {
     public void update(){
 
     }
-    public void render(){
 
+    public void render(){
+        if(g2d!=null){
+            g2d.setColor(new Color(66,136,244));
+            g2d.fillRect(0,0,width,height);
+
+        }
     }
+
     public void draw(){
+        Graphics g2 = (Graphics)this.getGraphics();
+        g2.drawImage(img,0,0,width,height,null);
+        g2.dispose();
+    }
+
+    public void input(){
 
     }
 }
