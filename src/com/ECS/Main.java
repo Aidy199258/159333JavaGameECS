@@ -39,26 +39,19 @@ public class Main {
         new Main();
 
 
-        Entity player = new Entity();
-        //Adding playerEntity part to the Entity
-        Entity.PlayerEntity playerE = new Entity.PlayerEntity();
-        player.addEntity(playerE, Entity.PlayerEntity.STARTLIFE);
+        // Create an entity for the player
+        Entity entity = new Entity();
 
-        //Adding coinEntity part to the Entity
-        player.addEntity(new Entity.CoinEntity(0));
+        // Add a player component
+        entity.addComponent(new PlayerComponent(50));
+        //entity.addComponent(new PositionComponent(100, 100));
 
+        // Get Player Life
+        PlayerComponent player = (PlayerComponent)entity.getComponent(PlayerComponent.class);
+        System.out.println("Player's Life: " + player.getLife());
 
-        //Testing getting life value for the player
-        System.out.println("Player's life: "+ player.getEntity(playerE));
-        
-
-        //List of entities - game players
-        List<Entity> entities = new ArrayList<Entity>();
-
-
-        entities.add(player);
-
-
+        PositionComponent position = (PositionComponent)entity.getComponent(PositionComponent.class);
+        System.out.println("Player's Position: " + position.getX() + ", " + position.getY());
 
 
 
