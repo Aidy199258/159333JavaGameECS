@@ -4,16 +4,12 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class System {
+public abstract class System {
 
-    class GameSystem{
-        public void StartGame(){
-
-        }
-    }
 }
 
 /*class User_Input extends System implements KeyListener {
@@ -79,6 +75,7 @@ public static long jumpingTime = 200;
 //System to load image
 class LoadImageSystem extends System{
 
+    //Load image by providing filename
     public Image LoadImageSystem(String filename) {
         try {
             // Load Image
@@ -94,4 +91,51 @@ class LoadImageSystem extends System{
         return null;
     }
 
+    // Loads a sub-image out of an image
+    public Image LoadImageSystem(Image source, int x, int y, int w, int h){
+        // Check if image is null
+        if(source == null) {
+            // Print Error message
+            java.lang.System.out.println("Error: cannot extract a subImage from a null image.\n");
+
+            // Return null
+            return null;
+        }
+
+        // Convert to a buffered image
+        BufferedImage buffered = (BufferedImage)source;
+
+        // Extract sub image
+        Image image = buffered.getSubimage(x, y, w, h);
+
+        // Return image
+        return image;
+
+    }
+
+}
+
+class DrawImageSystem extends System{
+            Graphics2D mGraphics;
+
+            // Draws an image on the screen at position (x,y)
+            public void DrawImageSystem(Image image, double x, double y){
+                // Check if image is null
+                if(image == null) {
+                    // Print Error message
+                    java.lang.System.out.println("Error: cannot draw null image.\n");
+                    return;
+                }
+
+                // Draw image on screen at (x,y)
+                mGraphics.drawImage(image, (int)x, (int)y, null);
+
+
+
+            }
+}
+
+class TimeSystem extends System{
+    //?Codes to keep tract of time
+    //Codes from original game need to be implement for functions
 }

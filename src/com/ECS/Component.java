@@ -6,10 +6,11 @@ import java.awt.geom.Area;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 
-public  abstract class Component {
+public abstract class Component {
 
 }
 
@@ -41,10 +42,57 @@ class PlayerComponent extends Component {
 
 
 
-
-
-
 }
+
+// Rainbow instead of coin
+class RainbowComponent extends Component{
+    Entity mEntity;
+
+    // Position
+    protected double mW, mH;
+
+    // Bounding Box
+    Area mBoundingBox, mArea;
+    AffineTransform mTransform;
+
+    // Coin Sprite
+    Image spritesheet;
+    Image sprites[];
+    int frame;
+    public RainbowComponent(Entity entity, double x, double y, double w, double h){
+        // Set Game/Entity
+        mEntity = entity;
+        // Set Position and Size
+        //mX = x;
+        //mY = y;
+        mW = w;
+        mH = h;
+
+        // Initialise Bounding Box
+        mBoundingBox = new Area(new Ellipse2D.Double(-mW/2, -mH/2, mW, mH));
+        mArea = new Area();
+        mTransform = new AffineTransform();
+        //mTransform.translate(mX, mY);
+
+        // Load Spritesheet
+        //spritesheet = loadImage("Pictures/coin/coin.png");
+
+        // Create sprites
+        sprites = new Image[16];
+
+        // Load sprites
+        for(int i = 0; i < 16; i++) {
+            // Calculate x,y
+            int sx = (i % 4) * 32;
+            int sy = (i / 4) * 32;
+
+            // Load sprite
+            //sprites[i] = subImage(spritesheet, sx, sy, 32, 32);
+        }
+
+    }
+}
+
 
 
 //Velocity of
@@ -242,6 +290,9 @@ class PositionComponent extends  Component {
             // Load sprite
             //sprite = LoadImageSystem("Pictures/platform/platform.png");
         }
+
+
+
 
 }
 
