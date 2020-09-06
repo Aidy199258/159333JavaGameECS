@@ -116,26 +116,40 @@ class LoadImageSystem extends System{
 }
 
 class DrawImageSystem extends System{
-            Graphics2D mGraphics;
+    Graphics2D mGraphics;
 
-            // Draws an image on the screen at position (x,y)
-            public void DrawImageSystem(Image image, double x, double y){
-                // Check if image is null
-                if(image == null) {
-                    // Print Error message
-                    java.lang.System.out.println("Error: cannot draw null image.\n");
-                    return;
-                }
+    // Draws an image on the screen at position (x,y)
+    public DrawImageSystem(Image image, double x, double y){
+        // Check if image is null
+        if(image == null) {
+            // Print Error message
+            java.lang.System.out.println("Error: cannot draw null image.\n");
+            return;
+        }
 
-                // Draw image on screen at (x,y)
-                mGraphics.drawImage(image, (int)x, (int)y, null);
+        // Draw image on screen at (x,y)
+        mGraphics.drawImage(image, (int)x, (int)y, null);
 
+    }
 
-
-            }
+    // Draws an image on the screen at position (x,y)
+    public DrawImageSystem(Image image, double x, double y, double w, double h) {
+        // Check if image is null
+        if(image == null) {
+            // Print Error message
+            java.lang.System.out.println("Error: cannot draw null image.\n");
+            return;
+        }
+        // Draw image on screen at (x,y) with size (w,h)
+        mGraphics.drawImage(image, (int)x, (int)y, (int)w, (int)h, null);
+    }
 }
+
+
 
 class TimeSystem extends System{
     //?Codes to keep tract of time
     //Codes from original game need to be implement for functions
 }
+
+
