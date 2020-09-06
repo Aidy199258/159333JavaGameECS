@@ -16,7 +16,7 @@ public class System {
     }
 }
 
-class User_Input extends System implements KeyListener {
+/*class User_Input extends System implements KeyListener {
 
 public  static boolean right = false;
 public  static boolean left = false;
@@ -73,11 +73,8 @@ public static long jumpingTime = 200;
                 System.exit(0);
             }
         }
-    }
+    }*/
 
-
-
-    }
 
 //System to load image
 class LoadImageSystem extends System{

@@ -15,7 +15,7 @@ public  abstract class Component {
 
 
 //this component called when a key is pressed
-class MoveComponent extends Component {
+/*class MoveComponent extends Component {
     // Called whenever a key is pressed
     void keyPressed(KeyEvent event);
 
@@ -24,7 +24,7 @@ class MoveComponent extends Component {
 
     // Called whenever a key is pressed and immediately released
     void keyTyped(KeyEvent event);
-}
+}*/
 
 
 // Player Component - Holds Player specific information
@@ -82,7 +82,7 @@ class PositionComponent extends  Component {
 }
 
 
-class Collide extends  Component{
+/*class Collide extends  Component{
         //get bounding shape of Entity
         Area shape;
         public Area getShape() {
@@ -91,17 +91,14 @@ class Collide extends  Component{
 
         //two object collide, eg: player collide item, platforms..
         void collide(Collidable other);
-}
+}*/
 
 
 
-public class RenderComponent{
-
-    }
+class RenderComponent extends Component{
 
 
-
-    class PlatformComponent extends Component{
+    class PlatformComponent extends Component {
 
         // Shape
         protected double mW, mH, mX, mY;
@@ -120,7 +117,7 @@ public class RenderComponent{
             mH = h;
 
             // Initialise Bounding Box
-            mBoundingBox = new Area(new Rectangle2D.Double(-mW/2, -mH/2, mW, mH));
+            mBoundingBox = new Area(new Rectangle2D.Double(-mW / 2, -mH / 2, mW, mH));
             mArea = new Area();
             mTransform = new AffineTransform();
             mTransform.translate(mX, mY);
@@ -128,13 +125,8 @@ public class RenderComponent{
             // Load sprite
             //sprite = LoadImageSystem("Pictures/platform/platform.png");
         }
-
-
-
-
-
-
-
     }
-
 }
+
+
+
