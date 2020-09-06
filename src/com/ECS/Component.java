@@ -95,9 +95,6 @@ class PositionComponent extends  Component {
 
 
 
-class RenderComponent extends Component{
-
-
     class PlatformComponent extends Component {
 
         // Shape
@@ -125,7 +122,7 @@ class RenderComponent extends Component{
             // Load sprite
             //sprite = LoadImageSystem("Pictures/platform/platform.png");
         }
-    }
+
 }
 
 
