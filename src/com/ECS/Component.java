@@ -38,6 +38,12 @@ class PlayerComponent extends Component {
     public PlayerComponent(int life) {
         mLife = life;
     }
+
+
+
+
+
+
 }
 
 
@@ -78,6 +84,120 @@ class PositionComponent extends  Component {
         mX = X;
         mY = Y;
         mA = A;
+
+
+
+
+        //Player's Position
+        /*
+        // Direction
+        enum Direction {Left, Right};
+        Direction mDirection;
+
+        // State
+        enum State {Standing, Running, Jumping};
+        State mState;
+
+        // Size
+        double mW, mH;
+
+        // Position (inherited from Entity)
+        // double mX, mY;
+
+        // Velocity
+        double mVX, mVY;
+
+        // Bounding Box
+        Area mBoundingBox, mArea;
+        AffineTransform mTransform;
+
+    Needs implementation for image
+    // Sprites
+    Image resting[];
+    Image walking[];
+    Image jumping[];
+
+    // Frame Counters
+    int restingFrame;
+    int walkingFrame;
+    int jumpingFrame;
+
+
+        // Jump Timer
+        long jumpStart;
+        boolean left, right;
+
+        //public PlayerComponent(Game game, double x, double y, double w, double h) {
+    public PlayerComponent(double x, double y, double w, double h) {
+            // Player Constructor
+
+            // Initialise Position and Size
+            mX = x;
+            mY = y;
+            mW = w;
+            mH = h;
+
+            // Initialise Bounding Box
+            mBoundingBox = new Area(new Rectangle2D.Double(-mW/3, -mH/2, mW*2.0/3.0, mH));
+            mArea = new Area();
+            mTransform = new AffineTransform();
+
+            // Initialise Velocity
+            mVX = 0;
+            mVY = 0;
+
+            // Initialise left/right
+            left  = false;
+            right = false;
+
+            // Initialise State
+            mDirection = Direction.Left;
+            mState = State.Standing;
+
+            // Resting Sprits
+            //resting = new Image[10];
+            //restingFrame = 0;
+
+            // Load Sprites
+            for(int i = 0; i < 10; i++) {
+                // Sprite X,Y
+                int sx = (i % 4) * 256;
+                int sy = (i / 4) * 256;
+
+                // Get Sprite
+                //resting[i] = loadImage("Pictures/player/idle" + (i+1) + ".png");
+            }
+
+            // Walking Sprits
+            //walking = new Image[8];
+            //walkingFrame = 0;
+
+            // Load Sprites
+            for(int i = 0; i < 8; i++) {
+                // Sprite X,Y
+                int sx = (i % 4) * 256;
+                int sy = (i / 4) * 256;
+
+                // Get Sprite
+                //walking[i] = loadImage("Pictures/player/run" + (i+1) + ".png");
+            }
+
+            // Jumping Sprits
+            //jumping = new Image[10];
+            //jumpingFrame = 0;
+
+            // Load Sprites
+            for(int i = 0; i < 10; i++) {
+                // Sprite X,Y
+                int sx = (i % 4) * 256;
+                int sy = (i / 4) * 256;
+
+                // Get Sprite
+                //jumping[i] = loadImage("Pictures/player/jump" + (i+1) + ".png");
+            }
+        }
+
+         */
     }
 }
 
@@ -106,7 +226,7 @@ class PositionComponent extends  Component {
         // Sprite
         Image sprite;
 
-        public PlatformComponent(double x, double y, double w, double h) {
+        public PlatformComponent(Entity entity, double x, double y, double w, double h) {
             // Set Position and Size
             mX = x;
             mY = y;

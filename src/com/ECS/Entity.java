@@ -11,6 +11,7 @@ public class Entity {
 
         mComponents.put(component.getClass(),component);
 
+
     }
     public Component getComponent(Class type){
         return mComponents.get(type);

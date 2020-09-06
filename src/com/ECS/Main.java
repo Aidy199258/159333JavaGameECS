@@ -54,6 +54,14 @@ public class Main {
         System.out.println("Player's Position: " + position.getX() + ", " + position.getY());
 
 
+        //Add a platform
+        entity.addComponent(new PlatformComponent(entity,  100, 150, 100, 20));
+        entity.addComponent(new PlatformComponent(entity,  350, 200, 100, 20));
+        entity.addComponent(new PlatformComponent(entity, 900, 250, 100, 20));
+        entity.addComponent(new PlatformComponent(entity, 1100, 350, 100, 20));
+        entity.addComponent(new PlatformComponent(entity,  600, 300, 100, 20));
+        entity.addComponent(new PlatformComponent(entity, 1300, 200, 100, 20));
+
 
 
 
