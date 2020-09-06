@@ -1,33 +1,19 @@
 package com.ECS;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.lang.System;
 import java.util.ArrayList;
 import java.util.List;
 import  java.lang.*;
 
+
 public class Main {
 
 
-    public static  Game_Panel game_panel;
-
     //Starting Game Panel
-    public static void startGamePanel(){
-        //Testing
 
-        JFrame frame = new JFrame();
-        ////Default WIDTH and HEIGHT
-        game_panel = new Game_Panel(Game_Panel.WIDTH,Game_Panel.HEIGHT);
-
-        frame.add(game_panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("159333 Java Game");
-
-        frame.pack();
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-
-    }
 
     // Main Function
     public static void main(String args[]) {
@@ -35,11 +21,13 @@ public class Main {
         // Create the Game
 
         //Run Game Panel
-        //new Main();
-        startGamePanel();
+        Game_Panel game_panel= new Game_Panel(900,600);
+        game_panel.startGamePanel(game_panel);
 
-        // Create an entity for the player
+        // Create an entity for the player/game
         Entity entity = new Entity();
+
+
 
         //Create platforms
         entity.addComponent(new PlatformComponent(entity,  100, 150, 100, 20));

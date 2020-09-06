@@ -1,9 +1,9 @@
 package com.ECS;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
-
+import javax.swing.*;
 
 
 public class Game_Panel extends JPanel {
@@ -117,6 +117,59 @@ public class Game_Panel extends JPanel {
     }
 
     public void input(){
+
+    }
+
+    public void startGamePanel(Game_Panel gamepanel){
+        //Testing
+
+        JFrame frame = new JFrame();
+        ////Default WIDTH and HEIGHT
+        gamepanel = new Game_Panel(Game_Panel.WIDTH,Game_Panel.HEIGHT);
+
+        frame.add(gamepanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("159333 Java Game");
+
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        // Able to resize for testing for now
+        // Frame.setResizable(false);
+
+        gamepanel.setDoubleBuffered(true);
+        //game_panel.addMouseListener(this);
+        //game_panel.addMouseMotionListener(this);
+
+        /*
+        // Register a key event dispatcher to get a turn in handling all
+        // key events, independent of which component currently has the focus
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                .addKeyEventDispatcher(new KeyEventDispatcher() {
+                    @Override
+                    public boolean dispatchKeyEvent(KeyEvent e) {
+                        switch (e.getID()) {
+                            case KeyEvent.KEY_PRESSED:
+                                GameEngine.this.keyPressed(e);
+                                return false;
+                            case KeyEvent.KEY_RELEASED:
+                                GameEngine.this.keyReleased(e);
+                                return false;
+                            case KeyEvent.KEY_TYPED:
+                                GameEngine.this.keyTyped(e);
+                                return false;
+                            default:
+                                return false; // do not consume the event
+                        }
+                    }
+                });
+        // Resize the window (insets are just the boarders that the Operating System puts on the board)
+        Insets insets = Frame.getInsets();
+        Frame.setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
+
+
+         */
+
 
     }
 }
