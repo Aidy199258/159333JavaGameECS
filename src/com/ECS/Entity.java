@@ -13,11 +13,18 @@ public class Entity {
 
 
     }
+
+    public Boolean hasComponent(Class type) {
+        return mComponents.containsKey(type);
+    }
+
+
     public Component getComponent(Class type){
         return mComponents.get(type);
 
     }
 
+    //Constructor
     public Entity(){
 
         mComponents = new HashMap<Class, Component>();

@@ -1,5 +1,8 @@
 package com.ECS;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
@@ -292,9 +295,75 @@ class PositionComponent extends  Component {
         }
 
 
-
-
 }
 
+
+
+//Audio Clip
+class AudioComponent extends Component{
+    // Format
+    AudioFormat mFormat;
+
+    // Audio Data
+    byte[] mData;
+
+    // Buffer Length
+    long mLength;
+
+    // Loop Clip
+    Clip mLoopClip;
+
+    public Clip getLoopClip() {
+        // return mLoopClip
+        return mLoopClip;
+    }
+
+    public void setLoopClip(Clip clip) {
+        // Set mLoopClip to clip
+        mLoopClip = clip;
+    }
+
+    public AudioFormat getAudioFormat() {
+        // Return mFormat
+        return mFormat;
+    }
+
+    public byte[] getData() {
+        // Return mData
+        return mData;
+    }
+
+    public long getBufferSize() {
+        // Return mLength
+        return mLength;
+    }
+
+    //Needs implementation
+    public AudioComponent(AudioInputStream stream) {
+        // Get Format
+        mFormat = stream.getFormat();
+
+        // Get length (in Frames)
+        mLength = stream.getFrameLength() * mFormat.getFrameSize();
+
+        // Allocate Buffer Data
+        mData = new byte[(int)mLength];
+
+        try {
+            // Read data
+            stream.read(mData);
+        } catch(Exception exception) {
+            // Print Error
+            java.lang.System.out.println("Error reading Audio File\n");
+
+            // Exit
+            java.lang.System.exit(1);
+        }
+
+        // Set LoopClip to null
+        mLoopClip = null;
+    }
+
+}
 
 
