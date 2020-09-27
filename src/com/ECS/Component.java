@@ -338,6 +338,9 @@ class AudioComponent extends Component{
         return mLength;
     }
 
+    public String AudioComponent(){
+        return "AudioComponent";
+    }
     //Needs implementation
     public AudioComponent(AudioInputStream stream) {
         // Get Format

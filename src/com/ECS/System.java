@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public abstract class System {
 
@@ -153,3 +154,50 @@ class TimeSystem extends System{
 }
 
 
+//Update Image
+//?Update velocity of player
+class UpdateSystem extends System{
+
+
+}
+
+//Needs implementation
+class AudioSystem extends System{
+    public AudioSystem(ArrayList<Entity> entities){
+
+        for(Entity entity : entities) {
+
+            if(entity.hasComponent(AudioComponent.class)) {
+
+                //AudioComponent audioComponent = entity.getComponent(AudioComponent.class);
+                Component audioComponent = entity.getComponent(AudioComponent.class);
+
+
+
+
+
+            }
+
+        }
+    }
+}
+
+//?To deal with Key pressed events
+class EventSystem extends System{
+
+
+    public EventSystem(List entities, KeyEvent event){
+        //keyReleased-Called whenever a key is released
+        // Left Arrow
+        if(event.getKeyCode() == KeyEvent.VK_LEFT) {
+            // Record Left Movement
+            //left = false;
+        }
+        // Right Arrow
+        if(event.getKeyCode() == KeyEvent.VK_RIGHT) {
+            // Record Right Movement
+            //right = false;
+        }
+
+    }
+}

@@ -24,9 +24,13 @@ public class Main {
         Game_Panel game_panel= new Game_Panel(900,600);
         game_panel.startGamePanel(game_panel);
 
-        // Create an entity for the player/game
-        Entity entity = new Entity();
+        //Create a list of entities
+        List<Entity> entities = new ArrayList<Entity>();
 
+
+        // Add an entity/player for the game
+        Entity entity = new Entity();
+        entities.add(entity);
 
 
         //Create platforms
