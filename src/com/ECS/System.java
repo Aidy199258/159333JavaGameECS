@@ -1,9 +1,11 @@
 package com.ECS;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -148,9 +150,32 @@ class DrawImageSystem extends System{
 
 
 
-class TimeSystem extends System{
+ class TimeSystem extends Timer {
     //?Codes to keep tract of time
     //Codes from original game need to be implement for functions
+
+    private static final long serialVersionUID = 1L;
+    private int framerate;
+
+
+    //TimeSystem for GameTimer
+    protected TimeSystem(int framerate, ActionListener listener) {
+        super(1000/framerate, listener);
+        this.framerate = framerate;
+    }
+
+    protected void setFramerate(int framerate) {
+        if (framerate < 1) framerate = 1;
+        this.framerate = framerate;
+
+        int delay = 1000 / framerate;
+        setInitialDelay(0);
+        setDelay(delay);
+    }
+
+    protected int getFramerate() {
+        return framerate;
+    }
 }
 
 
@@ -245,5 +270,81 @@ class ScoreSystem extends System{
 
 
     }
+
+}
+
+
+class GameSystem extends System{
+    boolean initialised;
+
+    public long getTime() {
+        // Get the current time from the system
+        return java.lang.System.currentTimeMillis();
+    }
+
+    // Waits for ms milliseconds
+    public void sleep(double ms) {
+        try {
+            // Sleep
+            Thread.sleep((long)ms);
+        } catch(Exception e) {
+            // Do Nothing
+        }
+    }
+
+    //-------------------------------------------------------
+    // Functions to control the framerate
+    //-------------------------------------------------------
+    // Two variables to keep track of how much time has passed between frames
+    long time = 0, oldTime = 0;
+
+    // Returns the time passed since this function was last called.
+    public long measureTime() {
+        time = getTime();
+        if(oldTime == 0) {
+            oldTime = time;
+        }
+        long passed = time - oldTime;
+        oldTime = time;
+        return passed;
+    }
+
+
+
+
+    //Constructor - TO IMPLEMENT
+    public void GameSystem(){
+
+    }
+    public void InitiateGame(){
+        TimeSystem timer = new TimeSystem(30, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Determine the time step
+                double passedTime = measureTime();
+                double dt = passedTime / 1000.;
+
+                // Update the Game
+                //update(dt);
+
+                // Tell the Game to draw
+                //mPanel.repaint();
+            }
+        });
+
+    }
+
+    public void GameLoop(TimeSystem timer, int framerate){
+        initialised = true; // assume init has been called or won't be called
+
+        timer.setFramerate(framerate);
+        timer.setRepeats(true);
+
+        // Main loop runs until program is closed
+        timer.start();
+
+    }
+
+
 
 }
