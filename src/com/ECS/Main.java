@@ -15,17 +15,26 @@ import  java.lang.*;
 public class Main {
 
 
+    static int mScore;
+    static boolean mGameOver;
+    long mStartTime, mEndTime;
+
+    static Image mBackground;
     //Starting Game Panel
 
 
     // Main Function
     public static void main(String args[]) {
 
+
+
         // Create the Game
 
         //Run Game Panel
         Game_Panel game_panel= new Game_Panel(900,600);
         game_panel.startGamePanel(game_panel);
+
+
 
         //Create a list of entities
         ArrayList<Entity> entities = new ArrayList<Entity>();
@@ -35,6 +44,14 @@ public class Main {
         Entity entity = new Entity();
         entities.add(entity);
 
+        /*Needs implementation
+        Graphics2D graphics=null;
+        //Add RenderComponent and TransformComponent
+        entity.addComponent(new RenderComponent(entity, graphics));
+        RenderSystem renderSystem = new RenderSystem();
+        renderSystem.setWindowSize(1500, 750);
+
+*/
 
         //Create platforms
         entity.addComponent(new PlatformComponent(entity,  100, 150, 100, 20));

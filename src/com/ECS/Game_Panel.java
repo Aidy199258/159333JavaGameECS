@@ -8,6 +8,7 @@ import javax.swing.*;
 
 public class Game_Panel extends JPanel {
 
+
     private static final long serialVersionUID = 1L;
     public static final int WIDTH = 900, HEIGHT = 600;
     public static int width;

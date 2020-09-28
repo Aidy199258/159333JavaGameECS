@@ -3,6 +3,7 @@ package com.ECS;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
@@ -11,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Stack;
 
 
 public abstract class Component {
@@ -391,3 +394,102 @@ class PointComponent extends Component{
         }
 }
 
+class TransformComponent extends Component{
+    // Stack of transforms
+    Stack<AffineTransform> mTransforms;
+
+
+    public void SetTransform(Stack<AffineTransform> transforms){
+        mTransforms = transforms;
+    }
+    public Stack<AffineTransform> GetTransform (){
+        return mTransforms;
+    }
+
+    public void ResetTransform(Entity entity){
+        // Reset all transforms
+        mTransforms.clear();
+        if(entity.hasComponent(RenderComponent.class)){
+            RenderComponent renderComponent=(RenderComponent)entity.getComponent(RenderComponent.class);
+            // Push transform onto the stack
+            mTransforms.push(renderComponent.Graphics().getTransform());
+        }
+    }
+
+    // Save the current transform
+    public void saveCurrentTransform(Entity entity) {
+        if(entity.hasComponent(RenderComponent.class)){
+            RenderComponent renderComponent=(RenderComponent)entity.getComponent(RenderComponent.class);
+            // Push transform onto the stack
+            mTransforms.push(renderComponent.Graphics().getTransform());
+        }
+
+    }
+
+    // Restores the last transform
+    public void restoreLastTransform(Entity entity) {
+        // Set current transform to the top of the stack.
+        if(entity.hasComponent(RenderComponent.class)){
+            RenderComponent renderComponent=(RenderComponent)entity.getComponent(RenderComponent.class);
+            // Push transform onto the stack
+            renderComponent.Graphics().setTransform(mTransforms.peek());
+        }
+
+
+        // If there is more than one transform on the stack
+        if(mTransforms.size() > 1) {
+            // Pop a transform off the stack
+            mTransforms.pop();
+        }
+    }
+
+}
+class RenderComponent extends Component{
+    //Window image
+    private Graphics2D mGraphics;
+
+    public Graphics2D Graphics(){
+        return mGraphics;
+    }
+
+
+    //Constructor
+    public RenderComponent(Entity entity, Graphics graphics) {
+        // Get the graphics object
+        mGraphics = (Graphics2D) graphics;
+    }
+    public void RenderSettings(){
+        // Rendering settings
+        mGraphics.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
+
+    }
+
+
+    // This function translates the drawing context by (x,y)
+    void translate(double x, double y) {
+        // Translate the drawing context
+        mGraphics.translate(x,y);
+    }
+
+
+
+    // This function rotates the drawing context by a degrees
+    void rotate(double a) {
+        // Rotate the drawing context
+        mGraphics.rotate(Math.toRadians(a));
+    }
+
+    // This function scales the drawing context by (x,y)
+    void scale(double x, double y) {
+        // Scale the drawing context
+        mGraphics.scale(x, y);
+    }
+
+    // This function shears the drawing context by (x,y)
+    void shear(double x, double y) {
+        // Shear the drawing context
+        mGraphics.shear(x, y);
+    }
+
+
+}
