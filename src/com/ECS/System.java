@@ -169,8 +169,8 @@ class AudioSystem extends System{
 
             if(entity.hasComponent(AudioComponent.class)) {
 
-                //AudioComponent audioComponent = entity.getComponent(AudioComponent.class);
-                Component audioComponent = entity.getComponent(AudioComponent.class);
+                AudioComponent audioComponent = (AudioComponent)entity.getComponent(AudioComponent.class);
+
 
 
 
@@ -183,10 +183,11 @@ class AudioSystem extends System{
 }
 
 //?To deal with Key pressed events
+//Incomplete
 class EventSystem extends System{
 
 
-    public EventSystem(List entities, KeyEvent event){
+    public EventSystem(ArrayList<Entity> entities, KeyEvent event){
         //keyReleased-Called whenever a key is released
         // Left Arrow
         if(event.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -200,4 +201,49 @@ class EventSystem extends System{
         }
 
     }
+}
+
+//Counting points/scores
+//Incomplete
+class ScoreSystem extends System{
+    public void AddScore(ArrayList<Entity> entities){
+        for(Entity entity: entities){
+            //Player gains one point if touches rainbow/coin
+            if(entity.hasComponent(RainbowComponent.class)&&(entity.hasComponent(PointComponent.class))){
+                RainbowComponent rainbowComponent = (RainbowComponent)entity.getComponent(RainbowComponent.class);
+                PointComponent pointComponent = (PointComponent)entity.getComponent(PointComponent.class);
+
+                pointComponent.GainOnePoint();
+            }
+
+            /*
+            //??minus points if falling off the platform
+            if(entity.hasComponent(?FallComponent.class)&&(entity.hasComponent(PointComponent.class))){
+               PointComponent pointComponent = (PointComponent)entity.getComponent(PointComponent.class);
+
+                pointComponent.LoseOnePoint();
+            }*/
+        }
+
+    }
+
+    public int ShowScore(ArrayList<Entity> entities){
+        //Score will be -1 if not initiated
+        int score = -1;
+        for(Entity entity: entities){
+            //Player gains one point if touches rainbow/coin
+            if(entity.hasComponent(RainbowComponent.class)&&(entity.hasComponent(PointComponent.class))){
+                RainbowComponent rainbowComponent = (RainbowComponent)entity.getComponent(RainbowComponent.class);
+                PointComponent pointComponent = (PointComponent)entity.getComponent(PointComponent.class);
+
+                score = pointComponent.GetPoint();
+            }
+
+        }
+        return score;
+
+
+
+    }
+
 }

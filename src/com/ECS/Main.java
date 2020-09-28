@@ -1,5 +1,6 @@
 package com.ECS;
 
+import javax.sound.sampled.AudioInputStream;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -25,7 +26,7 @@ public class Main {
         game_panel.startGamePanel(game_panel);
 
         //Create a list of entities
-        List<Entity> entities = new ArrayList<Entity>();
+        ArrayList<Entity> entities = new ArrayList<Entity>();
 
 
         // Add an entity/player for the game
@@ -54,6 +55,15 @@ public class Main {
         entity.addComponent(new RainbowComponent(entity,  1100,  314, 32, 32));
 
 
+        //TESTING add Audio Component
+        //AudioInputStream audioIS = ;
+        //entity.addComponent(new AudioComponent(audioIS));
+
+
+        //TESTING add Point Component
+        entity.addComponent(new PointComponent(10));
+
+
         // Get Player Life
         PlayerComponent player = (PlayerComponent)entity.getComponent(PlayerComponent.class);
         System.out.println("Player's Life: " + player.getLife());
@@ -62,6 +72,11 @@ public class Main {
         //NullPointerException
         // System.out.println("Player's Position: " + position.getX() + ", " + position.getY());
 
+
+        //Testing ScoreSystem
+        ScoreSystem scoreSystem = new ScoreSystem();
+        scoreSystem.AddScore(entities);
+        System.out.println(scoreSystem.ShowScore(entities));
 
 
 

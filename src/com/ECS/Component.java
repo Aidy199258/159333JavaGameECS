@@ -369,4 +369,25 @@ class AudioComponent extends Component{
 
 }
 
+class PointComponent extends Component{
+        private int mPoints;
+        private final int mSTART_POINTS = 10;
+        private final int mLOSE_POINTS =0;
+
+        public PointComponent(int points){
+
+            mPoints = points;
+        }
+
+        public int GetPoint(){
+            return mPoints;
+        }
+        public void LoseOnePoint(){
+            mPoints-=1;
+        }
+
+        public void GainOnePoint(){
+            mPoints+=1;
+        }
+}
 
