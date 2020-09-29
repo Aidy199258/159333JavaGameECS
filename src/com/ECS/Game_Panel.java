@@ -128,6 +128,8 @@ public class Game_Panel extends JPanel {
         ////Default WIDTH and HEIGHT
         gamepanel = new Game_Panel(Game_Panel.WIDTH,Game_Panel.HEIGHT);
 
+
+
         frame.add(gamepanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("159333 Java Game");

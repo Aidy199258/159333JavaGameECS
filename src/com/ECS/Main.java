@@ -19,7 +19,9 @@ public class Main {
     static boolean mGameOver;
     long mStartTime, mEndTime;
 
+
     static Image mBackground;
+
     //Starting Game Panel
 
 
@@ -27,12 +29,21 @@ public class Main {
     public static void main(String args[]) {
 
 
+        Graphics2D Graphics;
+
+
+        //Testing load image
+        LoadImageSystem loadImageSystem = new LoadImageSystem();
+        //loadImageSystem.loadImage("Pictures/background/background.png");//Having errors
+        //loadImageSystem.LoadImageSystem()
+
 
         // Create the Game
 
         //Run Game Panel
         Game_Panel game_panel= new Game_Panel(900,600);
         game_panel.startGamePanel(game_panel);
+
 
 
 
@@ -46,6 +57,9 @@ public class Main {
 
         /*Needs implementation
         Graphics2D graphics=null;
+        LoadImageSystem loadImageSystem = new LoadImageSystem();
+        mBackground =loadImageSystem.loadImage("src/com.ECS/Pictures/background/background.png");
+
         //Add RenderComponent and TransformComponent
         entity.addComponent(new RenderComponent(entity, graphics));
         RenderSystem renderSystem = new RenderSystem();

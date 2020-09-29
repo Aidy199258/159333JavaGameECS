@@ -79,6 +79,10 @@ public static long jumpingTime = 200;
 //System to load image
 class LoadImageSystem extends System{
 
+    Graphics2D mGraphics;
+    public LoadImageSystem(){
+
+    }
     //-------------------------------------------------------
     // Image Functions
     //-------------------------------------------------------
@@ -100,24 +104,7 @@ class LoadImageSystem extends System{
         // Return null
         return null;
     }
-    /*
-    //Load image by providing filename
-    public Image LoadImageSystem(String filename) {
-        try {
-            // Load Image
-            Image image = ImageIO.read(new File(filename));
 
-            // Return Image
-            return image;
-        } catch (IOException e) {
-            // Show Error Message
-            java.lang.System.out.println("Error: could not load image " + filename);
-            java.lang.System.exit(1);
-        }
-        return null;
-    }
-
-     */
 
     // Loads a sub-image out of an image
     public Image LoadImageSystem(Image source, int x, int y, int w, int h){
@@ -140,6 +127,34 @@ class LoadImageSystem extends System{
         return image;
 
     }
+
+    // Draws an image on the screen at position (x,y)
+    public void drawImage(Image image, double x, double y) {
+        // Check if image is null
+        if(image == null) {
+            // Print Error message
+            java.lang.System.out.println("Error: cannot draw null image.\n");
+            return;
+        }
+
+        // Draw image on screen at (x,y)
+        mGraphics.drawImage(image, (int)x, (int)y, null);
+    }
+
+    // Draws an image on the screen at position (x,y)
+    public void drawImage(Image image, double x, double y, double w, double h) {
+        // Check if image is null
+        if(image == null) {
+            // Print Error message
+            java.lang.System.out.println("Error: cannot draw null image.\n");
+            return;
+        }
+        // Draw image on screen at (x,y) with size (w,h)
+        mGraphics.drawImage(image, (int)x, (int)y, (int)w, (int)h, null);
+    }
+
+
+
 
 }
 
@@ -239,21 +254,25 @@ class DrawImageSystem extends System{
          return passed;
      }
 
-     TimeSystem timer = new TimeSystem(30, new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-             // Determine the time step
-             double passedTime = measureTime();
-             double dt = passedTime / 1000.;
 
-             // Update the Game
-             //update(dt);
 
-             // Tell the Game to draw
-             //mPanel.repaint();
-         }
-     });
+     public TimeSystem GetTimer(){
+         TimeSystem timer = new TimeSystem(30, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 // Determine the time step
+                 double passedTime = measureTime();
+                 double dt = passedTime / 1000.;
 
+                 // Update the Game
+                 //update(dt);
+
+                 // Tell the Game to draw
+                 //mPanel.repaint();
+             }
+         });
+         return timer;
+     }
 }
 
 
@@ -382,9 +401,30 @@ class ScoreSystem extends System{
 class GameSystem extends System{
     boolean initialised;
     Graphics2D mGraphics;
-    Stack<AffineTransform> Transforms;
+    Stack<AffineTransform> mTransforms;
 
 
+
+
+    public static void createGame(Entity entity, int framerate) {
+        // Initialise Game
+        GameSystem gameSystem = new GameSystem();
+
+
+        gameSystem.InitiateGame(entity);
+
+        ActionListener listener = null;
+
+        TimeSystem timeSystem = new TimeSystem(framerate,listener);
+
+        // Start the Game
+        gameSystem.GameLoop(timeSystem.GetTimer(),framerate);
+    }
+
+    public static void createGame(Entity entity) {
+        // Call CreateGame
+        createGame(entity, 30);
+    }
 
 
     public void paintComponent(Graphics graphics) {
@@ -392,8 +432,8 @@ class GameSystem extends System{
         mGraphics = (Graphics2D)graphics;
 
         // Reset all transforms
-        Transforms.clear();
-        Transforms.push(mGraphics.getTransform());
+        mTransforms.clear();
+        mTransforms.push(mGraphics.getTransform());
 
         // Rendering settings
         mGraphics.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
@@ -402,14 +442,33 @@ class GameSystem extends System{
     }
 
 
+
     //Constructor - TO IMPLEMENT
     public void GameSystem(Entity entity){
         if(entity.hasComponent(RenderComponent.class)&&entity.hasComponent(TransformComponent.class)){
             RenderComponent renderComponent = (RenderComponent) entity.getComponent(RenderComponent.class);
             TransformComponent transformComponent = (TransformComponent)entity.getComponent((TransformComponent.class));
 
-            this.Transforms = transformComponent.GetTransform();
+
+
+            this.mTransforms = transformComponent.GetTransform();
             mGraphics = renderComponent.Graphics();
+            // Create graphics transform stack
+            mTransforms = new Stack<AffineTransform>();
+
+            // Set default width, height
+            int mWidth = 500;
+            int mHeight = 500;
+
+            // Create window
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    RenderSystem renderSystem = new RenderSystem();
+                    // Create the window
+                    renderSystem.setupWindow(500,500);
+                }
+            });
 
         }
 
