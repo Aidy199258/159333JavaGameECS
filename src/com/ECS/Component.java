@@ -103,11 +103,11 @@ class KeyComponent extends Component {
 
 //Velocity of
 class VelocityComponent extends Component {
-    public float speed_x;
-    public float speed_y;
-    public boolean gravity;
+    public static float speed_x;
+    public static float speed_y;
+    public static boolean gravity;
 
-    public float Get_VelocityX() {
+    public  float Get_VelocityX() {
         return speed_x;
     }
 
@@ -115,10 +115,10 @@ class VelocityComponent extends Component {
         return speed_y;
     }
 
-    public void setX(float x) {
+    public static void setX(float x) {
         speed_x = x;
     }
-    public void setY(float y) {
+    public static void setY(float y) {
         speed_y = y;
     }
 

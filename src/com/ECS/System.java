@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
+
+import static com.ECS.VelocityComponent.gravity;
 
 public abstract class System {
 
@@ -305,11 +308,15 @@ class AudioSystem extends System{
 
 //?To deal with Key pressed events
 //Incomplete
+
 class KeyEventSystem extends System {
+
 
     public KeyEventSystem() {
 
     }
+
+
 
     public void KeyPressed(ArrayList<Entity> entities, KeyEvent e) {
         for (Entity entity : entities) {
@@ -325,12 +332,25 @@ class KeyEventSystem extends System {
 
                 if((e.getKeyCode() == KeyEvent.VK_LEFT)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);
-                    velocity.setX(-50);
+                    Game_Panel.left = true;
+                    java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+                    VelocityComponent.setX(-50);
+                }else if((e.getKeyCode() != KeyEvent.VK_LEFT)&&) {
+                    // velocity.setX(velocity.Get_VelocityX() * -1);
+                    Game_Panel.left = false;
+                    // java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+                    VelocityComponent.setX(0);
                 }
-
                 if((e.getKeyCode() == KeyEvent.VK_RIGHT)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);
-                    velocity.setX(50);
+                    Game_Panel.right = true;
+                    VelocityComponent.setX(50);
+                }
+
+                if((e.getKeyCode() == KeyEvent.VK_SPACE)) {
+                    gravity = true;
+
+                    java.lang.System.out.println(" Yeet" );
                 }
 
                 java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
@@ -338,6 +358,8 @@ class KeyEventSystem extends System {
             }
         }
     }
+
+
 
 
     // public KeyEventSystem(ArrayList<Entity> entities, KeyEvent event){
@@ -551,6 +573,10 @@ class GameSystem extends System{
 
 
 class MovementSystem extends System {
+
+    public static long jumpingTime = 200;
+
+
     public void Process(ArrayList<Entity> entities, double dt) {
         for (Entity entity : entities) {
             // Need a Position & a Velocity Component
@@ -563,17 +589,21 @@ class MovementSystem extends System {
                 position.setX(position.getX() + velocity.Get_VelocityX() * (float)dt);
                 position.setY(position.getY() + velocity.Get_VelocityY() * (float)dt);
 
-                java.lang.System.out.println("Velocity: " + velocity.Get_VelocityX());
+                //java.lang.System.out.println("Velocity: " + velocity.Get_VelocityX());
 
 
-                if(velocity.gravity == true) {
-                    velocity.setY(velocity.Get_VelocityY() + 100.0f * (float)dt);
+                if(gravity == true) {
+                   //java.lang.System.out.println("jumping");
+                   //new Thread(new thread()).start();
+                    VelocityComponent.setY(-100);
+
+                    //VelocityComponent.setY(+100);
                 }
 
 
-                if(position.getY() > 400 && velocity.Get_VelocityY() > 0) {
-                    velocity.setY(velocity.Get_VelocityY() * -1);
-                }
+               // if(position.getY() > 400 && velocity.Get_VelocityY() > 0) {
+                //    VelocityComponent.setY(velocity.Get_VelocityY() * -1);
+              //  } THIS ONE COMMENTING FOR NOW
 
 
                 // if(position.getX() > 250 && velocity.Get_VelocityX() > 0) {

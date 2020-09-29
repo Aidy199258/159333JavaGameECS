@@ -35,6 +35,9 @@ public class Game_Panel extends JPanel {
     private BufferedImage img;
     private Graphics2D g2d;
     private boolean running = false;
+    public static boolean left= false;
+    public static boolean right = false;
+
     public Game_Panel(int width, int height) {
 
 
@@ -73,8 +76,8 @@ public class Game_Panel extends JPanel {
 
         // Create the Player
         Entity player = new Entity();
-        player.addComponent(new PositionComponent(50, 50, 0));
-        player.addComponent(new VelocityComponent(50, 0, true));
+        player.addComponent(new PositionComponent(100, 400, 0));
+        player.addComponent(new VelocityComponent(0, 0, false));
         player.addComponent(new KeyComponent());
 
         try {
@@ -200,6 +203,7 @@ public class Game_Panel extends JPanel {
     public void test(KeyEvent e) {
         System.out.println("tesT");
         keyEventSystem.KeyPressed(entities, e);
+
     }
 
     public void startGamePanel(Game_Panel gamepanel){
