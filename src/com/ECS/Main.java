@@ -1,11 +1,13 @@
 package com.ECS;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.lang.System;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,6 @@ public class Main {
 
     static Image mBackground;
 
-    //Starting Game Panel
 
 
     // Main Function
@@ -32,19 +33,14 @@ public class Main {
         Graphics2D Graphics;
 
 
-        //Testing load image
-        LoadImageSystem loadImageSystem = new LoadImageSystem();
-        //loadImageSystem.loadImage("Pictures/background/background.png");//Having errors
-        //loadImageSystem.LoadImageSystem()
+
 
 
         // Create the Game
 
         //Run Game Panel
         Game_Panel game_panel= new Game_Panel(900,600);
-        game_panel.startGamePanel(game_panel);
-
-
+        game_panel.startGamePanel(game_panel); //Velocity problem - not changed with key pressed
 
 
         //Create a list of entities

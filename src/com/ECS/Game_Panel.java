@@ -1,12 +1,30 @@
 package com.ECS;
 
+import javax.imageio.ImageIO;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
+import java.lang.*;
+import java.lang.System;
+
 
 
 public class Game_Panel extends JPanel {
+
+    // Array of entities
+    ArrayList<Entity> entities;
+
+    // Render System
+    RenderSystem renderSystem;
+    MovementSystem movementSystem;
+    KeyEventSystem keyEventSystem;
+
+
 
 
     private static final long serialVersionUID = 1L;
@@ -21,7 +39,6 @@ public class Game_Panel extends JPanel {
 
 
         setFocusable(true);
-        //setBackground(Color.black);
 
         this.width = width; this.height = height;
 
@@ -32,6 +49,48 @@ public class Game_Panel extends JPanel {
         requestFocus();
 
 
+
+        // ========================================
+        // Set up Entities and Systems
+        // ========================================
+
+        entities = new ArrayList<Entity>();
+        renderSystem = new RenderSystem();
+        movementSystem = new MovementSystem();
+        keyEventSystem = new KeyEventSystem();
+
+        // Create a Background
+        Entity background = new Entity();
+        background.addComponent(new PositionComponent(0, 0, 0));
+        try {
+            background.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/background/background.png"))));
+        } catch(IOException e) {
+            System.out.println("IO Exception");
+            e.printStackTrace();
+        }
+
+
+
+        // Create the Player
+        Entity player = new Entity();
+        player.addComponent(new PositionComponent(50, 50, 0));
+        player.addComponent(new VelocityComponent(50, 0, true));
+        player.addComponent(new KeyComponent());
+
+        try {
+            player.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/player/idle1.png"))));
+        } catch(IOException e) {
+            System.out.println("IO Exception");
+        }
+
+
+
+
+        // Add Background to entities
+        entities.add(background);
+
+        // Add Player to entities
+        entities.add(player);
     }
 
     public void addNotify(){
@@ -66,32 +125,40 @@ public class Game_Panel extends JPanel {
         while(running){
             double now = java.lang.System.nanoTime();
             int UpdateCount = 0;
-            while(((now - LastUpdateTime)>TBU)&&(UpdateCount<MUBR)){
-                update();
-                input();
-                render();
-                draw();
 
-            }
-            if((now - LastUpdateTime)>TBU){
-                LastUpdateTime = now - TBU;
-            }
+            // while(((now - LastUpdateTime)>TBU)&&(UpdateCount<MUBR)){
+            // update();
+            // input();
+            // render();
+            // draw();
 
+            while((now - LastUpdateTime) < TBU) {
+                now = java.lang.System.nanoTime();
+            }
+            double dt = (now - LastUpdateTime) / 1000000000.0;
+
+
+            LastUpdateTime = now;
+            // if((now - LastUpdateTime)>TBU){
+            //     LastUpdateTime = now - TBU;
+            // }
+
+            update(dt);
             input();
-            render();
             draw();
-            LastRenderTime = now;
+
+            // LastRenderTime = now;
             FrameCount++;
 
-            int ThisSecond = (int) (LastUpdateTime/1000000000);
-            if (ThisSecond > LastSecondTime){
-                if(FrameCount!=OldFrameCount){
-                    java.lang.System.out.println("New Second"+ThisSecond+" "+FrameCount);
-                    OldFrameCount = FrameCount;
-                }
-                FrameCount = 0;
-                LastSecondTime = ThisSecond;
-            }
+            // int ThisSecond = (int) (LastUpdateTime/1000000000);
+            // if (ThisSecond > LastSecondTime){
+            //     if(FrameCount!=OldFrameCount){
+            //         java.lang.System.out.println("New Second"+ThisSecond+" "+FrameCount);
+            //         OldFrameCount = FrameCount;
+            //     }
+            //     FrameCount = 0;
+            //     LastSecondTime = ThisSecond;
+            // }
 
 
 
@@ -99,26 +166,40 @@ public class Game_Panel extends JPanel {
     }
     private int x = 0;
 
-    public void update(){
+    public void update(double dt){
 
+        movementSystem.Process(entities, dt);
     }
 
     public void render(){
-        if(g2d!=null){
-            g2d.setColor(new Color(66,136,244));
-            g2d.fillRect(0,0,width,height);
+        // if(g2d!=null){
+        //     g2d.setColor(new Color(66,136,244));
+        //     g2d.fillRect(0,0,width,height);
 
-        }
+        //     // Ask RenderSystem to render all the entities
+        //     renderSystem.Process(entities, g2d);
+        // }
     }
 
     public void draw(){
-        Graphics g2 = (Graphics)this.getGraphics();
-        g2.drawImage(img,0,0,width,height,null);
-        g2.dispose();
+        // // System.out.println("Drawing");
+        // Graphics g2 = (Graphics)this.getGraphics();
+        // g2.drawImage(img,0,0,width,height,null);
+        // g2.dispose();
+        repaint();
+    }
+
+    public void paintComponent(Graphics graphics) {
+        renderSystem.Process(entities, (Graphics2D)graphics);
     }
 
     public void input(){
 
+    }
+
+    public void test(KeyEvent e) {
+        System.out.println("tesT");
+        keyEventSystem.KeyPressed(entities, e);
     }
 
     public void startGamePanel(Game_Panel gamepanel){
@@ -144,7 +225,7 @@ public class Game_Panel extends JPanel {
         //game_panel.addMouseListener(this);
         //game_panel.addMouseMotionListener(this);
 
-        /*
+
         // Register a key event dispatcher to get a turn in handling all
         // key events, independent of which component currently has the focus
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
@@ -153,25 +234,28 @@ public class Game_Panel extends JPanel {
                     public boolean dispatchKeyEvent(KeyEvent e) {
                         switch (e.getID()) {
                             case KeyEvent.KEY_PRESSED:
-                                GameEngine.this.keyPressed(e);
-                                return false;
+                                // keyEventSystem.KeyPressed(entities, e);
+                                test(e);
+                                // System.out.println("Pressed");
+                                // GameEngine.this.keyPressed(e);
+                                return true;
                             case KeyEvent.KEY_RELEASED:
-                                GameEngine.this.keyReleased(e);
+                                // GameEngine.this.keyReleased(e);
                                 return false;
                             case KeyEvent.KEY_TYPED:
-                                GameEngine.this.keyTyped(e);
+                                // GameEngine.this.keyTyped(e);
                                 return false;
                             default:
                                 return false; // do not consume the event
                         }
                     }
                 });
-        // Resize the window (insets are just the boarders that the Operating System puts on the board)
-        Insets insets = Frame.getInsets();
-        Frame.setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
+        // // Resize the window (insets are just the boarders that the Operating System puts on the board)
+        // Insets insets = Frame.getInsets();
+        // Frame.setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
 
 
-         */
+
 
 
     }

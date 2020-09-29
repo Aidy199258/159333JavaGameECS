@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
-
 public abstract class System {
 
 }
@@ -190,7 +189,7 @@ class DrawImageSystem extends System{
 
 
 
- class TimeSystem extends Timer {
+class TimeSystem extends Timer {
     //?Codes to keep tract of time
     //Codes from original game need to be implement for functions
 
@@ -218,61 +217,61 @@ class DrawImageSystem extends System{
     }
 
     //-------------------------------------------------------
-     // Time-Related functions
-     //-------------------------------------------------------
+    // Time-Related functions
+    //-------------------------------------------------------
 
-     // Returns the time in milliseconds
-     public long getTime() {
-         // Get the current time from the system
-         return java.lang.System.currentTimeMillis();
-     }
+    // Returns the time in milliseconds
+    public long getTime() {
+        // Get the current time from the system
+        return java.lang.System.currentTimeMillis();
+    }
 
-     // Waits for ms milliseconds
-     public void sleep(double ms) {
-         try {
-             // Sleep
-             Thread.sleep((long)ms);
-         } catch(Exception e) {
-             // Do Nothing
-         }
-     }
+    // Waits for ms milliseconds
+    public void sleep(double ms) {
+        try {
+            // Sleep
+            Thread.sleep((long)ms);
+        } catch(Exception e) {
+            // Do Nothing
+        }
+    }
 
-     //-------------------------------------------------------
-     // Functions to control the framerate
-     //-------------------------------------------------------
-     // Two variables to keep track of how much time has passed between frames
-     long time = 0, oldTime = 0;
+    //-------------------------------------------------------
+    // Functions to control the framerate
+    //-------------------------------------------------------
+    // Two variables to keep track of how much time has passed between frames
+    long time = 0, oldTime = 0;
 
-     // Returns the time passed since this function was last called.
-     public long measureTime() {
-         time = getTime();
-         if(oldTime == 0) {
-             oldTime = time;
-         }
-         long passed = time - oldTime;
-         oldTime = time;
-         return passed;
-     }
+    // Returns the time passed since this function was last called.
+    public long measureTime() {
+        time = getTime();
+        if(oldTime == 0) {
+            oldTime = time;
+        }
+        long passed = time - oldTime;
+        oldTime = time;
+        return passed;
+    }
 
 
 
-     public TimeSystem GetTimer(){
-         TimeSystem timer = new TimeSystem(30, new ActionListener() {
-             @Override
-             public void actionPerformed(ActionEvent e) {
-                 // Determine the time step
-                 double passedTime = measureTime();
-                 double dt = passedTime / 1000.;
+    public TimeSystem GetTimer(){
+        TimeSystem timer = new TimeSystem(30, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Determine the time step
+                double passedTime = measureTime();
+                double dt = passedTime / 1000.;
 
-                 // Update the Game
-                 //update(dt);
+                // Update the Game
+                //update(dt);
 
-                 // Tell the Game to draw
-                 //mPanel.repaint();
-             }
-         });
-         return timer;
-     }
+                // Tell the Game to draw
+                //mPanel.repaint();
+            }
+        });
+        return timer;
+    }
 }
 
 
@@ -306,50 +305,82 @@ class AudioSystem extends System{
 
 //?To deal with Key pressed events
 //Incomplete
-class KeyEventSystem extends System{
+class KeyEventSystem extends System {
 
-
-    public KeyEventSystem(ArrayList<Entity> entities, KeyEvent event){
-        //keyReleased-Called whenever a key is released
-        // Left Arrow
-        if(event.getKeyCode() == KeyEvent.VK_LEFT) {
-            // Record Left Movement
-            //left = false;
-        }
-        // Right Arrow
-        if(event.getKeyCode() == KeyEvent.VK_RIGHT) {
-            // Record Right Movement
-            //right = false;
-        }
-
-
-        /*
-        // Register a key event dispatcher to get a turn in handling all
-        // key events, independent of which component currently has the focus
-        KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                .addKeyEventDispatcher(new KeyEventDispatcher() {
-                    @Override
-                    public boolean dispatchKeyEvent(KeyEvent e) {
-                        switch (e.getID()) {
-                            case KeyEvent.KEY_PRESSED:
-                                GameEngine.this.keyPressed(e);
-                                return false;
-                            case KeyEvent.KEY_RELEASED:
-                                GameEngine.this.keyReleased(e);
-                                return false;
-                            case KeyEvent.KEY_TYPED:
-                                GameEngine.this.keyTyped(e);
-                                return false;
-                            default:
-                                return false; // do not consume the event
-                        }
-                    }
-                });
-
-
-         */
+    public KeyEventSystem() {
 
     }
+
+    public void KeyPressed(ArrayList<Entity> entities, KeyEvent e) {
+        for (Entity entity : entities) {
+            // Need a Position & a Velocity Component
+            if(entity.hasComponent(KeyComponent.class) && entity.hasComponent(VelocityComponent.class)) {
+                // Get Position & Velocity Components
+                // PositionComponent position = (PositionComponent)entity.getComponent(PositionComponent.class);
+
+                // KeyComponent key = (KeyComponent)entity.getComponent(KeyComponent.class);
+                VelocityComponent velocity = (VelocityComponent)entity.getComponent(VelocityComponent.class);
+
+
+
+                if((e.getKeyCode() == KeyEvent.VK_LEFT)) {
+                    // velocity.setX(velocity.Get_VelocityX() * -1);
+                    velocity.setX(-50);
+                }
+
+                if((e.getKeyCode() == KeyEvent.VK_RIGHT)) {
+                    // velocity.setX(velocity.Get_VelocityX() * -1);
+                    velocity.setX(50);
+                }
+
+                java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+
+            }
+        }
+    }
+
+
+    // public KeyEventSystem(ArrayList<Entity> entities, KeyEvent event){
+    //     //keyReleased-Called whenever a key is released
+    //     // Left Arrow
+    //     if(event.getKeyCode() == KeyEvent.VK_LEFT) {
+    //         // Record Left Movement
+    //         //left = false;
+    //     }
+    //     // Right Arrow
+    //     if(event.getKeyCode() == KeyEvent.VK_RIGHT) {
+    //         // Record Right Movement
+    //         //right = false;
+    //     }
+
+
+
+    //     // Register a key event dispatcher to get a turn in handling all
+    //     // key events, independent of which component currently has the focus
+    //     KeyboardFocusManager.getCurrentKeyboardFocusManager()
+    //             .addKeyEventDispatcher(new KeyEventDispatcher() {
+    //                 @Override
+    //                 public boolean dispatchKeyEvent(KeyEvent e) {
+    //                     switch (e.getID()) {
+    //                         case KeyEvent.KEY_PRESSED:
+    //                             GameEngine.this.keyPressed(e);
+    //                             return false;
+    //                         case KeyEvent.KEY_RELEASED:
+    //                             GameEngine.this.keyReleased(e);
+    //                             return false;
+    //                         case KeyEvent.KEY_TYPED:
+    //                             GameEngine.this.keyTyped(e);
+    //                             return false;
+    //                         default:
+    //                             return false; // do not consume the event
+    //                     }
+    //                 }
+    //             });
+
+
+
+
+    // }
 }
 
 //Counting points/scores
@@ -515,35 +546,89 @@ class GameSystem extends System{
         timer.start();
 
     }
-
-
-
 }
 
 
+
+class MovementSystem extends System {
+    public void Process(ArrayList<Entity> entities, double dt) {
+        for (Entity entity : entities) {
+            // Need a Position & a Velocity Component
+            if(entity.hasComponent(PositionComponent.class) && entity.hasComponent(VelocityComponent.class)) {
+                // Get Position & Velocity Components
+                PositionComponent position = (PositionComponent)entity.getComponent(PositionComponent.class);
+                VelocityComponent velocity = (VelocityComponent)entity.getComponent(VelocityComponent.class);
+
+                // Change Position based on Velocity
+                position.setX(position.getX() + velocity.Get_VelocityX() * (float)dt);
+                position.setY(position.getY() + velocity.Get_VelocityY() * (float)dt);
+
+                java.lang.System.out.println("Velocity: " + velocity.Get_VelocityX());
+
+
+                if(velocity.gravity == true) {
+                    velocity.setY(velocity.Get_VelocityY() + 100.0f * (float)dt);
+                }
+
+
+                if(position.getY() > 400 && velocity.Get_VelocityY() > 0) {
+                    velocity.setY(velocity.Get_VelocityY() * -1);
+                }
+
+
+                // if(position.getX() > 250 && velocity.Get_VelocityX() > 0) {
+                //     velocity.setX(velocity.Get_VelocityX() * -1);
+                // }
+
+                // if(position.getX() < 50 && velocity.Get_VelocityX() < 0) {
+                //     velocity.setX(velocity.Get_VelocityX() * -1);
+                // }
+            }
+        }
+    }
+}
+
 class RenderSystem extends System {
     public void Process(ArrayList<Entity> entities, Graphics2D g) {
-
         for (Entity entity : entities) {
+            // Need a Position & a Render Component
+            if(entity.hasComponent(PositionComponent.class) && entity.hasComponent(RenderComponent.class)) {
+                // Get Position & Render Components
+                PositionComponent position = (PositionComponent)entity.getComponent(PositionComponent.class);
+                RenderComponent render     = (RenderComponent)entity.getComponent(RenderComponent.class);
 
-            if (entity.hasComponent(TransformComponent.class) && entity.hasComponent(RenderComponent.class)) {
+                // Save current transform
+                AffineTransform transform = g.getTransform();
 
-                TransformComponent transform = (TransformComponent) entity.getComponent(TransformComponent.class);
+                // Move into correct position
+                g.translate(position.getX(), position.getY());
 
-                TransformComponent render = (TransformComponent) entity.getComponent(RenderComponent.class);
+                // Draw the Render component
+                g.drawImage(render.getImage(), 0, 0, null);
 
-                /*
-                g.rotate(transform.mA);
-
-                g.translate(transform.mX, transform.mY);
-
-                g.drawImage(render.mImage);
-
-
-
-                 */
-
+                // Reset Transform
+                g.setTransform(transform);
             }
+
+
+            // if (entity.hasComponent(TransformComponent.class) && entity.hasComponent(RenderComponent.class)) {
+
+            //     TransformComponent transform = (TransformComponent) entity.getComponent(TransformComponent.class);
+
+            //     TransformComponent render = (TransformComponent) entity.getComponent(RenderComponent.class);
+
+            //     /*
+            //     g.rotate(transform.mA);
+
+            //     g.translate(transform.mX, transform.mY);
+
+            //     g.drawImage(render.mImage);
+
+
+
+            //      */
+
+            // }
         }
     }
     JFrame mFrame;
@@ -553,19 +638,22 @@ class RenderSystem extends System {
     boolean initialised = false;
 
     //Constructor
-    public void RenderSystem(ArrayList<Entity> entities) {
-        setupWindow(1500, 750);
-        for (Entity entity : entities) {
+    public void RenderSystem() {
 
-            if (entity.hasComponent(TransformComponent.class) && entity.hasComponent(RenderComponent.class)) {
-
-                TransformComponent transform = (TransformComponent) entity.getComponent(TransformComponent.class);
-
-                TransformComponent render = (TransformComponent) entity.getComponent(RenderComponent.class);
-
-            }
-        }
     }
+    // public void RenderSystem(ArrayList<Entity> entities) {
+    //     // setupWindow(1500, 750);
+    //     // for (Entity entity : entities) {
+
+    //     //     if (entity.hasComponent(TransformComponent.class) && entity.hasComponent(RenderComponent.class)) {
+
+    //     //         TransformComponent transform = (TransformComponent) entity.getComponent(TransformComponent.class);
+
+    //     //         TransformComponent render = (TransformComponent) entity.getComponent(RenderComponent.class);
+
+    //     //     }
+    //     // }
+    // }
 
     //-------------------------------------------------------
     // Functions for setting up the window

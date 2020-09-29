@@ -42,9 +42,6 @@ class PlayerComponent extends Component {
     public PlayerComponent(int life) {
         mLife = life;
     }
-
-
-
 }
 
 // Rainbow instead of coin
@@ -97,11 +94,18 @@ class RainbowComponent extends Component{
 }
 
 
+class KeyComponent extends Component {
+    public KeyComponent() {
+
+    }
+}
+
 
 //Velocity of
-class Velocity extends Component {
+class VelocityComponent extends Component {
     public float speed_x;
     public float speed_y;
+    public boolean gravity;
 
     public float Get_VelocityX() {
         return speed_x;
@@ -111,27 +115,43 @@ class Velocity extends Component {
         return speed_y;
     }
 
-    public Velocity(float x, float y) {
+    public void setX(float x) {
+        speed_x = x;
+    }
+    public void setY(float y) {
+        speed_y = y;
+    }
+
+    public VelocityComponent(float x, float y, boolean g) {
         speed_x = x;
         speed_y = y;
+        gravity = g;
     }
 }
 
 
 
 class PositionComponent extends  Component {
-    public int mX, mY, mA;
+    public float mX, mY, mA;
 
 
-    public int getX() {
+    public float getX() {
         return mX;
     }
 
-    public int getY() {
+    public float getY() {
         return mY;
     }
 
-    public PositionComponent(int X, int Y, int A) {
+    public void setX(float x) {
+        mX = x;
+    }
+
+    public void setY(float y) {
+        mY = y;
+    }
+
+    public PositionComponent(float X, float Y, float A) {
         mX = X;
         mY = Y;
         mA = A;
@@ -266,33 +286,33 @@ class PositionComponent extends  Component {
 
 
 
-    class PlatformComponent extends Component {
+class PlatformComponent extends Component {
 
-        // Shape
-        protected double mW, mH, mX, mY;
-        // Bounding Box
-        Area mBoundingBox, mArea;
-        AffineTransform mTransform;
+    // Shape
+    protected double mW, mH, mX, mY;
+    // Bounding Box
+    Area mBoundingBox, mArea;
+    AffineTransform mTransform;
 
-        // Sprite
-        Image sprite;
+    // Sprite
+    Image sprite;
 
-        public PlatformComponent(Entity entity, double x, double y, double w, double h) {
-            // Set Position and Size
-            mX = x;
-            mY = y;
-            mW = w;
-            mH = h;
+    public PlatformComponent(Entity entity, double x, double y, double w, double h) {
+        // Set Position and Size
+        mX = x;
+        mY = y;
+        mW = w;
+        mH = h;
 
-            // Initialise Bounding Box
-            mBoundingBox = new Area(new Rectangle2D.Double(-mW / 2, -mH / 2, mW, mH));
-            mArea = new Area();
-            mTransform = new AffineTransform();
-            mTransform.translate(mX, mY);
+        // Initialise Bounding Box
+        mBoundingBox = new Area(new Rectangle2D.Double(-mW / 2, -mH / 2, mW, mH));
+        mArea = new Area();
+        mTransform = new AffineTransform();
+        mTransform.translate(mX, mY);
 
-            // Load sprite
-            //sprite = LoadImageSystem("Pictures/platform/platform.png");
-        }
+        // Load sprite
+        //sprite = LoadImageSystem("Pictures/platform/platform.png");
+    }
 
 
 }
@@ -370,25 +390,25 @@ class AudioComponent extends Component{
 }
 
 class PointComponent extends Component{
-        private int mPoints;
-        private final int mSTART_POINTS = 10;
-        private final int mLOSE_POINTS =0;
+    private int mPoints;
+    private final int mSTART_POINTS = 10;
+    private final int mLOSE_POINTS =0;
 
-        public PointComponent(int points){
+    public PointComponent(int points){
 
-            mPoints = points;
-        }
+        mPoints = points;
+    }
 
-        public int GetPoint(){
-            return mPoints;
-        }
-        public void LoseOnePoint(){
-            mPoints-=1;
-        }
+    public int GetPoint(){
+        return mPoints;
+    }
+    public void LoseOnePoint(){
+        mPoints-=1;
+    }
 
-        public void GainOnePoint(){
-            mPoints+=1;
-        }
+    public void GainOnePoint(){
+        mPoints+=1;
+    }
 }
 
 class TransformComponent extends Component{
@@ -441,7 +461,21 @@ class TransformComponent extends Component{
     }
 
 }
-class RenderComponent extends Component{
+
+
+class RenderComponent extends Component {
+    private Image mImage;
+
+    public Image getImage() {
+        return mImage;
+    }
+
+    public RenderComponent(Image image) {
+        mImage = image;
+    }
+
+
+
     //Window image
     private Graphics2D mGraphics;
 
@@ -487,17 +521,15 @@ class RenderComponent extends Component{
         // Shear the drawing context
         mGraphics.shear(x, y);
     }
-
-
 }
 
 class GraphicComponent extends Component{
 
-        Graphics2D mGraphics;
-        //Constructor
-        public GraphicComponent(){
+    Graphics2D mGraphics;
+    //Constructor
+    public GraphicComponent(){
 
-        }
+    }
     //-------------------------------------------------------
     // Graphics Functions
     //-------------------------------------------------------
