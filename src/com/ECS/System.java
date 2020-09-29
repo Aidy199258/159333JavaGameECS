@@ -335,7 +335,7 @@ class KeyEventSystem extends System {
                     Game_Panel.left = true;
                     java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
                     VelocityComponent.setX(-50);
-                }else if((e.getKeyCode() != KeyEvent.VK_LEFT)&&) {
+                }else if((e.getKeyCode() != KeyEvent.VK_LEFT)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);
                     Game_Panel.left = false;
                     // java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
