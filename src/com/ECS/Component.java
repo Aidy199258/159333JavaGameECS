@@ -132,7 +132,9 @@ class VelocityComponent extends Component {
 
 
 class PositionComponent extends  Component {
-    public float mX, mY, mA;
+    public float mX;
+    public float mY;
+    public float mA;
 
 
     public float getX() {

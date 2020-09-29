@@ -316,6 +316,44 @@ class KeyEventSystem extends System {
 
     }
 
+    public void KeyReleased(ArrayList<Entity> entities, KeyEvent e) {
+        for (Entity entity : entities) {
+            // Need a Position & a Velocity Component
+            if (entity.hasComponent(KeyComponent.class) && entity.hasComponent(VelocityComponent.class)) {
+                // Get Position & Velocity Components
+                // PositionComponent position = (PositionComponent)entity.getComponent(PositionComponent.class);
+
+                // KeyComponent key = (KeyComponent)entity.getComponent(KeyComponent.class);
+                VelocityComponent velocity = (VelocityComponent) entity.getComponent(VelocityComponent.class);
+
+
+                if ((e.getKeyCode() == KeyEvent.VK_RIGHT)) {
+                    // velocity.setX(velocity.Get_VelocityX() * -1);
+                    Game_Panel.right = false;
+                    java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+                    VelocityComponent.setX(0);
+                }
+                if ((e.getKeyCode() == KeyEvent.VK_LEFT)) {
+                    // velocity.setX(velocity.Get_VelocityX() * -1);
+                    Game_Panel.left = false;
+                    java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+                    VelocityComponent.setX(0);
+                }
+                if ((e.getKeyCode() == KeyEvent.VK_SPACE)) {
+                    // velocity.setX(velocity.Get_VelocityX() * -1);
+                    gravity = false;
+                    java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+
+                    //VelocityComponent.setY(100);
+
+                }
+
+
+                java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+
+            }
+        }
+    }
 
 
     public void KeyPressed(ArrayList<Entity> entities, KeyEvent e) {
@@ -335,11 +373,6 @@ class KeyEventSystem extends System {
                     Game_Panel.left = true;
                     java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
                     VelocityComponent.setX(-50);
-                }else if((e.getKeyCode() != KeyEvent.VK_LEFT)) {
-                    // velocity.setX(velocity.Get_VelocityX() * -1);
-                    Game_Panel.left = false;
-                    // java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
-                    VelocityComponent.setX(0);
                 }
                 if((e.getKeyCode() == KeyEvent.VK_RIGHT)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);

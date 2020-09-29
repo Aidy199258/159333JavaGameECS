@@ -1,6 +1,7 @@
 package com.ECS;
 
 import javax.imageio.ImageIO;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +13,10 @@ import javax.swing.*;
 import java.lang.*;
 import java.lang.System;
 
+import static com.ECS.VelocityComponent.gravity;
 
 
 public class Game_Panel extends JPanel {
-
     // Array of entities
     ArrayList<Entity> entities;
 
@@ -37,6 +38,9 @@ public class Game_Panel extends JPanel {
     private boolean running = false;
     public static boolean left= false;
     public static boolean right = false;
+
+    public static float player_inix = 100;//initial x position
+    public static float player_iniy = 400;// initital y position
 
     public Game_Panel(int width, int height) {
 
@@ -200,10 +204,14 @@ public class Game_Panel extends JPanel {
 
     }
 
-    public void test(KeyEvent e) {
-        System.out.println("tesT");
-        keyEventSystem.KeyPressed(entities, e);
+    public void Key_Released(KeyEvent e) {
+        //keyEventSystem.KeyPressed(entities, e);
+        keyEventSystem.KeyReleased(entities, e);
+    }
 
+   public void Key_Press(KeyEvent e) {
+        keyEventSystem.KeyPressed(entities, e);
+        //keyEventSystem.KeyReleased(entities, e);
     }
 
     public void startGamePanel(Game_Panel gamepanel){
@@ -239,13 +247,14 @@ public class Game_Panel extends JPanel {
                         switch (e.getID()) {
                             case KeyEvent.KEY_PRESSED:
                                 // keyEventSystem.KeyPressed(entities, e);
-                                test(e);
+                                Key_Press(e);
                                 // System.out.println("Pressed");
                                 // GameEngine.this.keyPressed(e);
                                 return true;
                             case KeyEvent.KEY_RELEASED:
                                 // GameEngine.this.keyReleased(e);
-                                return false;
+                                Key_Released(e);
+                                return true;
                             case KeyEvent.KEY_TYPED:
                                 // GameEngine.this.keyTyped(e);
                                 return false;
@@ -263,4 +272,5 @@ public class Game_Panel extends JPanel {
 
 
     }
+
 }
