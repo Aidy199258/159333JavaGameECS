@@ -602,6 +602,7 @@ class GameSystem extends System{
             // Create graphics transform stack
             mTransforms = new Stack<AffineTransform>();
 
+            /*****?Not Needed as Duplicate to Game_Panel**********
             // Set default width, height
             int mWidth = 500;
             int mHeight = 500;
@@ -616,6 +617,7 @@ class GameSystem extends System{
                 }
             });
 
+             */
         }
 
 
@@ -779,12 +781,16 @@ class RenderSystem extends System {
             // }
         }
     }
-    JFrame mFrame;
-    GamePanel mPanel;
     int mWidth, mHeight;
     Graphics2D mGraphics;
     boolean initialised = false;
+    /*****?Not Needed as Duplicate to Game_Panel**********
 
+    JFrame mFrame;
+    GamePanel mPanel;
+
+
+     */
     //Constructor
     public void RenderSystem() {
 
@@ -808,6 +814,7 @@ class RenderSystem extends System {
     // Functions for setting up the window
     //-------------------------------------------------------
     // Function to create the window and display it
+    /*?Not needed anymore as duplicate with Game_Panel function
     public void setupWindow(int width, int height) {
         mFrame = new JFrame();
         mPanel = new GamePanel();
@@ -851,7 +858,7 @@ class RenderSystem extends System {
     public int width() {
         return mWidth;
     }
-
+*/
     // Return the height of the window
     public int height() {
         return mHeight;

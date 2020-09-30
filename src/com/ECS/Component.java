@@ -18,18 +18,6 @@ public abstract class Component {
 }
 
 
-//this component called when a key is pressed
-/*class MoveComponent extends Component {
-    // Called whenever a key is pressed
-    void keyPressed(KeyEvent event);
-
-    // Called whenever a key is released
-    void keyReleased(KeyEvent event);
-
-    // Called whenever a key is pressed and immediately released
-    void keyTyped(KeyEvent event);
-}*/
-
 
 // Player Component - Holds Player specific information
 class PlayerComponent extends Component {
@@ -182,7 +170,7 @@ class PositionComponent extends  Component {
 
 
 
-        //Player's Position
+        //Player's Position - Codes from original game for guidance
         /*
         // Direction
         enum Direction {Left, Right};
