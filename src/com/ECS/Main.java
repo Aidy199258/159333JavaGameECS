@@ -48,9 +48,10 @@ public class Main {
 
         // Create the Game
         GameSystem gameSystem = new GameSystem();
-        gameSystem.CreateEntities(entities);
+        //gameSystem.CreateEntities(entities);
 
 
+        GameSystem.createGame(gameSystem,entities,30);
 
 
         //___________________________Testing_________________________
@@ -63,10 +64,14 @@ public class Main {
         PlayerComponent player=(PlayerComponent)entities.get(0).getComponent(PlayerComponent.class);
         System.out.println("Player's Life: " + player.getLife());
 
-        PositionComponent position = (PositionComponent)entities.get(0).getComponent(PositionComponent.class);
-        //NullPointerException
-        System.out.println("Player's Position: " + position.getX() + ", " + position.getY());
 
+        //Testing Positions
+        PositionComponent position = (PositionComponent)entities.get(0).getComponent(PositionComponent.class);
+        System.out.println("Player's Position: " + position.getX() + ", " + position.getY());
+        //Change Player's Position
+        position.setX(20);
+        position.setY(20);
+        System.out.println("Player's Position after change from Main: " + position.getX() + ", " + position.getY());
 
 
         //Testing ScoreSystem

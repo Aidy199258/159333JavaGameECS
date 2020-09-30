@@ -489,14 +489,19 @@ class GameSystem extends System{
     Stack<AffineTransform> mTransforms;
 
 
+    //Call Create Game
+    public static void createGame(GameSystem gameSystem,ArrayList<Entity> entities) {
+        // Call CreateGame
+        createGame(gameSystem, entities,30);
+
+    }
 
 
-    public static void createGame(Entity entity, int framerate) {
+    public static void createGame(GameSystem gameSystem, ArrayList<Entity> entities, int framerate) {
         // Initialise Game
-        GameSystem gameSystem = new GameSystem();
+        gameSystem.InitiateGame();
+        gameSystem.CreateEntities(entities);
 
-
-        gameSystem.InitiateGame(entity);
 
         ActionListener listener = null;
 
@@ -506,18 +511,28 @@ class GameSystem extends System{
         gameSystem.GameLoop(timeSystem.GetTimer(),framerate);
     }
 
-    public static void createGame(Entity entity) {
-        // Call CreateGame
-        createGame(entity, 30);
+    //Initiate Default Stats apart from Entities
+    public void InitiateGame(){
+
+        // Initialise Score
+        Main.mScore = 0;
+        Main.mGameOver = false;
+
+        //LoadImageSystem loadImageSystem = new LoadImageSystem();
+        // Load background
+        //Main.mBackground = loadImageSystem.loadImage("Pictures/background/background.png");
+
     }
 
-    //Stats default - NEEDS IMPLEMENTATION
+
+
+    //Entities Stats default - NEEDS IMPLEMENTATION
     public void CreateEntities(ArrayList<Entity> entities){
         //Add PlayerEntity
         //Needs PlayerComponent,PositionComponent,VelocityComponent
         Entity Player = new Entity();
         entities.add(Player);
-        Player.addComponent(new PlayerComponent(50));
+        Player.addComponent(new PlayerComponent(10));
         Player.addComponent(new VelocityComponent(0,0,false));
         Player.addComponent(new PositionComponent(5,5,5));
 
@@ -606,22 +621,7 @@ class GameSystem extends System{
     }
 
 
-    public void InitiateGame(Entity entity){
 
-        // Initialise Score
-        Main.mScore = 0;
-        Main.mGameOver = false;
-
-        LoadImageSystem loadImageSystem = new LoadImageSystem();
-        // Load background
-        Main.mBackground = loadImageSystem.loadImage("Pictures/background/background.png");
-
-
-
-
-
-
-    }
 
     public void GameLoop(TimeSystem timer, int framerate){
         initialised = true; // assume init has been called or won't be called
