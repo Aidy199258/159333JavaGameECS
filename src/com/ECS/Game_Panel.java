@@ -12,13 +12,14 @@ import java.awt.image.BufferedImage;
 import javax.swing.*;
 import java.lang.*;
 import java.lang.System;
+import java.util.Random;
 
 import static com.ECS.VelocityComponent.gravity;
 
 
 public class Game_Panel extends JPanel {
     // Array of entities
-    ArrayList<Entity> entities;
+    public static ArrayList<Entity> entities;
 
     // Render System
     RenderSystem renderSystem;
@@ -80,8 +81,8 @@ public class Game_Panel extends JPanel {
 
         // Create the Player
         Entity player = new Entity();
-        player.addComponent(new PositionComponent(100, 400, 0));
-        player.addComponent(new VelocityComponent(0, 0, false));
+        player.addComponent(new PositionComponent(100, 435, 0));
+        player.addComponent(new VelocityComponent(0, 0,false));
         player.addComponent(new KeyComponent());
 
         try {
@@ -90,7 +91,46 @@ public class Game_Panel extends JPanel {
             System.out.println("IO Exception");
         }
 
+        // Create Some Platform
+        Entity Platform1 = new Entity();
+        Entity Platform2 = new Entity();
+        Entity Platform3 = new Entity();
+        Entity Platform4 = new Entity();
 
+        // Drawing platform but not very fast way
+
+        //plat1
+        Platform1.addComponent(new PositionComponent(700, 200, 0));
+        try {
+            Platform1.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
+        } catch (IOException e) {
+            System.out.println("IO Exception");
+        }
+
+        //plat2
+        Platform2.addComponent(new PositionComponent(500, 310, 0));
+        try{
+            Platform2.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
+        }catch (IOException e) {
+            System.out.println("IO Exception");
+        }
+
+        //plat3
+        Platform3.addComponent(new PositionComponent(300, 400, 0));
+        try{
+            Platform3.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
+        }catch (IOException e) {
+            System.out.println("IO Exception");
+        }
+
+
+        Entity Floor = new Entity();
+        Floor.addComponent(new PositionComponent(0, 500, 0));
+        try{
+            Floor.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/floor.png"))));
+        }catch (IOException e) {
+            System.out.println("IO Exception");
+        }
 
 
         // Add Background to entities
@@ -98,6 +138,15 @@ public class Game_Panel extends JPanel {
 
         // Add Player to entities
         entities.add(player);
+
+        //Add Platform
+        entities.add(Platform1);
+        entities.add(Platform2);
+        entities.add(Platform3);
+
+        //Add floor
+        entities.add(Floor);
+
     }
 
     public void addNotify(){

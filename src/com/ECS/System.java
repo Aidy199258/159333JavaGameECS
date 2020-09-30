@@ -336,14 +336,14 @@ class KeyEventSystem extends System {
                 if ((e.getKeyCode() == KeyEvent.VK_LEFT)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);
                     Game_Panel.left = false;
-                    java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+                    //java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
                     VelocityComponent.setX(0);
                 }
                 if ((e.getKeyCode() == KeyEvent.VK_SPACE)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);
                     gravity = false;
-                    java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
-
+                    java.lang.System.out.println("Releasing");
+                    java.lang.System.out.println("Gravity is now:" + gravity);
                     //VelocityComponent.setY(100);
 
                 }
@@ -382,8 +382,7 @@ class KeyEventSystem extends System {
 
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)) {
                     gravity = true;
-
-                    java.lang.System.out.println(" Yeet" );
+                    java.lang.System.out.println("Gravity is now:" + gravity);
                 }
 
                 java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
@@ -607,7 +606,7 @@ class GameSystem extends System{
 
 class MovementSystem extends System {
 
-    public static long jumpingTime = 200;
+    //public static long jumpingTime = 200;
 
 
     public void Process(ArrayList<Entity> entities, double dt) {
@@ -626,17 +625,46 @@ class MovementSystem extends System {
 
 
                 if(gravity == true) {
+                    // velocity.setY(-10);
+                    VelocityComponent.setY(-100);
+                    //if(position.getY() < 320 ){
+                      //  VelocityComponent.setY(100);
+                        //java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
+                    //}
+                }
+                if(gravity == false){
+                    if(position.getY() < 320 ){
+                        VelocityComponent.setY(100);
+                        //await
+                        // java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
+                    }
+                    if(position.getY() > 435 && velocity.Get_VelocityY() > 0){
+                        velocity.setY(0);
+                    }
+                }
                    //java.lang.System.out.println("jumping");
                    //new Thread(new thread()).start();
-                    VelocityComponent.setY(-100);
+                    //VelocityComponent.setY(-100);
+                    //VelocityComponent.setY(-100);
+                    //VelocityComponent.setY(-100);
+                    //java.lang.System.out.println("Player'x: " + Entity);
 
+                    /* try
+                    {
+                       // VelocityComponent.setY(-100);
+                        Thread.sleep(1000);
+                    }
+                    catch(InterruptedException ex)
+                    {
+                        Thread.currentThread().interrupt();
+                    }*/
+                   //  VelocityComponent.setY(+100);
                     //VelocityComponent.setY(+100);
-                }
 
 
-               // if(position.getY() > 400 && velocity.Get_VelocityY() > 0) {
-                //    VelocityComponent.setY(velocity.Get_VelocityY() * -1);
-              //  } THIS ONE COMMENTING FOR NOW
+
+
+
 
 
                 // if(position.getX() > 250 && velocity.Get_VelocityX() > 0) {
