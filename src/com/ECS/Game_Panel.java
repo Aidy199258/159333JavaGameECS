@@ -78,6 +78,21 @@ public class Game_Panel extends JPanel {
         }
 
 
+        //DrawImageSystem constructor will draw the images on Window
+        DrawImageSystem drawImageSystem = new DrawImageSystem(entities);
+
+
+        //==========Testing method============
+        //Load Player Pictures
+        Entity playerImages = new Entity();
+        entities.add(playerImages);
+
+        //Load player picture to playerImages Entity
+        //and adding pic to RenderComponent
+        RenderSystem.LoadPicturesToEntity(playerImages,"Pictures/player/idle1.png");
+
+        //======================================
+
 
         // Create the Player
         Entity player = new Entity();

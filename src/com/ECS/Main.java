@@ -43,6 +43,8 @@ public class Main {
         game_panel.startGamePanel(game_panel); //Velocity problem - not changed with key pressed
 
 
+        //?Need to Move codes to Game Panel
+        //Load player, platforms and coins
         //Create a list of entities
         ArrayList<Entity> entities = new ArrayList<Entity>();
 
@@ -54,7 +56,7 @@ public class Main {
         GameSystem.createGame(gameSystem,entities,30);
 
 
-        //___________________________Testing_________________________
+        //===================Testing======================//
         //A temporary entity to get values
         Entity playerEntity = new Entity();
 
@@ -79,6 +81,8 @@ public class Main {
         scoreSystem.AddScore(entities);
         System.out.println("Total Score: " + scoreSystem.ShowScore(entities));//-1 as invalid score
 
+
+        //===================Testing======================//
 
 
         /*=====================Things to Implement=======================*/

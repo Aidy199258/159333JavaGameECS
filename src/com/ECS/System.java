@@ -163,6 +163,16 @@ class LoadImageSystem extends System{
 class DrawImageSystem extends System{
     Graphics2D mGraphics;
 
+    //Load images at initialisation of Game Panel
+    public DrawImageSystem(ArrayList<Entity> entities){
+        //Draw Character
+
+
+        //Draw Platforms
+
+        //Draw Coins
+    }
+
     // Draws an image on the screen at position (x,y)
     public DrawImageSystem(Image image, double x, double y){
         // Check if image is null
@@ -188,6 +198,8 @@ class DrawImageSystem extends System{
         // Draw image on screen at (x,y) with size (w,h)
         mGraphics.drawImage(image, (int)x, (int)y, (int)w, (int)h, null);
     }
+
+
 }
 
 
@@ -534,7 +546,8 @@ class GameSystem extends System{
         entities.add(Player);
         Player.addComponent(new PlayerComponent(10));
         Player.addComponent(new VelocityComponent(0,0,false));
-        Player.addComponent(new PositionComponent(5,5,5));
+        Player.addComponent(new PositionComponent(100, 435, 0));
+        Player.addComponent(new KeyComponent());
 
         //Create platforms
         Entity Platforms = new Entity();
@@ -713,6 +726,17 @@ class MovementSystem extends System {
 }
 
 class RenderSystem extends System {
+    public static void LoadPicturesToEntity(Entity entity,String filepath){
+        Image image=null;
+        try {
+            image = ImageIO.read(new File(filepath));
+
+        }catch(IOException e) {
+            java.lang.System.out.println("Ops..Problem loading picture");
+        }
+        entity.addComponent(new RenderComponent(image));
+
+    }
     public void Process(ArrayList<Entity> entities, Graphics2D g) {
         for (Entity entity : entities) {
             // Need a Position & a Render Component
@@ -763,6 +787,7 @@ class RenderSystem extends System {
 
     //Constructor
     public void RenderSystem() {
+
 
     }
     // public void RenderSystem(ArrayList<Entity> entities) {
