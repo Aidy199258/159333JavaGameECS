@@ -511,6 +511,20 @@ class GameSystem extends System{
         createGame(entity, 30);
     }
 
+    //Stats default - NEEDS IMPLEMENTATION
+    public void CreateEntities(ArrayList<Entity> entities){
+        //Add PlayerEntity
+        //Needs PlayerComponent,PositionComponent,VelocityComponent
+
+        Entity Player = new Entity();
+        entities.add(Player);
+        Player.addComponent(new PlayerComponent(50));
+        Player.addComponent(new VelocityComponent(0,0,false));
+        Player.addComponent(new PositionComponent(5,5,5));
+
+
+
+    }
 
     public void paintComponent(Graphics graphics) {
         // Get the graphics object

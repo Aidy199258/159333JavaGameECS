@@ -73,7 +73,7 @@ public class Game_Panel extends JPanel {
         try {
             background.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/background/background.png"))));
         } catch(IOException e) {
-            System.out.println("IO Exception");
+            System.out.println("Ops..Problem loading picture");
             e.printStackTrace();
         }
 
@@ -88,7 +88,7 @@ public class Game_Panel extends JPanel {
         try {
             player.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/player/idle1.png"))));
         } catch(IOException e) {
-            System.out.println("IO Exception");
+            System.out.println("Ops..Problem loading picture");
         }
 
         // Create Some Platform
@@ -104,7 +104,7 @@ public class Game_Panel extends JPanel {
         try {
             Platform1.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
         } catch (IOException e) {
-            System.out.println("IO Exception");
+            System.out.println("Ops..Problem loading picture");
         }
 
         //plat2
@@ -112,7 +112,7 @@ public class Game_Panel extends JPanel {
         try{
             Platform2.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
         }catch (IOException e) {
-            System.out.println("IO Exception");
+            System.out.println("Ops..Problem loading picture");
         }
 
         //plat3
@@ -120,7 +120,7 @@ public class Game_Panel extends JPanel {
         try{
             Platform3.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
         }catch (IOException e) {
-            System.out.println("IO Exception");
+            System.out.println("Ops..Problem loading picture");
         }
 
 
@@ -129,7 +129,7 @@ public class Game_Panel extends JPanel {
         try{
             Floor.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/floor.png"))));
         }catch (IOException e) {
-            System.out.println("IO Exception");
+            System.out.println("Ops..Problem loading picture");
         }
 
 

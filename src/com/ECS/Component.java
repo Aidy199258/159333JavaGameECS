@@ -44,6 +44,21 @@ class PlayerComponent extends Component {
     }
 }
 
+class CoinComponent extends Component{
+    //Each Coin counts as 1 point
+    private final int mDEFAULT_POINT = 1;
+    public int CoinPoint;
+    //Constructor
+    public CoinComponent(int DefaultPoint){
+        if(DefaultPoint<=0) {//Invalid input
+            CoinPoint = mDEFAULT_POINT;
+        }else {
+            CoinPoint = DefaultPoint;
+        }
+
+    }
+}
+
 // Rainbow instead of coin
 class RainbowComponent extends Component{
     Entity mEntity;
