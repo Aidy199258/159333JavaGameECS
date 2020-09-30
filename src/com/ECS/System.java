@@ -515,12 +515,31 @@ class GameSystem extends System{
     public void CreateEntities(ArrayList<Entity> entities){
         //Add PlayerEntity
         //Needs PlayerComponent,PositionComponent,VelocityComponent
-
         Entity Player = new Entity();
         entities.add(Player);
         Player.addComponent(new PlayerComponent(50));
         Player.addComponent(new VelocityComponent(0,0,false));
         Player.addComponent(new PositionComponent(5,5,5));
+
+        //Create platforms
+        Entity Platforms = new Entity();
+        Platforms.addComponent(new PlatformComponent(100, 150, 100, 20));
+        Platforms.addComponent(new PlatformComponent(350, 200, 100, 20));
+        Platforms.addComponent(new PlatformComponent(900, 250, 100, 20));
+        Platforms.addComponent(new PlatformComponent(1100, 350, 100, 20));
+        Platforms.addComponent(new PlatformComponent(600, 300, 100, 20));
+        Platforms.addComponent(new PlatformComponent(1300, 200, 100, 20));
+
+
+        //Create Coins
+        Entity Coins = new Entity();
+        // Create Coins-Changed to rainbow
+        Coins.addComponent(new CoinComponent(1, 100,  114, 32, 32));
+        Coins.addComponent(new CoinComponent(1,1300,  164, 32, 32));
+        Coins.addComponent(new CoinComponent(1, 350,  164, 32, 32));
+        Coins.addComponent(new CoinComponent(1,  900,  214, 32, 32));
+        Coins.addComponent(new CoinComponent(1, 600,  264, 32, 32));
+        Coins.addComponent(new CoinComponent(1, 1100,  314, 32, 32));
 
 
 

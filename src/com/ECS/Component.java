@@ -48,13 +48,19 @@ class CoinComponent extends Component{
     //Each Coin counts as 1 point
     private final int mDEFAULT_POINT = 1;
     public int CoinPoint;
+    // Shape
+    protected double mW, mH, mX, mY;
     //Constructor
-    public CoinComponent(int DefaultPoint){
+    public CoinComponent(int DefaultPoint, double x, double y, double w, double h){
         if(DefaultPoint<=0) {//Invalid input
             CoinPoint = mDEFAULT_POINT;
         }else {
             CoinPoint = DefaultPoint;
         }
+        mW=w;
+        mH=h;
+        mX=x;
+        mY=y;
 
     }
 }
@@ -314,7 +320,7 @@ class PlatformComponent extends Component {
     // Sprite
     Image sprite;
 
-    public PlatformComponent(Entity entity, double x, double y, double w, double h) {
+    public PlatformComponent(double x, double y, double w, double h) {
         // Set Position and Size
         mX = x;
         mY = y;
