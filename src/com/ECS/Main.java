@@ -36,24 +36,40 @@ public class Main {
 
 
 
+//        //?Need to Move codes to Game Panel
+//        //Load player, platforms and coins
+//        //Create a list of entities
+//        ArrayList<Entity> entities = new ArrayList<Entity>();
+
+
+
+        //Create a reference link to the main game Entities after initialisation of all entities
+        //gameSystem.SetGameEntities(entities);
+
+        //Create the Main Game Entities array
+        ArrayList<Entity> entities = new ArrayList<Entity>();
+
+        // Create the Game
+        GameSystem gameSystem = new GameSystem();
+        GameSystem.createGame(gameSystem,entities,30);
+        gameSystem.SetGameEntities(entities);
 
 
         //Run Game Panel
         Game_Panel game_panel= new Game_Panel(900,600);
         game_panel.startGamePanel(game_panel); //Velocity problem - not changed with key pressed
 
+//        //Get main Entity Array from main Game
+//        //Create a local reference for arraylist
+//        ArrayList<Entity> entities = GameSystem.GetGameEntities();
 
-        //?Need to Move codes to Game Panel
-        //Load player, platforms and coins
-        //Create a list of entities
-        ArrayList<Entity> entities = new ArrayList<Entity>();
+        //gameSystem.AddPlayerEntity(entities);
 
-        // Create the Game
-        GameSystem gameSystem = new GameSystem();
+
+
         //gameSystem.CreateEntities(entities);
 
 
-        GameSystem.createGame(gameSystem,entities,30);
 
 
         //===================Testing======================//

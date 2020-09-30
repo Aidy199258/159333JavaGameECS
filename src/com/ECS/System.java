@@ -500,18 +500,33 @@ class GameSystem extends System{
     Graphics2D mGraphics;
     Stack<AffineTransform> mTransforms;
 
+    //Reference to get the main entities for game from Main.java
+    private static ArrayList<Entity> GameEntities;
 
-    //Call Create Game
-    public static void createGame(GameSystem gameSystem,ArrayList<Entity> entities) {
-        // Call CreateGame
-        createGame(gameSystem, entities,30);
+    //Function to use in Main/Game_Panel.java to get entities from main game
+    public void SetGameEntities(ArrayList<Entity> entities){
+        GameEntities = entities;
+    }
+    public static ArrayList<Entity> GetGameEntities(){
+        return GameEntities;
 
     }
 
+    //Run first to Call Create Game
+    public static void createGame(GameSystem gameSystem,ArrayList<Entity> entities) {
 
+        // Call CreateGame
+        createGame(gameSystem, entities,30);
+
+
+    }
+
+    //Run second
     public static void createGame(GameSystem gameSystem, ArrayList<Entity> entities, int framerate) {
         // Initialise Game
         gameSystem.InitiateGame();
+
+
         gameSystem.CreateEntities(entities);
 
 
@@ -537,19 +552,36 @@ class GameSystem extends System{
     }
 
 
+    public static void TestingCreateEntities(GameSystem gameSystem, ArrayList<Entity> entities){
+        gameSystem.CreateEntities(entities);
+    }
 
     //Entities Stats default - NEEDS IMPLEMENTATION
     public void CreateEntities(ArrayList<Entity> entities){
-        //Add PlayerEntity
-        //Needs PlayerComponent,PositionComponent,VelocityComponent
+        //Add PlayerEntity - Index 0
+        AddPlayerEntity(entities);
+
+        //Create platforms - Index 1
+        AddPlatformEntity(entities);
+
+        //Create Coins - Index 2
+        AddCoinEntity(entities);
+
+
+    }
+    public void AddPlayerEntity(ArrayList<Entity> entities){
+        //Needs PlayerComponent,PositionComponent,VelocityComponent,RenderComponent
         Entity Player = new Entity();
         entities.add(Player);
         Player.addComponent(new PlayerComponent(10));
         Player.addComponent(new VelocityComponent(0,0,false));
         Player.addComponent(new PositionComponent(100, 435, 0));
         Player.addComponent(new KeyComponent());
+        //Player images divided into three - resting, walking, jumping
+        //NEEDS IMPLEMENT
 
-        //Create platforms
+    }
+    public void AddPlatformEntity(ArrayList<Entity> entities){
         Entity Platforms = new Entity();
         Platforms.addComponent(new PlatformComponent(100, 150, 100, 20));
         Platforms.addComponent(new PlatformComponent(350, 200, 100, 20));
@@ -557,17 +589,20 @@ class GameSystem extends System{
         Platforms.addComponent(new PlatformComponent(1100, 350, 100, 20));
         Platforms.addComponent(new PlatformComponent(600, 300, 100, 20));
         Platforms.addComponent(new PlatformComponent(1300, 200, 100, 20));
+        //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
+        RenderSystem.LoadPicturesToEntities(entities,Platforms,"Pictures/platform/platform.png");
 
-
-        //Create Coins
+    }
+    public void AddCoinEntity(ArrayList<Entity> entities){
         Entity Coins = new Entity();
-        // Create Coins-Changed to rainbow
         Coins.addComponent(new CoinComponent(1, 100,  114, 32, 32));
         Coins.addComponent(new CoinComponent(1,1300,  164, 32, 32));
         Coins.addComponent(new CoinComponent(1, 350,  164, 32, 32));
         Coins.addComponent(new CoinComponent(1,  900,  214, 32, 32));
         Coins.addComponent(new CoinComponent(1, 600,  264, 32, 32));
         Coins.addComponent(new CoinComponent(1, 1100,  314, 32, 32));
+        //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
+        RenderSystem.LoadPicturesToEntities(entities,Coins,"Pictures/coin/coin.png");
 
 
 
@@ -728,7 +763,7 @@ class MovementSystem extends System {
 }
 
 class RenderSystem extends System {
-    public static void LoadPicturesToEntity(Entity entity,String filepath){
+    public static void LoadPicturesToEntities(ArrayList<Entity> entities,Entity entity,String filepath){
         Image image=null;
         try {
             image = ImageIO.read(new File(filepath));
@@ -737,6 +772,7 @@ class RenderSystem extends System {
             java.lang.System.out.println("Ops..Problem loading picture");
         }
         entity.addComponent(new RenderComponent(image));
+        entities.add(entity);
 
     }
     public void Process(ArrayList<Entity> entities, Graphics2D g) {

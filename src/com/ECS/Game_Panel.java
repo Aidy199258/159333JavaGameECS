@@ -19,7 +19,12 @@ import static com.ECS.VelocityComponent.gravity;
 
 public class Game_Panel extends JPanel {
     // Array of entities
-    public static ArrayList<Entity> entities;
+    //public static ArrayList<Entity> entities;
+
+
+    //Create a local reference for main Entities ListArray from main Game
+    ArrayList<Entity> entities;
+
 
     // Render System
     RenderSystem renderSystem;
@@ -62,34 +67,36 @@ public class Game_Panel extends JPanel {
         // Set up Entities and Systems
         // ========================================
 
-        entities = new ArrayList<Entity>();
+        //entities = new ArrayList<Entity>();
         renderSystem = new RenderSystem();
         movementSystem = new MovementSystem();
         keyEventSystem = new KeyEventSystem();
 
-        // Create a Background
+        //Initialising default Entities via GameSystem
+        GameSystem gameSystem = new GameSystem();
+
+        //Link entities reference to Main Game ArrayList entities
+        entities= GameSystem.GetGameEntities();
+
+        // Create a Background - Codes to be catergoirsed into GameSystem
         Entity background = new Entity();
         background.addComponent(new PositionComponent(0, 0, 0));
-        try {
-            background.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/background/background.png"))));
-        } catch(IOException e) {
-            System.out.println("Ops..Problem loading picture");
-            e.printStackTrace();
-        }
+        RenderSystem.LoadPicturesToEntities(entities,background,"Pictures/background/background.png");
 
 
         //DrawImageSystem constructor will draw the images on Window
+        //Codes Incomplete
         DrawImageSystem drawImageSystem = new DrawImageSystem(entities);
 
 
         //==========Testing method============
-        //Load Player Pictures
-        Entity playerImages = new Entity();
-        entities.add(playerImages);
 
-        //Load player picture to playerImages Entity
-        //and adding pic to RenderComponent
-        RenderSystem.LoadPicturesToEntity(playerImages,"Pictures/player/idle1.png");
+        //Get values from the main entities
+        //Array Index refer to CreateEntities under GameSystem
+        PlayerComponent GamePlayer=(PlayerComponent)entities.get(0).getComponent(PlayerComponent.class);
+        System.out.println("Game_Panel: Game Player's Life: " + GamePlayer.getLife());
+
+
 
         //======================================
 
