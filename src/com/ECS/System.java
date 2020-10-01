@@ -497,14 +497,14 @@ class ScoreSystem extends System{
 
 class GameSystem extends System{
     boolean initialised;
-    Graphics2D mGraphics;
+    Graphics2D mGraphics = null;
     Stack<AffineTransform> mTransforms;
 
     //Reference to get the main entities for game from Main.java
     private static ArrayList<Entity> GameEntities;
 
     //Function to use in Main/Game_Panel.java to get entities from main game
-    public void SetGameEntities(ArrayList<Entity> entities){
+    public static void SetGameEntities(ArrayList<Entity> entities){
         GameEntities = entities;
     }
     public static ArrayList<Entity> GetGameEntities(){
@@ -529,13 +529,18 @@ class GameSystem extends System{
 
         gameSystem.CreateEntities(entities);
 
+        //Loading Pictures to Window
+        //RenderSystem renderSystem = new RenderSystem();
+        //renderSystem.Process(entities,mGraphics);
+        //renderSystem.Process(entities, (Graphics2D)graphics);
 
         ActionListener listener = null;
 
         TimeSystem timeSystem = new TimeSystem(framerate,listener);
 
         // Start the Game
-        gameSystem.GameLoop(timeSystem.GetTimer(),framerate);
+        //Testing Loop?duplicate loop with Game_Panel?
+        //gameSystem.GameLoop(timeSystem.GetTimer(),framerate);
     }
 
     //Initiate Default Stats apart from Entities
@@ -567,18 +572,30 @@ class GameSystem extends System{
         //Create Coins - Index 2
         AddCoinEntity(entities);
 
+        //Create Background - Index 3
+        AddBackgroundEntity(entities);
+
+
+
 
     }
     public void AddPlayerEntity(ArrayList<Entity> entities){
         //Needs PlayerComponent,PositionComponent,VelocityComponent,RenderComponent
         Entity Player = new Entity();
-        entities.add(Player);
+
         Player.addComponent(new PlayerComponent(10));
         Player.addComponent(new VelocityComponent(0,0,false));
         Player.addComponent(new PositionComponent(100, 435, 0));
         Player.addComponent(new KeyComponent());
         //Player images divided into three - resting, walking, jumping
         //NEEDS IMPLEMENT
+        //RenderSystem.LoadPicturesToEntities(entities,Player,"Pictures/player/idle1.png");
+        try {
+            Player.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/player/idle1.png"))));
+        } catch(IOException e) {
+            java.lang.System.out.println("Ops..Problem loading picture");
+        }
+        entities.add(Player);
 
     }
     public void AddPlatformEntity(ArrayList<Entity> entities){
@@ -608,6 +625,20 @@ class GameSystem extends System{
 
     }
 
+    public void AddBackgroundEntity(ArrayList<Entity> entities){
+        Entity Background = new Entity();
+        Background.addComponent(new PositionComponent(0, 0, 0));
+        RenderSystem.LoadPicturesToEntities(entities,Background,"Pictures/background/background.png");
+
+    }
+
+    public void AddFloorEntity(ArrayList<Entity> entities){
+        Entity Floor = new Entity();
+        Floor.addComponent(new PositionComponent(0, 500, 0));
+        RenderSystem.LoadPicturesToEntities(entities,Floor,"Pictures/platform/floor.png");
+
+
+    }
     public void paintComponent(Graphics graphics) {
         // Get the graphics object
         mGraphics = (Graphics2D)graphics;
@@ -779,6 +810,7 @@ class RenderSystem extends System {
         for (Entity entity : entities) {
             // Need a Position & a Render Component
             if(entity.hasComponent(PositionComponent.class) && entity.hasComponent(RenderComponent.class)) {
+                //java.lang.System.out.println("This Entity has an image:"+entity.getComponent(RenderComponent.class));
                 // Get Position & Render Components
                 PositionComponent position = (PositionComponent)entity.getComponent(PositionComponent.class);
                 RenderComponent render     = (RenderComponent)entity.getComponent(RenderComponent.class);

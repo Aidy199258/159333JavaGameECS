@@ -19,11 +19,14 @@ import static com.ECS.VelocityComponent.gravity;
 
 public class Game_Panel extends JPanel {
     // Array of entities
-    //public static ArrayList<Entity> entities;
+    public static ArrayList<Entity> entities= new ArrayList<Entity>();;
+
+    //Initialising default Entities via GameSystem
+    GameSystem gameSystem = new GameSystem();
 
 
     //Create a local reference for main Entities ListArray from main Game
-    ArrayList<Entity> entities;
+    //ArrayList<Entity> entities;
 
 
     // Render System
@@ -47,6 +50,7 @@ public class Game_Panel extends JPanel {
 
     public static float player_inix = 100;//initial x position
     public static float player_iniy = 400;// initital y position
+
 
     public Game_Panel(int width, int height) {
 
@@ -72,21 +76,25 @@ public class Game_Panel extends JPanel {
         movementSystem = new MovementSystem();
         keyEventSystem = new KeyEventSystem();
 
-        //Initialising default Entities via GameSystem
-        GameSystem gameSystem = new GameSystem();
 
         //Link entities reference to Main Game ArrayList entities
-        entities= GameSystem.GetGameEntities();
+        //GameSystem.SetGameEntities(entities);
+        //Create the Main Game Entities array
+        //entities = new ArrayList<Entity>();
 
-        // Create a Background - Codes to be catergoirsed into GameSystem
-        Entity background = new Entity();
-        background.addComponent(new PositionComponent(0, 0, 0));
-        RenderSystem.LoadPicturesToEntities(entities,background,"Pictures/background/background.png");
+        // Create the Game
+        GameSystem gameSystem = new GameSystem();
+        GameSystem.createGame(gameSystem,entities,30);
+
+//        // Create a Background - Codes to be categorised into GameSystem
+//        Entity background = new Entity();
+//        background.addComponent(new PositionComponent(0, 0, 0));
+//        RenderSystem.LoadPicturesToEntities(entities,background,"Pictures/background/background.png");
 
 
         //DrawImageSystem constructor will draw the images on Window
         //Codes Incomplete
-        DrawImageSystem drawImageSystem = new DrawImageSystem(entities);
+        //DrawImageSystem drawImageSystem = new DrawImageSystem(entities);
 
 
         //==========Testing method============
@@ -146,17 +154,17 @@ public class Game_Panel extends JPanel {
         }
 
 
-        Entity Floor = new Entity();
-        Floor.addComponent(new PositionComponent(0, 500, 0));
-        try{
-            Floor.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/floor.png"))));
-        }catch (IOException e) {
-            System.out.println("Ops..Problem loading picture");
-        }
+//        Entity Floor = new Entity();
+//        Floor.addComponent(new PositionComponent(0, 500, 0));
+//        try{
+//            Floor.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/floor.png"))));
+//        }catch (IOException e) {
+//            System.out.println("Ops..Problem loading picture");
+//        }
 
 
         // Add Background to entities
-        entities.add(background);
+        //entities.add(background);
 
         // Add Player to entities
         entities.add(player);
@@ -167,7 +175,7 @@ public class Game_Panel extends JPanel {
         entities.add(Platform3);
 
         //Add floor
-        entities.add(Floor);
+        //entities.add(Floor);
 
     }
 
@@ -246,6 +254,7 @@ public class Game_Panel extends JPanel {
 
     public void update(double dt){
 
+        //entities= GameSystem.GetGameEntities();
         movementSystem.Process(entities, dt);
     }
 
@@ -268,6 +277,7 @@ public class Game_Panel extends JPanel {
     }
 
     public void paintComponent(Graphics graphics) {
+        //entities=GameSystem.GetGameEntities();
         renderSystem.Process(entities, (Graphics2D)graphics);
     }
 

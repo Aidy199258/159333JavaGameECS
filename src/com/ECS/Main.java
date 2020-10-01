@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.lang.System;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +32,8 @@ public class Main {
     public static void main(String args[]) {
 
 
-        Graphics2D Graphics;
 
-
-
-
-
-//        //?Need to Move codes to Game Panel
+//        //Moved codes to Game Panel
 //        //Load player, platforms and coins
 //        //Create a list of entities
 //        ArrayList<Entity> entities = new ArrayList<Entity>();
@@ -46,22 +43,25 @@ public class Main {
         //Create a reference link to the main game Entities after initialisation of all entities
         //gameSystem.SetGameEntities(entities);
 
-        //Create the Main Game Entities array
-        ArrayList<Entity> entities = new ArrayList<Entity>();
-
-        // Create the Game
-        GameSystem gameSystem = new GameSystem();
-        GameSystem.createGame(gameSystem,entities,30);
-        gameSystem.SetGameEntities(entities);
+//        //Create the Main Game Entities array
+//        ArrayList<Entity> entities = new ArrayList<Entity>();
+//
+//        // Create the Game
+//        GameSystem gameSystem = new GameSystem();
+//        GameSystem.createGame(gameSystem,entities,30,Graphics);
+        //GameSystem.SetGameEntities(entities);
 
 
         //Run Game Panel
         Game_Panel game_panel= new Game_Panel(900,600);
-        game_panel.startGamePanel(game_panel); //Velocity problem - not changed with key pressed
+        game_panel.startGamePanel(game_panel);
 
-//        //Get main Entity Array from main Game
-//        //Create a local reference for arraylist
-//        ArrayList<Entity> entities = GameSystem.GetGameEntities();
+//        Game_Panel game_panel= new Game_Panel(900,600);
+//        game_panel.startGamePanel(game_panel);
+
+        //Get main Entity Array from main Game
+        //Create a local reference for arraylist
+        //ArrayList<Entity> entities = GameSystem.GetGameEntities();
 
         //gameSystem.AddPlayerEntity(entities);
 
@@ -73,30 +73,32 @@ public class Main {
 
 
         //===================Testing======================//
-        //A temporary entity to get values
-        Entity playerEntity = new Entity();
 
+
+//        //A temporary entity to get values - Functioning
+//        Entity playerEntity = new Entity();
+//
 
         //Entities Indexes: 0-Player,1-Platforms,2-Coin
         //Testing - Get Player Life
-        PlayerComponent player=(PlayerComponent)entities.get(0).getComponent(PlayerComponent.class);
+        PlayerComponent player=(PlayerComponent)Game_Panel.entities.get(0).getComponent(PlayerComponent.class);
         System.out.println("Player's Life: " + player.getLife());
 
 
-        //Testing Positions
-        PositionComponent position = (PositionComponent)entities.get(0).getComponent(PositionComponent.class);
-        System.out.println("Player's Position: " + position.getX() + ", " + position.getY());
-        //Change Player's Position
-        position.setX(20);
-        position.setY(20);
-        System.out.println("Player's Position after change from Main: " + position.getX() + ", " + position.getY());
+//        //Testing Positions - functioning
+//        PositionComponent position = (PositionComponent)entities.get(0).getComponent(PositionComponent.class);
+//        System.out.println("Player's Position: " + position.getX() + ", " + position.getY());
+//        //Change Player's Position
+//        position.setX(100);
+//        position.setY(50);
+//        System.out.println("Player's Position after change from Main: " + position.getX() + ", " + position.getY());
 
 
-        //Testing ScoreSystem
-        ScoreSystem scoreSystem = new ScoreSystem();
-        scoreSystem.AddScore(entities);
-        System.out.println("Total Score: " + scoreSystem.ShowScore(entities));//-1 as invalid score
-
+//        //Testing ScoreSystem-functioning
+//        ScoreSystem scoreSystem = new ScoreSystem();
+//        scoreSystem.AddScore(entities);
+//        System.out.println("Total Score: " + scoreSystem.ShowScore(entities));//-1 as invalid score
+//
 
         //===================Testing======================//
 
