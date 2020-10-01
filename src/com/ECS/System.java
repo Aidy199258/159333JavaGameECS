@@ -642,6 +642,31 @@ class GameSystem extends System{
         Coin5.addComponent(new PositionComponent(600, 200,  10));
 
         //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
+        Image CoinsImages=null;
+        try {
+            CoinsImages = ImageIO.read(new File("Pictures/coin/coin.png"));
+
+        }catch(IOException e) {
+            java.lang.System.out.println("Ops..Problem loading picture");
+        }
+        Image[] CoinImages = new Image[16];
+        // Load sprites
+        for(int i = 0; i < 16; i++) {
+            // Calculate x,y
+            int sx = (i % 4) * 32;
+            int sy = (i / 4) * 32;
+
+            // Load sprite
+            BufferedImage buffered = (BufferedImage)CoinsImages;
+
+            // Extract sub image
+            CoinImages[i] = buffered.getSubimage(sx, sy, 32, 32);
+        }
+
+
+        Coin1.addComponent(new RenderComponent(CoinImages[0]));
+        Coin2.addComponent(new RenderComponent(CoinImages[1]));
+        Coin3.addComponent(new RenderComponent(CoinImages[2]));
         RenderSystem.LoadPicturesToEntity(Coin1,"Pictures/coin/coin.png");
         RenderSystem.LoadPicturesToEntity(Coin2,"Pictures/coin/coin.png");
         RenderSystem.LoadPicturesToEntity(Coin3,"Pictures/coin/coin.png");
