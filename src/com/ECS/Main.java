@@ -75,14 +75,15 @@ public class Main {
         //===================Testing======================//
 
 
+
 //        //A temporary entity to get values - Functioning
 //        Entity playerEntity = new Entity();
 //
 
         //Entities Indexes: 0-Player,1-Platforms,2-Coin
         //Testing - Get Player Life
-        PlayerComponent player=(PlayerComponent)Game_Panel.entities.get(0).getComponent(PlayerComponent.class);
-        System.out.println("Player's Life: " + player.getLife());
+        //PlayerComponent player=(PlayerComponent)Game_Panel.entities.get(0).getComponent(PlayerComponent.class);
+        //System.out.println("Player's Life: " + player.getLife());
 
 
 //        //Testing Positions - functioning
@@ -97,7 +98,7 @@ public class Main {
 //        //Testing ScoreSystem-functioning
 //        ScoreSystem scoreSystem = new ScoreSystem();
 //        scoreSystem.AddScore(entities);
-//        System.out.println("Total Score: " + scoreSystem.ShowScore(entities));//-1 as invalid score
+//        System.out.println("Total Score: " + scoreSystem.ScoreUpdate(entities));//-1 as invalid score
 //
 
         //===================Testing======================//

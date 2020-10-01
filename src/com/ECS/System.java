@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
+import static com.ECS.Game_Panel.entities;
 import static com.ECS.VelocityComponent.gravity;
 
 public abstract class System {
@@ -455,8 +456,8 @@ class ScoreSystem extends System{
     public void AddScore(ArrayList<Entity> entities){
         for(Entity entity: entities){
             //Player gains one point if touches rainbow/coin
-            if(entity.hasComponent(RainbowComponent.class)&&(entity.hasComponent(PointComponent.class))){
-                RainbowComponent rainbowComponent = (RainbowComponent)entity.getComponent(RainbowComponent.class);
+            if(entity.hasComponent(CoinComponent.class)&&(entity.hasComponent(PointComponent.class))){
+                CoinComponent coinComponent = (CoinComponent)entity.getComponent(CoinComponent.class);
                 PointComponent pointComponent = (PointComponent)entity.getComponent(PointComponent.class);
 
                 pointComponent.GainOnePoint();
@@ -473,13 +474,13 @@ class ScoreSystem extends System{
 
     }
 
-    public int ShowScore(ArrayList<Entity> entities){
+    public static int ScoreUpdate(ArrayList<Entity> entities){
         //Score will be -1 if not initiated
         int score = -1;
         for(Entity entity: entities){
             //Player gains one point if touches rainbow/coin
-            if(entity.hasComponent(RainbowComponent.class)&&(entity.hasComponent(PointComponent.class))){
-                RainbowComponent rainbowComponent = (RainbowComponent)entity.getComponent(RainbowComponent.class);
+            if(entity.hasComponent(CoinComponent.class)&&(entity.hasComponent(PointComponent.class))){
+                CoinComponent coinComponent = (CoinComponent)entity.getComponent(CoinComponent.class);
                 PointComponent pointComponent = (PointComponent)entity.getComponent(PointComponent.class);
 
                 score = pointComponent.GetPoint();
@@ -497,37 +498,25 @@ class ScoreSystem extends System{
 
 class GameSystem extends System{
     boolean initialised;
-    Graphics2D mGraphics = null;
+    Graphics2D mGraphics;
     Stack<AffineTransform> mTransforms;
 
-    //Reference to get the main entities for game from Main.java
-    private static ArrayList<Entity> GameEntities;
-
-    //Function to use in Main/Game_Panel.java to get entities from main game
-    public static void SetGameEntities(ArrayList<Entity> entities){
-        GameEntities = entities;
-    }
-    public static ArrayList<Entity> GetGameEntities(){
-        return GameEntities;
-
-    }
-
     //Run first to Call Create Game
-    public static void createGame(GameSystem gameSystem,ArrayList<Entity> entities) {
+    public void createGame(GameSystem gameSystem) {
 
         // Call CreateGame
-        createGame(gameSystem, entities,30);
+        createGame(gameSystem,30);
 
 
     }
 
     //Run second
-    public static void createGame(GameSystem gameSystem, ArrayList<Entity> entities, int framerate) {
+    public void createGame(GameSystem gameSystem, int framerate) {
         // Initialise Game
         gameSystem.InitiateGame();
 
 
-        gameSystem.CreateEntities(entities);
+        //gameSystem.CreateEntities();
 
         //Loading Pictures to Window
         //RenderSystem renderSystem = new RenderSystem();
@@ -557,29 +546,44 @@ class GameSystem extends System{
     }
 
 
-    public static void TestingCreateEntities(GameSystem gameSystem, ArrayList<Entity> entities){
-        gameSystem.CreateEntities(entities);
+    public static void TestingDrawPic(ArrayList<Entity> entities,Graphics2D g){
+
+        PositionComponent playerPosition=(PositionComponent)entities.get(0).getComponent(PositionComponent.class);
+        RenderComponent playerRender=(RenderComponent) entities.get(0).getComponent(RenderComponent.class);
+        playerRender.getImage();
+        // Save current transform
+        AffineTransform transform = g.getTransform();
+
+        // Move into correct position
+        g.translate(playerPosition.getX(), playerPosition.getY());
+
+        // Draw the Render component
+        g.drawImage(playerRender.getImage(), 0, 0, null);
+
+        // Reset Transform
+        g.setTransform(transform);
+
     }
 
     //Entities Stats default - NEEDS IMPLEMENTATION
-    public void CreateEntities(ArrayList<Entity> entities){
+    public void CreateEntities(){
         //Add PlayerEntity - Index 0
-        AddPlayerEntity(entities);
+        AddPlayerEntity();
 
         //Create platforms - Index 1
-        AddPlatformEntity(entities);
+        AddPlatformEntity();
 
         //Create Coins - Index 2
-        AddCoinEntity(entities);
+        AddCoinEntity();
 
         //Create Background - Index 3
-        AddBackgroundEntity(entities);
+        AddBackgroundEntity();
 
 
 
 
     }
-    public void AddPlayerEntity(ArrayList<Entity> entities){
+    public void AddPlayerEntity(){
         //Needs PlayerComponent,PositionComponent,VelocityComponent,RenderComponent
         Entity Player = new Entity();
 
@@ -589,53 +593,81 @@ class GameSystem extends System{
         Player.addComponent(new KeyComponent());
         //Player images divided into three - resting, walking, jumping
         //NEEDS IMPLEMENT
-        //RenderSystem.LoadPicturesToEntities(entities,Player,"Pictures/player/idle1.png");
-        try {
-            Player.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/player/idle1.png"))));
-        } catch(IOException e) {
-            java.lang.System.out.println("Ops..Problem loading picture");
-        }
+        RenderSystem.LoadPicturesToEntity(Player,"Pictures/player/idle1.png");
         entities.add(Player);
 
+
     }
-    public void AddPlatformEntity(ArrayList<Entity> entities){
-        Entity Platforms = new Entity();
-        Platforms.addComponent(new PlatformComponent(100, 150, 100, 20));
-        Platforms.addComponent(new PlatformComponent(350, 200, 100, 20));
-        Platforms.addComponent(new PlatformComponent(900, 250, 100, 20));
-        Platforms.addComponent(new PlatformComponent(1100, 350, 100, 20));
-        Platforms.addComponent(new PlatformComponent(600, 300, 100, 20));
-        Platforms.addComponent(new PlatformComponent(1300, 200, 100, 20));
+    public void AddPlatformEntity(){
+
+        Entity Platform1 = new Entity();
+        Entity Platform2 = new Entity();
+        Entity Platform3 = new Entity();
+        Entity Platform4 = new Entity();
+        Entity Platform5 = new Entity();
+        Entity Platform6 = new Entity();
+        Platform1.addComponent(new PositionComponent(700, 200, 10));
+        Platform2.addComponent(new PositionComponent(500, 310, 0));
+        Platform3.addComponent(new PositionComponent(300, 400, 0));
+        Platform4.addComponent(new PositionComponent(0, 500, 0));
+        Platform5.addComponent(new PositionComponent(100, 300, 20));
+        Platform6.addComponent(new PositionComponent(200,50,0));
         //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
-        RenderSystem.LoadPicturesToEntities(entities,Platforms,"Pictures/platform/platform.png");
+        RenderSystem.LoadPicturesToEntity(Platform1,"Pictures/platform/platform.png");
+        RenderSystem.LoadPicturesToEntity(Platform2,"Pictures/platform/platform.png");
+        RenderSystem.LoadPicturesToEntity(Platform3,"Pictures/platform/platform.png");
+        RenderSystem.LoadPicturesToEntity(Platform4,"Pictures/platform/platform.png");
+        RenderSystem.LoadPicturesToEntity(Platform5,"Pictures/platform/platform.png");
+        RenderSystem.LoadPicturesToEntity(Platform6,"Pictures/platform/platform.png");
+        entities.add(Platform1);
+        entities.add(Platform2);
+        entities.add(Platform3);
+        entities.add(Platform4);
+        entities.add(Platform5);
+        entities.add(Platform6);
 
     }
-    public void AddCoinEntity(ArrayList<Entity> entities){
-        Entity Coins = new Entity();
-        Coins.addComponent(new CoinComponent(1, 100,  114, 32, 32));
-        Coins.addComponent(new CoinComponent(1,1300,  164, 32, 32));
-        Coins.addComponent(new CoinComponent(1, 350,  164, 32, 32));
-        Coins.addComponent(new CoinComponent(1,  900,  214, 32, 32));
-        Coins.addComponent(new CoinComponent(1, 600,  264, 32, 32));
-        Coins.addComponent(new CoinComponent(1, 1100,  314, 32, 32));
+    public void AddCoinEntity(){
+        Entity Coin1 = new Entity();
+        Entity Coin2 = new Entity();
+        Entity Coin3 = new Entity();
+        Entity Coin4 = new Entity();
+        Entity Coin5 = new Entity();
+        Coin1.addComponent(new CoinComponent(30,42,66,0,30));
+        Coin1.addComponent(new PositionComponent(10, 100,  20));
+        Coin2.addComponent(new PositionComponent(300,500,  0));
+        Coin3.addComponent(new PositionComponent(500, 700,  0));
+        Coin4.addComponent(new PositionComponent(200,  100,  2));
+        Coin5.addComponent(new PositionComponent(600, 200,  10));
+
         //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
-        RenderSystem.LoadPicturesToEntities(entities,Coins,"Pictures/coin/coin.png");
-
+        RenderSystem.LoadPicturesToEntity(Coin1,"Pictures/coin/coin.png");
+        RenderSystem.LoadPicturesToEntity(Coin2,"Pictures/coin/coin.png");
+        RenderSystem.LoadPicturesToEntity(Coin3,"Pictures/coin/coin.png");
+        RenderSystem.LoadPicturesToEntity(Coin4,"Pictures/coin/coin.png");
+        RenderSystem.LoadPicturesToEntity(Coin5,"Pictures/coin/coin.png");
+        entities.add(Coin1);
+        entities.add(Coin2);
+        entities.add(Coin3);
+        entities.add(Coin4);
+        entities.add(Coin5);
 
 
     }
 
-    public void AddBackgroundEntity(ArrayList<Entity> entities){
+    public void AddBackgroundEntity(){
         Entity Background = new Entity();
         Background.addComponent(new PositionComponent(0, 0, 0));
-        RenderSystem.LoadPicturesToEntities(entities,Background,"Pictures/background/background.png");
+        RenderSystem.LoadPicturesToEntity(Background,"Pictures/background/background.png");
+        entities.add(Background);
 
     }
 
-    public void AddFloorEntity(ArrayList<Entity> entities){
+    public void AddFloorEntity(){
         Entity Floor = new Entity();
         Floor.addComponent(new PositionComponent(0, 500, 0));
-        RenderSystem.LoadPicturesToEntities(entities,Floor,"Pictures/platform/floor.png");
+        RenderSystem.LoadPicturesToEntity(Floor,"Pictures/platform/floor.png");
+        entities.add(Floor);
 
 
     }
@@ -794,7 +826,8 @@ class MovementSystem extends System {
 }
 
 class RenderSystem extends System {
-    public static void LoadPicturesToEntities(ArrayList<Entity> entities,Entity entity,String filepath){
+
+    public static void LoadPicturesToEntity(Entity entity,String filepath){
         Image image=null;
         try {
             image = ImageIO.read(new File(filepath));
@@ -803,7 +836,7 @@ class RenderSystem extends System {
             java.lang.System.out.println("Ops..Problem loading picture");
         }
         entity.addComponent(new RenderComponent(image));
-        entities.add(entity);
+
 
     }
     public void Process(ArrayList<Entity> entities, Graphics2D g) {
@@ -829,108 +862,18 @@ class RenderSystem extends System {
             }
 
 
-            // if (entity.hasComponent(TransformComponent.class) && entity.hasComponent(RenderComponent.class)) {
 
-            //     TransformComponent transform = (TransformComponent) entity.getComponent(TransformComponent.class);
-
-            //     TransformComponent render = (TransformComponent) entity.getComponent(RenderComponent.class);
-
-            //     /*
-            //     g.rotate(transform.mA);
-
-            //     g.translate(transform.mX, transform.mY);
-
-            //     g.drawImage(render.mImage);
-
-
-
-            //      */
-
-            // }
         }
     }
     int mWidth, mHeight;
     Graphics2D mGraphics;
     boolean initialised = false;
-    /*****?Not Needed as Duplicate to Game_Panel**********
-
-    JFrame mFrame;
-    GamePanel mPanel;
 
 
-     */
     //Constructor
     public void RenderSystem() {
 
 
     }
-    // public void RenderSystem(ArrayList<Entity> entities) {
-    //     // setupWindow(1500, 750);
-    //     // for (Entity entity : entities) {
-
-    //     //     if (entity.hasComponent(TransformComponent.class) && entity.hasComponent(RenderComponent.class)) {
-
-    //     //         TransformComponent transform = (TransformComponent) entity.getComponent(TransformComponent.class);
-
-    //     //         TransformComponent render = (TransformComponent) entity.getComponent(RenderComponent.class);
-
-    //     //     }
-    //     // }
-    // }
-
-    //-------------------------------------------------------
-    // Functions for setting up the window
-    //-------------------------------------------------------
-    // Function to create the window and display it
-    /*?Not needed anymore as duplicate with Game_Panel function
-    public void setupWindow(int width, int height) {
-        mFrame = new JFrame();
-        mPanel = new GamePanel();
-
-        mWidth = width;
-        mHeight = height;
-
-        mFrame.setSize(width, height);
-        mFrame.setLocation(200,200);
-        mFrame.setTitle("Window");
-        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mFrame.add(mPanel);
-        mFrame.setVisible(true);
-        mFrame.setResizable(false);
-
-        mPanel.setDoubleBuffered(true);
-        mPanel.addMouseListener((MouseListener) this);
-        mPanel.addMouseMotionListener((MouseMotionListener) this);
-
-
-        // Resize the window (insets are just the boarders that the Operating System puts on the board)
-        Insets insets = mFrame.getInsets();
-        mFrame.setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
-    }
-
-    public void setWindowSize(final int width, final int height) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // Resize the window (insets are just the boarders that the Operating System puts on the board)
-                Insets insets = mFrame.getInsets();
-                mWidth = width;
-                mHeight = height;
-                mFrame.setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
-                mPanel.setSize(width, height);
-            }
-        });
-    }
-
-    // Return the width of the window
-    public int width() {
-        return mWidth;
-    }
-*/
-    // Return the height of the window
-    public int height() {
-        return mHeight;
-    }
-
 
 }
