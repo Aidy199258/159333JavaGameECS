@@ -38,7 +38,7 @@ public class Game_Panel extends JPanel {
 
 
     private static final long serialVersionUID = 1L;
-    public static final int WIDTH = 900, HEIGHT = 600;
+    public static final int WIDTH = 1500, HEIGHT = 750;
     public static int width;
     public static int height;
     private Thread thread ;
@@ -89,100 +89,9 @@ public class Game_Panel extends JPanel {
         gameSystem.AddBackgroundEntity();
         gameSystem.AddPlatformEntity();
         gameSystem.AddCoinEntity();
-        gameSystem.AddPlayerEntity();
+
         gameSystem.AddFloorEntity();;
-
-//        // Create a Background - Codes to be categorised into GameSystem
-//        Entity background = new Entity();
-//        background.addComponent(new PositionComponent(0, 0, 0));
-//        RenderSystem.LoadPicturesToEntities(entities,background,"Pictures/background/background.png");
-
-
-        //DrawImageSystem constructor will draw the images on Window
-        //Codes Incomplete
-        //DrawImageSystem drawImageSystem = new DrawImageSystem(entities);
-
-
-        //==========Testing method============
-
-        //Get values from the main entities
-        //Array Index refer to CreateEntities under GameSystem
-        //PlayerComponent GamePlayer=(PlayerComponent)entities.get(0).getComponent(PlayerComponent.class);
-        //System.out.println("Game_Panel: Game Player's Life: " + GamePlayer.getLife());
-
-
-
-
-        //======================================
-
-
-//        // Create the Player
-//        Entity player = new Entity();
-//        player.addComponent(new PositionComponent(100, 435, 0));
-//        player.addComponent(new VelocityComponent(0, 0,false));
-//        player.addComponent(new KeyComponent());
-//
-//        try {
-//            player.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/player/idle1.png"))));
-//        } catch(IOException e) {
-//            System.out.println("Ops..Problem loading picture");
-//        }
-
-//        // Create Some Platform
-//        Entity Platform1 = new Entity();
-//        Entity Platform2 = new Entity();
-//        Entity Platform3 = new Entity();
-//        Entity Platform4 = new Entity();
-
-        // Drawing platform but not very fast way
-
-//        //plat1
-//        Platform1.addComponent(new PositionComponent(700, 200, 0));
-//        try {
-//            Platform1.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
-//        } catch (IOException e) {
-//            System.out.println("Ops..Problem loading picture");
-//        }
-//
-//        //plat2
-//        Platform2.addComponent(new PositionComponent(500, 310, 0));
-//        try{
-//            Platform2.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
-//        }catch (IOException e) {
-//            System.out.println("Ops..Problem loading picture");
-//        }
-//
-//        //plat3
-//        Platform3.addComponent(new PositionComponent(300, 400, 0));
-//        try{
-//            Platform3.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
-//        }catch (IOException e) {
-//            System.out.println("Ops..Problem loading picture");
-//        }
-
-
-//        Entity Floor = new Entity();
-//        Floor.addComponent(new PositionComponent(0, 500, 0));
-//        try{
-//            Floor.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/floor.png"))));
-//        }catch (IOException e) {
-//            System.out.println("Ops..Problem loading picture");
-//        }
-
-
-        // Add Background to entities
-        //entities.add(background);
-
-        // Add Player to entities
-        //entities.add(player);
-
-//        //Add Platform
-//        entities.add(Platform1);
-//        entities.add(Platform2);
-//        entities.add(Platform3);
-
-        //Add floor
-        //entities.add(Floor);
+        gameSystem.AddPlayerEntity();
 
     }
 

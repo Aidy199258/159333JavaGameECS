@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -589,7 +590,7 @@ class GameSystem extends System{
 
         Player.addComponent(new PlayerComponent(10));
         Player.addComponent(new VelocityComponent(0,0,false));
-        Player.addComponent(new PositionComponent(100, 435, 0));
+        Player.addComponent(new PositionComponent(100, 590, 0));
         Player.addComponent(new KeyComponent());
         //Player images divided into three - resting, walking, jumping
         //NEEDS IMPLEMENT
@@ -606,9 +607,9 @@ class GameSystem extends System{
         Entity Platform4 = new Entity();
         Entity Platform5 = new Entity();
         Entity Platform6 = new Entity();
-        Platform1.addComponent(new PositionComponent(700, 200, 10));
-        Platform2.addComponent(new PositionComponent(500, 310, 0));
-        Platform3.addComponent(new PositionComponent(300, 400, 0));
+        Platform1.addComponent(new PositionComponent(1100, 300, 0));
+        Platform2.addComponent(new PositionComponent(700, 300, 0));
+        Platform3.addComponent(new PositionComponent(300, 300, 0));
         Platform4.addComponent(new PositionComponent(0, 500, 0));
         Platform5.addComponent(new PositionComponent(100, 300, 20));
         Platform6.addComponent(new PositionComponent(200,50,0));
@@ -622,9 +623,9 @@ class GameSystem extends System{
         entities.add(Platform1);
         entities.add(Platform2);
         entities.add(Platform3);
-        entities.add(Platform4);
-        entities.add(Platform5);
-        entities.add(Platform6);
+        //entities.add(Platform4);
+        //entities.add(Platform5);
+        //entities.add(Platform6);
 
     }
     public void AddCoinEntity(){
@@ -633,10 +634,10 @@ class GameSystem extends System{
         Entity Coin3 = new Entity();
         Entity Coin4 = new Entity();
         Entity Coin5 = new Entity();
-        Coin1.addComponent(new CoinComponent(30,42,66,0,30));
-        Coin1.addComponent(new PositionComponent(10, 100,  20));
-        Coin2.addComponent(new PositionComponent(300,500,  0));
-        Coin3.addComponent(new PositionComponent(500, 700,  0));
+        Coin1.addComponent(new CoinComponent(5,5,5,5,5));
+        Coin1.addComponent(new PositionComponent(700, 350,  0));
+        Coin2.addComponent(new PositionComponent(300,350,  0));
+        Coin3.addComponent(new PositionComponent(500, 350,  0));
         Coin4.addComponent(new PositionComponent(200,  100,  2));
         Coin5.addComponent(new PositionComponent(600, 200,  10));
 
@@ -649,8 +650,8 @@ class GameSystem extends System{
         entities.add(Coin1);
         entities.add(Coin2);
         entities.add(Coin3);
-        entities.add(Coin4);
-        entities.add(Coin5);
+        //entities.add(Coin4);
+        //entities.add(Coin5);
 
 
     }
@@ -665,7 +666,7 @@ class GameSystem extends System{
 
     public void AddFloorEntity(){
         Entity Floor = new Entity();
-        Floor.addComponent(new PositionComponent(0, 500, 0));
+        Floor.addComponent(new PositionComponent(0, 700, 0));
         RenderSystem.LoadPicturesToEntity(Floor,"Pictures/platform/floor.png");
         entities.add(Floor);
 
@@ -700,26 +701,11 @@ class GameSystem extends System{
             // Create graphics transform stack
             mTransforms = new Stack<AffineTransform>();
 
-            /*****?Not Needed as Duplicate to Game_Panel**********
-            // Set default width, height
-            int mWidth = 500;
-            int mHeight = 500;
 
-            // Create window
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    RenderSystem renderSystem = new RenderSystem();
-                    // Create the window
-                    renderSystem.setupWindow(500,500);
-                }
-            });
-
-             */
         }
 
 
-        //entity.addComponent(RenderSystem renderSystem);
+
         // This gets called any time the Operating System
         // tells the program to paint itself
         // Paint the game
@@ -772,19 +758,19 @@ class MovementSystem extends System {
 
                 if(gravity == true) {
                     // velocity.setY(-10);
-                    VelocityComponent.setY(-100);
+                    VelocityComponent.setY(-300);
                     //if(position.getY() < 320 ){
                       //  VelocityComponent.setY(100);
                         //java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
                     //}
                 }
                 if(gravity == false){
-                    if(position.getY() < 320 ){
-                        VelocityComponent.setY(100);
+                    if(position.getY() < 100 ){
+                        VelocityComponent.setY(300);
                         //await
                         // java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
                     }
-                    if(position.getY() > 435 && velocity.Get_VelocityY() > 0){
+                    if(position.getY() > 590 && velocity.Get_VelocityY() > 0){
                         velocity.setY(0);
                     }
                 }
@@ -876,4 +862,8 @@ class RenderSystem extends System {
 
     }
 
+}
+
+class CollideSystem extends System{
+    Area E_boundingbox,E_Area;
 }
