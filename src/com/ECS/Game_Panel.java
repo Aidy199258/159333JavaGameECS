@@ -38,7 +38,7 @@ public class Game_Panel extends JPanel {
 
 
     private static final long serialVersionUID = 1L;
-    public static final int WIDTH = 900, HEIGHT = 600;
+    public static final int WIDTH = 1500, HEIGHT = 750;
     public static int width;
     public static int height;
     private Thread thread ;
@@ -111,7 +111,7 @@ public class Game_Panel extends JPanel {
 
         // Create the Player
         Entity player = new Entity();
-        player.addComponent(new PositionComponent(100, 435, 0));
+        player.addComponent(new PositionComponent(100, 590, 0));
         player.addComponent(new VelocityComponent(0, 0,false));
         player.addComponent(new KeyComponent());
 
@@ -125,12 +125,12 @@ public class Game_Panel extends JPanel {
         Entity Platform1 = new Entity();
         Entity Platform2 = new Entity();
         Entity Platform3 = new Entity();
-        Entity Platform4 = new Entity();
+     //   Entity Platform4 = new Entity();
 
         // Drawing platform but not very fast way
 
         //plat1
-        Platform1.addComponent(new PositionComponent(700, 200, 0));
+        Platform1.addComponent(new PositionComponent(1100, 300, 0));
         try {
             Platform1.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
         } catch (IOException e) {
@@ -138,7 +138,7 @@ public class Game_Panel extends JPanel {
         }
 
         //plat2
-        Platform2.addComponent(new PositionComponent(500, 310, 0));
+        Platform2.addComponent(new PositionComponent(700, 300, 0));
         try{
             Platform2.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
         }catch (IOException e) {
@@ -146,7 +146,7 @@ public class Game_Panel extends JPanel {
         }
 
         //plat3
-        Platform3.addComponent(new PositionComponent(300, 400, 0));
+        Platform3.addComponent(new PositionComponent(300, 300, 0));
         try{
             Platform3.addComponent(new RenderComponent(ImageIO.read(new File("Pictures/platform/platform.png"))));
         }catch (IOException e) {

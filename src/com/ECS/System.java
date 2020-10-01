@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -740,19 +741,19 @@ class MovementSystem extends System {
 
                 if(gravity == true) {
                     // velocity.setY(-10);
-                    VelocityComponent.setY(-100);
+                    VelocityComponent.setY(-300);
                     //if(position.getY() < 320 ){
                       //  VelocityComponent.setY(100);
                         //java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
                     //}
                 }
                 if(gravity == false){
-                    if(position.getY() < 320 ){
-                        VelocityComponent.setY(100);
+                    if(position.getY() < 100 ){
+                        VelocityComponent.setY(300);
                         //await
                         // java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
                     }
-                    if(position.getY() > 435 && velocity.Get_VelocityY() > 0){
+                    if(position.getY() > 590 && velocity.Get_VelocityY() > 0){
                         velocity.setY(0);
                     }
                 }
@@ -932,5 +933,7 @@ class RenderSystem extends System {
         return mHeight;
     }
 
-
+class Collidable extends System{
+    Area E_boundingbox, E_Area;
+}
 }
