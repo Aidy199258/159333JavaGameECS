@@ -84,7 +84,7 @@ public static long jumpingTime = 200;
 class LoadImageSystem extends System{
 
     Graphics2D mGraphics;
-    public LoadImageSystem(){
+    public LoadImageSystem(Image img){
 
     }
     //-------------------------------------------------------
@@ -111,7 +111,7 @@ class LoadImageSystem extends System{
 
 
     // Loads a sub-image out of an image
-    public Image LoadImageSystem(Image source, int x, int y, int w, int h){
+    public static Image loadImage1(Image source, int x, int y, int w, int h){
         // Check if image is null
         if(source == null) {
             // Print Error message
@@ -163,7 +163,7 @@ class LoadImageSystem extends System{
 }
 
 class DrawImageSystem extends System{
-    Graphics2D mGraphics;
+     static Graphics2D mGraphics;
 
     //Load images at initialisation of Game Panel
     public DrawImageSystem(ArrayList<Entity> entities){
@@ -190,7 +190,7 @@ class DrawImageSystem extends System{
     }
 
     // Draws an image on the screen at position (x,y)
-    public DrawImageSystem(Image image, double x, double y, double w, double h) {
+    public  DrawImageSystem(Image image, double x, double y, double w, double h) {
         // Check if image is null
         if(image == null) {
             // Print Error message
@@ -344,7 +344,7 @@ class KeyEventSystem extends System {
                 if ((e.getKeyCode() == KeyEvent.VK_RIGHT)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);
                     Game_Panel.right = false;
-                    java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+                   // java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
                     VelocityComponent.setX(0);
                 }
                 if ((e.getKeyCode() == KeyEvent.VK_LEFT)) {
@@ -356,8 +356,8 @@ class KeyEventSystem extends System {
                 if ((e.getKeyCode() == KeyEvent.VK_SPACE)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);
                     gravity = false;
-                    java.lang.System.out.println("Releasing");
-                    java.lang.System.out.println("Gravity is now:" + gravity);
+                   // java.lang.System.out.println("Releasing");
+
                     //VelocityComponent.setY(100);
 
                 }
@@ -385,7 +385,7 @@ class KeyEventSystem extends System {
                 if((e.getKeyCode() == KeyEvent.VK_LEFT)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);
                     Game_Panel.left = true;
-                    java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+                    //java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
                     VelocityComponent.setX(-50);
                 }
                 if((e.getKeyCode() == KeyEvent.VK_RIGHT)) {
@@ -396,10 +396,10 @@ class KeyEventSystem extends System {
 
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)) {
                     gravity = true;
-                    java.lang.System.out.println("Gravity is now:" + gravity);
+                   // java.lang.System.out.println("Gravity is now:" + gravity);
                 }
 
-                java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
+                //java.lang.System.out.println("New Velocity: " + velocity.Get_VelocityX());
 
             }
         }
@@ -628,53 +628,65 @@ class GameSystem extends System{
         //entities.add(Platform6);
 
     }
-    public void AddCoinEntity(){
+    public void AddCoinEntity() {
         Entity Coin1 = new Entity();
         Entity Coin2 = new Entity();
         Entity Coin3 = new Entity();
-        Entity Coin4 = new Entity();
-        Entity Coin5 = new Entity();
-        Coin1.addComponent(new CoinComponent(5,5,5,5,5));
-        Coin1.addComponent(new PositionComponent(700, 350,  0));
-        Coin2.addComponent(new PositionComponent(300,350,  0));
-        Coin3.addComponent(new PositionComponent(500, 350,  0));
-        Coin4.addComponent(new PositionComponent(200,  100,  2));
-        Coin5.addComponent(new PositionComponent(600, 200,  10));
+      //  Entity Coin4 = new Entity();
+      //  Entity Coin5 = new Entity();
+        //Coin1.addComponent(new CoinComponent(5,5,5,5,5));
+        Coin1.addComponent(new PositionComponent(1150, 260,  0));
+        Coin2.addComponent(new PositionComponent(750, 260,  0));
+        Coin3.addComponent(new PositionComponent(350, 260,  0));
 
-        //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
-        Image CoinsImages=null;
-        try {
-            CoinsImages = ImageIO.read(new File("Pictures/coin/coin.png"));
+        //RenderSystem.LoadPicturesToEntity(Coin1,"Pictures/platform/Coin1.png");
+        Image spritesheet = null;
+         try {
+             spritesheet = ImageIO.read(new File("Pictures/coin/coin.png"));
 
-        }catch(IOException e) {
-            java.lang.System.out.println("Ops..Problem loading picture");
+        } catch (IOException e ){
+            java.lang.System.out.println("Error: could not load image " );
+            java.lang.System.exit(1);
+
         }
-        Image[] CoinImages = new Image[16];
-        // Load sprites
+        Image coin[];
+        coin = new Image[16];
         for(int i = 0; i < 16; i++) {
             // Calculate x,y
             int sx = (i % 4) * 32;
             int sy = (i / 4) * 32;
 
             // Load sprite
-            BufferedImage buffered = (BufferedImage)CoinsImages;
-
-            // Extract sub image
-            CoinImages[i] = buffered.getSubimage(sx, sy, 32, 32);
+            coin[i] =  LoadImageSystem.loadImage1(spritesheet,sx,sy,32, 32);
         }
-
-
-        Coin1.addComponent(new RenderComponent(CoinImages[0]));
-        Coin2.addComponent(new RenderComponent(CoinImages[1]));
-        Coin3.addComponent(new RenderComponent(CoinImages[2]));
-        RenderSystem.LoadPicturesToEntity(Coin1,"Pictures/coin/coin.png");
-        RenderSystem.LoadPicturesToEntity(Coin2,"Pictures/coin/coin.png");
-        RenderSystem.LoadPicturesToEntity(Coin3,"Pictures/coin/coin.png");
-        RenderSystem.LoadPicturesToEntity(Coin4,"Pictures/coin/coin.png");
-        RenderSystem.LoadPicturesToEntity(Coin5,"Pictures/coin/coin.png");
+        RenderSystem.LoadPicturesToEntity1(Coin1,coin[0]);
+        RenderSystem.LoadPicturesToEntity1(Coin2,coin[0]);
+        RenderSystem.LoadPicturesToEntity1(Coin3,coin[0]);
         entities.add(Coin1);
         entities.add(Coin2);
         entities.add(Coin3);
+
+        //Coin2.addComponent(new PositionComponent(300,350,  0));
+        //Coin3.addComponent(new PositionComponent(500, 350,  0));
+        //Coin4.addComponent(new PositionComponent(200,  100,  2));
+        //Coin5.addComponent(new PositionComponent(600, 200,  10));
+
+        //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
+
+
+
+
+        // Coin1.addComponent(new RenderComponent(coin[frame]));
+       // Coin2.addComponent(new RenderComponent(CoinImages[0]));
+        //Coin3.addComponent(new RenderComponent(CoinImages[0]));
+       // RenderSystem.LoadPicturesToEntity(Coin1,"Pictures/coin/coin.png");
+        //RenderSystem.LoadPicturesToEntity(Coin2,"Pictures/coin/coin.png");
+        //RenderSystem.LoadPicturesToEntity(Coin3,"Pictures/coin/coin.png");
+       // RenderSystem.LoadPicturesToEntity(Coin4,"Pictures/coin/coin.png");
+        //RenderSystem.LoadPicturesToEntity(Coin5,"Pictures/coin/coin.png");
+       // entities.add(Coin1);
+       // entities.add(Coin2);
+        //entities.add(Coin3);
         //entities.add(Coin4);
         //entities.add(Coin5);
 
@@ -790,14 +802,15 @@ class MovementSystem extends System {
                     //}
                 }
                 if(gravity == false){
-                    if(position.getY() < 100 ){
+                    if(position.getY() < 100.0f ){
                         VelocityComponent.setY(300);
                         //await
                         // java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
                     }
-                    if(position.getY() > 590 && velocity.Get_VelocityY() > 0){
+                    if(position.getY() > 590.0f && velocity.Get_VelocityY() > 0){
                         velocity.setY(0);
                     }
+                    java.lang.System.out.println("position Y: " +position.getY());
                 }
                    //java.lang.System.out.println("jumping");
                    //new Thread(new thread()).start();
@@ -847,9 +860,15 @@ class RenderSystem extends System {
             java.lang.System.out.println("Ops..Problem loading picture");
         }
         entity.addComponent(new RenderComponent(image));
-
-
     }
+    public static void LoadPicturesToEntity1(Entity entity,Image img){
+        Image image=null;
+        image = img;
+        entity.addComponent(new RenderComponent(image));
+    }
+
+
+
     public void Process(ArrayList<Entity> entities, Graphics2D g) {
         for (Entity entity : entities) {
             // Need a Position & a Render Component

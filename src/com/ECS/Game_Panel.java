@@ -88,9 +88,10 @@ public class Game_Panel extends JPanel {
         //gameSystem.CreateEntities();//Method doesn't work drawing pictures on screen
         gameSystem.AddBackgroundEntity();
         gameSystem.AddPlatformEntity();
+
         gameSystem.AddCoinEntity();
 
-        gameSystem.AddFloorEntity();;
+        //gameSystem.AddFloorEntity();;
         gameSystem.AddPlayerEntity();
 
     }
