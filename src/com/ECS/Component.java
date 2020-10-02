@@ -402,8 +402,6 @@ class AudioComponent extends Component{
 
 class PointComponent extends Component{
     private int mPoints;
-    private final int mSTART_POINTS = 10;
-    private final int mLOSE_POINTS =0;
 
     public PointComponent(int points){
 

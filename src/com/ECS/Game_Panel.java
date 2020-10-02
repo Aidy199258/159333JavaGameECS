@@ -33,6 +33,7 @@ public class Game_Panel extends JPanel {
     RenderSystem renderSystem;
     MovementSystem movementSystem;
     KeyEventSystem keyEventSystem;
+    ScoreSystem scoreSystem;
 
 
 
@@ -75,6 +76,7 @@ public class Game_Panel extends JPanel {
         renderSystem = new RenderSystem();
         movementSystem = new MovementSystem();
         keyEventSystem = new KeyEventSystem();
+        scoreSystem = new ScoreSystem();
 
 
         //Link entities reference to Main Game ArrayList entities
@@ -88,7 +90,6 @@ public class Game_Panel extends JPanel {
         //gameSystem.CreateEntities();//Method doesn't work drawing pictures on screen
         gameSystem.AddBackgroundEntity();
         gameSystem.AddPlatformEntity();
-
         gameSystem.AddCoinEntity();
 
         //gameSystem.AddFloorEntity();;
@@ -173,6 +174,21 @@ public class Game_Panel extends JPanel {
 
         //entities= GameSystem.GetGameEntities();
         movementSystem.Process(entities, dt);
+        scoreSystem.ScoreUpdate(dt);
+        PointComponent player = (PointComponent)entities.get(0).getComponent(PointComponent.class);//Get playerEntity from entities ArrayList
+        int gameScore =player.GetPoint();
+
+        if(gameScore==0){
+            System.out.println("Game just started. Time to collect coins!");
+        }else if (gameScore>0&&gameScore<4){
+            if(gameScore==3){
+                System.out.println("You won!");
+            }else {
+                System.out.println("Game running. Enjoy!");
+            }
+        }else {
+            System.out.println("Ops. Game Score Error!");
+        }
     }
 
     public void render(){

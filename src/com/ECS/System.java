@@ -454,9 +454,16 @@ class KeyEventSystem extends System {
 //Counting points/scores
 //Incomplete
 class ScoreSystem extends System{
-    public void AddScore(ArrayList<Entity> entities){
+
+
+    public ScoreSystem(){
+        Entity gameScore = new Entity();
+        gameScore.addComponent(new PointComponent(0));
+        entities.add(gameScore);
+    }
+    public void AddScore(){
         for(Entity entity: entities){
-            //Player gains one point if touches rainbow/coin
+            //Player gains one point if touches coin
             if(entity.hasComponent(CoinComponent.class)&&(entity.hasComponent(PointComponent.class))){
                 CoinComponent coinComponent = (CoinComponent)entity.getComponent(CoinComponent.class);
                 PointComponent pointComponent = (PointComponent)entity.getComponent(PointComponent.class);
@@ -475,7 +482,7 @@ class ScoreSystem extends System{
 
     }
 
-    public static int ScoreUpdate(ArrayList<Entity> entities){
+    public int ScoreUpdate(double dt){
         //Score will be -1 if not initiated
         int score = -1;
         for(Entity entity: entities){
@@ -485,6 +492,8 @@ class ScoreSystem extends System{
                 PointComponent pointComponent = (PointComponent)entity.getComponent(PointComponent.class);
 
                 score = pointComponent.GetPoint();
+
+
             }
 
         }
@@ -592,6 +601,7 @@ class GameSystem extends System{
         Player.addComponent(new VelocityComponent(0,0,false));
         Player.addComponent(new PositionComponent(100, 590, 0));
         Player.addComponent(new KeyComponent());
+        Player.addComponent(new PointComponent(0));
         //Player images divided into three - resting, walking, jumping
         //NEEDS IMPLEMENT
         RenderSystem.LoadPicturesToEntity(Player,"Pictures/player/idle1.png");

@@ -32,15 +32,47 @@ public class Main {
     public static void main(String args[]) throws IOException {
 
 
+
+//        //Moved codes to Game Panel
+//        //Load player, platforms and coins
+//        //Create a list of entities
+//        ArrayList<Entity> entities = new ArrayList<Entity>();
+
+
+
+        //Create a reference link to the main game Entities after initialisation of all entities
+        //gameSystem.SetGameEntities(entities);
+
+//        //Create the Main Game Entities array
+//        ArrayList<Entity> entities = new ArrayList<Entity>();
+//
+//        // Create the Game
+//        GameSystem gameSystem = new GameSystem();
+//        GameSystem.createGame(gameSystem,entities,30,Graphics);
+        //GameSystem.SetGameEntities(entities);
+
+
         //Run Game Panel
         Game_Panel game_panel= new Game_Panel(900,600);
         game_panel.startGamePanel(game_panel);
+
+//        Game_Panel game_panel= new Game_Panel(900,600);
+//        game_panel.startGamePanel(game_panel);
+
+        //Get main Entity Array from main Game
+        //Create a local reference for arraylist
+        //ArrayList<Entity> entities = GameSystem.GetGameEntities();
+
+        //gameSystem.AddPlayerEntity(entities);
+
+
+
+        //gameSystem.CreateEntities(entities);
 
 
 
 
         //===================Testing======================//
-
 
 
 //        //A temporary entity to get values - Functioning
@@ -49,8 +81,8 @@ public class Main {
 
         //Entities Indexes: 0-Player,1-Platforms,2-Coin
         //Testing - Get Player Life
-        //PlayerComponent player=(PlayerComponent)Game_Panel.entities.get(0).getComponent(PlayerComponent.class);
-        //System.out.println("Player's Life: " + player.getLife());
+        PlayerComponent player=(PlayerComponent)Game_Panel.entities.get(0).getComponent(PlayerComponent.class);
+        System.out.println("Player's Life: " + player.getLife());
 
 
 //        //Testing Positions - functioning
@@ -65,7 +97,7 @@ public class Main {
 //        //Testing ScoreSystem-functioning
 //        ScoreSystem scoreSystem = new ScoreSystem();
 //        scoreSystem.AddScore(entities);
-//        System.out.println("Total Score: " + scoreSystem.ScoreUpdate(entities));//-1 as invalid score
+//        System.out.println("Total Score: " + scoreSystem.ShowScore(entities));//-1 as invalid score
 //
 
         //===================Testing======================//
