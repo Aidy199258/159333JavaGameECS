@@ -20,20 +20,6 @@ public abstract class Component {
 }
 
 
-
-// Player Component - Holds Player specific information
-class PlayerComponent extends Component {
-    private int mLife;
-
-    public int getLife() {
-        return mLife;
-    }
-
-    public PlayerComponent(int life) {
-        mLife = life;
-    }
-}
-
 class CoinComponent extends Component{
     //Each Coin counts as 1 point
     private final int mDEFAULT_POINT = 1;
@@ -51,55 +37,6 @@ class CoinComponent extends Component{
         mH=h;
         mX=x;
         mY=y;
-
-    }
-}
-
-// Rainbow instead of coin
-class RainbowComponent extends Component{
-    Entity mEntity;
-
-    // Position
-    protected double mW, mH;
-
-    // Bounding Box
-    Area mBoundingBox, mArea;
-    AffineTransform mTransform;
-
-    // Coin Sprite
-    Image spritesheet;
-    Image sprites[];
-    int frame;
-    public RainbowComponent(Entity entity, double x, double y, double w, double h){
-        // Set Game/Entity
-        mEntity = entity;
-        // Set Position and Size
-        //mX = x;
-        //mY = y;
-        mW = w;
-        mH = h;
-
-        // Initialise Bounding Box
-        mBoundingBox = new Area(new Ellipse2D.Double(-mW/2, -mH/2, mW, mH));
-        mArea = new Area();
-        mTransform = new AffineTransform();
-        //mTransform.translate(mX, mY);
-
-        // Load Spritesheet
-        //spritesheet = loadImage("Pictures/coin/coin.png");
-
-        // Create sprites
-        sprites = new Image[16];
-
-        // Load sprites
-        for(int i = 0; i < 16; i++) {
-            // Calculate x,y
-            int sx = (i % 4) * 32;
-            int sy = (i / 4) * 32;
-
-            // Load sprite
-            //sprites[i] = subImage(spritesheet, sx, sy, 32, 32);
-        }
 
     }
 }

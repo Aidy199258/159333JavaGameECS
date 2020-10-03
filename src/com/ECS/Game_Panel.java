@@ -170,6 +170,21 @@ public class Game_Panel extends JPanel {
         //entities= GameSystem.GetGameEntities();
         movementSystem.Process(Main.entities, dt);
         scoreSystem.ScoreUpdate(Main.entities,dt);
+        PointComponent player = (PointComponent)Main.entities.get(7).getComponent(PointComponent.class);//Get playerEntity from entities ArrayList
+        int gameScore =player.GetPoint();
+
+        if(gameScore==0){
+            System.out.println("Game just started. Time to collect coins!");
+        }else if (gameScore>0&&gameScore<4){
+            if(gameScore==3){
+                System.out.println("You won!");
+            }else {
+                System.out.println("Game running. Enjoy!");
+            }
+        }else {
+            System.out.println("Ops. Game Score Error!");
+        }
+
 
     }
 

@@ -1,18 +1,11 @@
 package com.ECS;
 
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
-import javax.swing.*;
+import javax.sound.sampled.Clip;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.lang.System;
 import java.util.ArrayList;
-import java.util.List;
 import  java.lang.*;
 
 
@@ -30,39 +23,45 @@ public class Main {
     static Image mBackground;
 
 
+    public static synchronized void playSound(final String url) {
+        new Thread(new Runnable() {
+            // The wrapper thread is unnecessary, unless it blocks on the
+            // Clip finishing; see comments.
+            public void run() {
+                try {
+                    Clip clip = javax.sound.sampled.AudioSystem.getClip();
+                    AudioInputStream inputStream = javax.sound.sampled.AudioSystem.getAudioInputStream(
+                            Main.class.getResourceAsStream("/bgm.wav"+url));
+                    clip.open(inputStream);
+                    clip.start();
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+        }).start();
+    }
 
     // Main Function
     public static void main(String args[]) throws IOException {
 
+        playSound("/bgm.wav");
 
 
         // Create the Game
         GameSystem gameSystem = new GameSystem();
         gameSystem.createGame(gameSystem,30);
+        //Adding Default Entities
         gameSystem.AddBackgroundEntity();//Including adding background sound//Index0
-        //audioSystem = new AudioSystem();
-
+        //AudioSystem audioSystem = new AudioSystem(entities);
         gameSystem.AddPlatformEntity();//Index1-3
         gameSystem.AddCoinEntity();//Index4-6
         //gameSystem.AddFloorEntity();
         gameSystem.AddPlayerEntity();//Index7
-        int index = Main.entities.indexOf("Background");
-        System.out.println("Index of Background Entity:"+index);
-        PointComponent player = (PointComponent)Main.entities.get(7).getComponent(PointComponent.class);//Get playerEntity from entities ArrayList
-        int gameScore =player.GetPoint();
 
-        if(gameScore==0){
-            System.out.println("Game just started. Time to collect coins!");
-        }else if (gameScore>0&&gameScore<4){
-            if(gameScore==3){
-                System.out.println("You won!");
-            }else {
-                System.out.println("Game running. Enjoy!");
-            }
-        }else {
-            System.out.println("Ops. Game Score Error!");
-        }
 
+        //Testing
+        PointComponent score=(PointComponent) entities.get(7).getComponent(PointComponent.class);
+        System.out.println("Testing current Score: " + score.GetPoint());
 
 
 
@@ -76,14 +75,7 @@ public class Main {
         //===================Testing======================//
 
 
-//        //A temporary entity to get values - Functioning
-//        Entity playerEntity = new Entity();
-//
-
-        //Entities Indexes: 0-Player,1-Platforms,2-Coin
         //Testing - Get Player Life
-        //PlayerComponent player=(PlayerComponent)entities.get(0).getComponent(PlayerComponent.class);
-        //System.out.println("Player's Life: " + player.getLife());
 
         //Testing Play Audio - get audio from Entities
         //AudioComponent backgroundAudio = (AudioComponent)entities.get(0).getComponent(AudioComponent.class);

@@ -604,7 +604,6 @@ class GameSystem extends System{
         //Needs PlayerComponent,PositionComponent,VelocityComponent,RenderComponent
         Entity Player = new Entity();
 
-        Player.addComponent(new PlayerComponent(10));
         Player.addComponent(new VelocityComponent(0,0,false));
         Player.addComponent(new PositionComponent(100, 590, 0));
         Player.addComponent(new KeyComponent());
@@ -692,7 +691,7 @@ class GameSystem extends System{
 
 
         AudioComponent audioComponent = new AudioComponent();
-        audioComponent.setFilePath("Audios/BackgroundAudio.wav");
+        audioComponent.setFilePath("Audios/bgm.wav");
         String filePath = audioComponent.getFilePath();
         audioComponent.LoadAudio(filePath);
         Background.addComponent(audioComponent);
