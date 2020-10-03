@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import static com.ECS.Game_Panel.entities;
+import static com.ECS.Main.entities;
 import static com.ECS.VelocityComponent.gravity;
 
 public abstract class System {
@@ -308,7 +308,7 @@ class AudioSystem extends System{
 
 
     //Play audios for all entities with an AudioComponent
-    public AudioSystem(){
+    public AudioSystem(ArrayList<Entity> entities){
 
         for(Entity entity : entities) {
 
@@ -473,7 +473,7 @@ class ScoreSystem extends System{
         gameScore.addComponent(new PointComponent(0));
         entities.add(gameScore);
     }
-    public void AddScore(){
+    public void AddScore(ArrayList<Entity> entities){
         for(Entity entity: entities){
             //Player gains one point if touches coin
             if(entity.hasComponent(CoinComponent.class)&&(entity.hasComponent(PointComponent.class))){
@@ -494,7 +494,7 @@ class ScoreSystem extends System{
 
     }
 
-    public int ScoreUpdate(double dt){
+    public int ScoreUpdate(ArrayList<Entity> entities,double dt){
         //Score will be -1 if not initiated
         int score = -1;
         for(Entity entity: entities){

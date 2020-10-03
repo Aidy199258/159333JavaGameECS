@@ -21,10 +21,11 @@ import static com.ECS.VelocityComponent.gravity;
 
 public class Game_Panel extends JPanel {
     // Array of entities
-    public static ArrayList<Entity> entities= new ArrayList<Entity>();
+    //public static ArrayList<Entity> entities= new ArrayList<Entity>();
 
     //Initialising default Entities via GameSystem
-    GameSystem gameSystem = new GameSystem();
+
+    //GameSystem gameSystem;
 
 
     //Create a local reference for main Entities ListArray from main Game
@@ -77,44 +78,16 @@ public class Game_Panel extends JPanel {
         // Set up Entities and Systems
         // ========================================
 
-        //entities = new ArrayList<Entity>();
+
         renderSystem = new RenderSystem();
         movementSystem = new MovementSystem();
         keyEventSystem = new KeyEventSystem();
         scoreSystem = new ScoreSystem();
 
-//        try {
-//            audioIS = javax.sound.sampled.AudioSystem.getAudioInputStream(
-//                    this.getClass().getResource("com/ECS/BackgroundAudio.wav"));
-//        } catch (UnsupportedAudioFileException | IOException e) {
-//            e.printStackTrace();
-//            System.out.println("Can't find audio file");
-//        }
 
 
-        //Link entities reference to Main Game ArrayList entities
-        //GameSystem.SetGameEntities(entities);
-        //Create the Main Game Entities array
-        //entities = new ArrayList<Entity>();
-
-        // Create the Game
-        //Unable to load pic through those methods
-        gameSystem.createGame(gameSystem,30);
-        //gameSystem.CreateEntities();//Method doesn't work - not drawing pictures on screen
-        gameSystem.AddBackgroundEntity();//Including adding background sound//Index0
-        //audioSystem = new AudioSystem();
-
-        gameSystem.AddPlatformEntity();//Index1-6
-        gameSystem.AddCoinEntity();//Index7-9
-        //gameSystem.AddFloorEntity();
-        gameSystem.AddPlayerEntity();//Index10
 
 
-        //Testing Play Audio - get audio from Entities
-        //AudioComponent backgroundAudio = (AudioComponent)entities.get(0).getComponent(AudioComponent.class);
-        //System.out.println("Audio file path is:"+backgroundAudio.getFilePath());
-        int index = entities.indexOf("Background");
-        System.out.println("Index of Background Entity:"+index);
 
 
     }
@@ -195,22 +168,9 @@ public class Game_Panel extends JPanel {
     public void update(double dt){
 
         //entities= GameSystem.GetGameEntities();
-        movementSystem.Process(entities, dt);
-        scoreSystem.ScoreUpdate(dt);
-        PointComponent player = (PointComponent)entities.get(0).getComponent(PointComponent.class);//Get playerEntity from entities ArrayList
-        int gameScore =player.GetPoint();
+        movementSystem.Process(Main.entities, dt);
+        scoreSystem.ScoreUpdate(Main.entities,dt);
 
-        if(gameScore==0){
-            System.out.println("Game just started. Time to collect coins!");
-        }else if (gameScore>0&&gameScore<4){
-            if(gameScore==3){
-                System.out.println("You won!");
-            }else {
-                System.out.println("Game running. Enjoy!");
-            }
-        }else {
-            System.out.println("Ops. Game Score Error!");
-        }
     }
 
     public void render(){
@@ -233,7 +193,7 @@ public class Game_Panel extends JPanel {
 
     public void paintComponent(Graphics graphics) {
         //entities=GameSystem.GetGameEntities();
-        renderSystem.Process(entities, (Graphics2D)graphics);
+        renderSystem.Process(Main.entities, (Graphics2D)graphics);
     }
 
     public void input(){
@@ -242,16 +202,17 @@ public class Game_Panel extends JPanel {
 
     public void Key_Released(KeyEvent e) {
         //keyEventSystem.KeyPressed(entities, e);
-        keyEventSystem.KeyReleased(entities, e);
+        keyEventSystem.KeyReleased(Main.entities, e);
     }
 
    public void Key_Press(KeyEvent e) {
-        keyEventSystem.KeyPressed(entities, e);
+        keyEventSystem.KeyPressed(Main.entities, e);
         //keyEventSystem.KeyReleased(entities, e);
     }
 
     public void startGamePanel(Game_Panel gamepanel){
         //Testing
+
 
         JFrame frame = new JFrame();
         ////Default WIDTH and HEIGHT
