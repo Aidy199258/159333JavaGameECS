@@ -19,33 +19,8 @@ public class Main {
     static ArrayList<Entity> entities= new ArrayList<Entity>();
 
 
-
-    static Image mBackground;
-
-
-    public static synchronized void playSound(final String url) {
-        new Thread(new Runnable() {
-            // The wrapper thread is unnecessary, unless it blocks on the
-            // Clip finishing; see comments.
-            public void run() {
-                try {
-                    Clip clip = javax.sound.sampled.AudioSystem.getClip();
-                    AudioInputStream inputStream = javax.sound.sampled.AudioSystem.getAudioInputStream(
-                            Main.class.getResourceAsStream("/bgm.wav"+url));
-                    clip.open(inputStream);
-                    clip.start();
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            }
-        }).start();
-    }
-
     // Main Function
     public static void main(String args[]) throws IOException {
-
-        playSound("/bgm.wav");
-
 
         // Create the Game
         GameSystem gameSystem = new GameSystem();
