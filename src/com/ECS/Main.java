@@ -32,6 +32,8 @@ public class Main {
     public static void main(String args[]) throws IOException {
 
 
+        // Array of entities
+        //ArrayList<Entity> entities= new ArrayList<Entity>();
 
         //Run Game Panel
         Game_Panel game_panel= new Game_Panel(900,600);

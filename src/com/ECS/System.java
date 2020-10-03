@@ -1,6 +1,9 @@
 package com.ECS;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
-import java.util.concurrent.TimeUnit;
 
 import static com.ECS.Game_Panel.entities;
 import static com.ECS.VelocityComponent.gravity;
@@ -301,7 +303,12 @@ class UpdateSystem extends System{
 
 //Needs implementation
 class AudioSystem extends System{
-    public AudioSystem(ArrayList<Entity> entities){
+
+
+
+
+    //Play audios for all entities with an AudioComponent
+    public AudioSystem(){
 
         for(Entity entity : entities) {
 
@@ -309,8 +316,10 @@ class AudioSystem extends System{
 
                 AudioComponent audioComponent = (AudioComponent)entity.getComponent(AudioComponent.class);
 
+                java.lang.System.out.println("Found an Entity that has audioComponent! Filepath:"+audioComponent.getFilePath());
 
 
+                audioComponent.PlayAudio(audioComponent);
 
 
 
@@ -318,6 +327,9 @@ class AudioSystem extends System{
 
         }
     }
+
+
+
 }
 
 //?To deal with Key pressed events
@@ -549,50 +561,45 @@ class GameSystem extends System{
         Main.mScore = 0;
         Main.mGameOver = false;
 
-        //LoadImageSystem loadImageSystem = new LoadImageSystem();
-        // Load background
-        //Main.mBackground = loadImageSystem.loadImage("Pictures/background/background.png");
 
     }
 
+//
+//    public static void TestingDrawPic(ArrayList<Entity> entities,Graphics2D g){
+//
+//        PositionComponent playerPosition=(PositionComponent)entities.get(0).getComponent(PositionComponent.class);
+//        RenderComponent playerRender=(RenderComponent) entities.get(0).getComponent(RenderComponent.class);
+//        playerRender.getImage();
+//        // Save current transform
+//        AffineTransform transform = g.getTransform();
+//
+//        // Move into correct position
+//        g.translate(playerPosition.getX(), playerPosition.getY());
+//
+//        // Draw the Render component
+//        g.drawImage(playerRender.getImage(), 0, 0, null);
+//
+//        // Reset Transform
+//        g.setTransform(transform);
+//
+//    }
 
-    public static void TestingDrawPic(ArrayList<Entity> entities,Graphics2D g){
-
-        PositionComponent playerPosition=(PositionComponent)entities.get(0).getComponent(PositionComponent.class);
-        RenderComponent playerRender=(RenderComponent) entities.get(0).getComponent(RenderComponent.class);
-        playerRender.getImage();
-        // Save current transform
-        AffineTransform transform = g.getTransform();
-
-        // Move into correct position
-        g.translate(playerPosition.getX(), playerPosition.getY());
-
-        // Draw the Render component
-        g.drawImage(playerRender.getImage(), 0, 0, null);
-
-        // Reset Transform
-        g.setTransform(transform);
-
-    }
-
-    //Entities Stats default - NEEDS IMPLEMENTATION
-    public void CreateEntities(){
-        //Add PlayerEntity - Index 0
-        AddPlayerEntity();
-
-        //Create platforms - Index 1
-        AddPlatformEntity();
-
-        //Create Coins - Index 2
-        AddCoinEntity();
-
-        //Create Background - Index 3
-        AddBackgroundEntity();
-
-
-
-
-    }
+//    //Entities Stats default - ERROR NOT GAME_PANEL NOT DRAWING THIS OUT
+//    public void CreateEntities(){
+//        //Add PlayerEntity - Index 0
+//        AddPlayerEntity();
+//
+//        //Create platforms - Index 1
+//        AddPlatformEntity();
+//
+//        //Create Coins - Index 2
+//        AddCoinEntity();
+//
+//        //Create Background - Index 3
+//        AddBackgroundEntity();
+//
+//
+//    }
     public void AddPlayerEntity(){
         //Needs PlayerComponent,PositionComponent,VelocityComponent,RenderComponent
         Entity Player = new Entity();
@@ -676,37 +683,20 @@ class GameSystem extends System{
         entities.add(Coin2);
         entities.add(Coin3);
 
-        //Coin2.addComponent(new PositionComponent(300,350,  0));
-        //Coin3.addComponent(new PositionComponent(500, 350,  0));
-        //Coin4.addComponent(new PositionComponent(200,  100,  2));
-        //Coin5.addComponent(new PositionComponent(600, 200,  10));
-
-        //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
-
-
-
-
-        // Coin1.addComponent(new RenderComponent(coin[frame]));
-       // Coin2.addComponent(new RenderComponent(CoinImages[0]));
-        //Coin3.addComponent(new RenderComponent(CoinImages[0]));
-       // RenderSystem.LoadPicturesToEntity(Coin1,"Pictures/coin/coin.png");
-        //RenderSystem.LoadPicturesToEntity(Coin2,"Pictures/coin/coin.png");
-        //RenderSystem.LoadPicturesToEntity(Coin3,"Pictures/coin/coin.png");
-       // RenderSystem.LoadPicturesToEntity(Coin4,"Pictures/coin/coin.png");
-        //RenderSystem.LoadPicturesToEntity(Coin5,"Pictures/coin/coin.png");
-       // entities.add(Coin1);
-       // entities.add(Coin2);
-        //entities.add(Coin3);
-        //entities.add(Coin4);
-        //entities.add(Coin5);
-
-
     }
 
     public void AddBackgroundEntity(){
         Entity Background = new Entity();
         Background.addComponent(new PositionComponent(0, 0, 0));
         RenderSystem.LoadPicturesToEntity(Background,"Pictures/background/background.png");
+
+
+        AudioComponent audioComponent = new AudioComponent();
+        audioComponent.setFilePath("Audios/BackgroundAudio.wav");
+        String filePath = audioComponent.getFilePath();
+        audioComponent.LoadAudio(filePath);
+        Background.addComponent(audioComponent);
+
         entities.add(Background);
 
     }

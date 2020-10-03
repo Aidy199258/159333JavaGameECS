@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.lang.*;
 import java.lang.System;
@@ -19,7 +21,7 @@ import static com.ECS.VelocityComponent.gravity;
 
 public class Game_Panel extends JPanel {
     // Array of entities
-    public static ArrayList<Entity> entities= new ArrayList<Entity>();;
+    public static ArrayList<Entity> entities= new ArrayList<Entity>();
 
     //Initialising default Entities via GameSystem
     GameSystem gameSystem = new GameSystem();
@@ -34,6 +36,9 @@ public class Game_Panel extends JPanel {
     MovementSystem movementSystem;
     KeyEventSystem keyEventSystem;
     ScoreSystem scoreSystem;
+    AudioSystem audioSystem;
+    static AudioInputStream audioIS;
+
 
 
 
@@ -78,6 +83,14 @@ public class Game_Panel extends JPanel {
         keyEventSystem = new KeyEventSystem();
         scoreSystem = new ScoreSystem();
 
+//        try {
+//            audioIS = javax.sound.sampled.AudioSystem.getAudioInputStream(
+//                    this.getClass().getResource("com/ECS/BackgroundAudio.wav"));
+//        } catch (UnsupportedAudioFileException | IOException e) {
+//            e.printStackTrace();
+//            System.out.println("Can't find audio file");
+//        }
+
 
         //Link entities reference to Main Game ArrayList entities
         //GameSystem.SetGameEntities(entities);
@@ -87,13 +100,22 @@ public class Game_Panel extends JPanel {
         // Create the Game
         //Unable to load pic through those methods
         gameSystem.createGame(gameSystem,30);
-        //gameSystem.CreateEntities();//Method doesn't work drawing pictures on screen
-        gameSystem.AddBackgroundEntity();
-        gameSystem.AddPlatformEntity();
-        gameSystem.AddCoinEntity();
+        //gameSystem.CreateEntities();//Method doesn't work - not drawing pictures on screen
+        gameSystem.AddBackgroundEntity();//Including adding background sound//Index0
+        //audioSystem = new AudioSystem();
 
-        //gameSystem.AddFloorEntity();;
-        gameSystem.AddPlayerEntity();
+        gameSystem.AddPlatformEntity();//Index1-6
+        gameSystem.AddCoinEntity();//Index7-9
+        //gameSystem.AddFloorEntity();
+        gameSystem.AddPlayerEntity();//Index10
+
+
+        //Testing Play Audio - get audio from Entities
+        //AudioComponent backgroundAudio = (AudioComponent)entities.get(0).getComponent(AudioComponent.class);
+        //System.out.println("Audio file path is:"+backgroundAudio.getFilePath());
+        int index = entities.indexOf("Background");
+        System.out.println("Index of Background Entity:"+index);
+
 
     }
 
@@ -234,6 +256,8 @@ public class Game_Panel extends JPanel {
         JFrame frame = new JFrame();
         ////Default WIDTH and HEIGHT
         gamepanel = new Game_Panel(Game_Panel.WIDTH,Game_Panel.HEIGHT);
+        //audioSystem = new AudioSystem();
+
 
 
 

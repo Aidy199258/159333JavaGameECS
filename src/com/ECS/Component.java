@@ -2,6 +2,7 @@ package com.ECS;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.awt.geom.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -332,6 +334,15 @@ class PlatformComponent extends Component {
 
 //Audio Clip
 class AudioComponent extends Component{
+
+    private String _filePath;
+
+    public void setFilePath(String filePath){
+        _filePath = filePath;
+    }
+    public String getFilePath(){
+        return _filePath;
+    }
     // Format
     AudioFormat mFormat;
 
@@ -369,11 +380,17 @@ class AudioComponent extends Component{
         return mLength;
     }
 
-    public String AudioComponent(){
-        return "AudioComponent";
+    //Empty Constructor for initiation
+    public AudioComponent(){
+
     }
-    //Needs implementation
+
+
+
+    //Adding AudioComponent AudioInputStream constructor
     public AudioComponent(AudioInputStream stream) {
+
+
         // Get Format
         mFormat = stream.getFormat();
 
@@ -397,6 +414,55 @@ class AudioComponent extends Component{
         // Set LoopClip to null
         mLoopClip = null;
     }
+
+    //Load Audio function
+    public AudioComponent LoadAudio(String filename){
+
+        try {
+            // Open File
+            File file = new File(filename);
+
+            // Open Audio Input Stream
+            Game_Panel.audioIS = javax.sound.sampled.AudioSystem.getAudioInputStream(file);
+
+            // Create Audio Clip
+            AudioComponent audioComponent = new AudioComponent(Game_Panel.audioIS);
+            return audioComponent;
+
+        } catch(Exception e) {
+            // Catch Exception
+            java.lang.System.out.println("Error: cannot open Audio File " + filename + "\n");
+        }
+        return null;
+    }
+    public void PlayAudio(AudioComponent audioComponent){
+        // Check audioClip for null
+        if(audioComponent == null) {
+            // Print error message
+            java.lang.System.out.println("Error: audioComponent is null\n");
+
+            // Return
+            return;
+        }
+
+        try {
+            // Create a Clip
+            Clip clip = javax.sound.sampled.AudioSystem.getClip();
+
+            // Load data
+            clip.open(audioComponent.getAudioFormat(), audioComponent.getData(), 0, (int)audioComponent.getBufferSize());
+
+            // Play Clip
+            clip.start();
+        } catch(Exception exception) {
+
+            // Display Error Message
+            java.lang.System.out.println("Error playing Audio Clip\n");
+            exception.printStackTrace();
+        }
+
+    }
+
 
 }
 
