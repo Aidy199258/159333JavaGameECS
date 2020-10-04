@@ -43,7 +43,7 @@ public class Main {
 
 
         //Run Game Panel
-        Game_Panel game_panel= new Game_Panel(900,600);
+        Game_Panel game_panel= new Game_Panel(1500,750);
         game_panel.startGamePanel(game_panel);
 
 

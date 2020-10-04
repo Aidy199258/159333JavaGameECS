@@ -37,7 +37,6 @@ public class Game_Panel extends JPanel {
     MovementSystem movementSystem;
     KeyEventSystem keyEventSystem;
     ScoreSystem scoreSystem;
-    AudioSystem audioSystem;
     static AudioInputStream audioIS;
 
 
@@ -58,6 +57,7 @@ public class Game_Panel extends JPanel {
     public static float player_inix = 100;//initial x position
     public static float player_iniy = 400;// initital y position
 
+    public AudioManagement am = new AudioManagement();
 
     public Game_Panel(int width, int height) {
 
@@ -84,11 +84,9 @@ public class Game_Panel extends JPanel {
         keyEventSystem = new KeyEventSystem();
         scoreSystem = new ScoreSystem();
 
-
-
-
-
-
+        String Audio_Clip = "Audios/BackgroundAudio.wav";
+        am.AudioManagement(Audio_Clip);
+        am.play();
 
     }
 
@@ -231,7 +229,7 @@ public class Game_Panel extends JPanel {
 
         JFrame frame = new JFrame();
         ////Default WIDTH and HEIGHT
-        gamepanel = new Game_Panel(Game_Panel.WIDTH,Game_Panel.HEIGHT);
+        //gamepanel = new Game_Panel(Game_Panel.WIDTH,Game_Panel.HEIGHT);
         //audioSystem = new AudioSystem();
 
 

@@ -3,6 +3,7 @@ package com.ECS;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
@@ -302,34 +303,22 @@ class UpdateSystem extends System{
 }
 
 //Needs implementation
-class AudioSystem extends System{
-
-
-
-
-    //Play audios for all entities with an AudioComponent
-    public AudioSystem(ArrayList<Entity> entities){
-
-        for(Entity entity : entities) {
-
-            if(entity.hasComponent(AudioComponent.class)) {
-
-                AudioComponent audioComponent = (AudioComponent)entity.getComponent(AudioComponent.class);
-
-                java.lang.System.out.println("Found an Entity that has audioComponent! Filepath:"+audioComponent.getFilePath());
-
-
-                audioComponent.PlayAudio(audioComponent);
-
-
-
-            }
+class AudioManagement extends System{
+    public static Clip clip;
+    public static void AudioManagement(String soundFileName){
+        try{
+            File file = new File(soundFileName);
+            AudioInputStream sound = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open(sound);
+        }catch (Exception e){
 
         }
     }
-
-
-
+    public static  void play(){
+        clip.setFramePosition(0);
+        clip.start();
+    }
 }
 
 //?To deal with Key pressed events
