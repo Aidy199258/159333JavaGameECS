@@ -20,14 +20,22 @@ public abstract class Component {
 }
 
 
-class CoinComponent extends Component{
+class CoinComponent extends Component{ 
     //Each Coin counts as 1 point
     private final int mDEFAULT_POINT = 1;
     public int CoinPoint;
     // Shape
-    protected double mW, mH, mX, mY;
+    protected float mW, mH, mX, mY;
+
+    public float getX() {
+        return mX;
+    }
+
+    public float getY() {
+        return mY;
+    }
     //Constructor
-    public CoinComponent(int DefaultPoint, double x, double y, double w, double h){
+    public CoinComponent(int DefaultPoint, float x, float y, float w, float h){
         if(DefaultPoint<=0) {//Invalid input
             CoinPoint = mDEFAULT_POINT;
         }else {
