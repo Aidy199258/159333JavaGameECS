@@ -455,6 +455,23 @@ class KeyEventSystem extends System {
 //Counting points/scores
 //Incomplete
 class ScoreSystem extends System{
+    public static boolean CatchCoin(ArrayList<Entity> entities, float x, float y){
+        for(Entity entity: entities){
+            if(entity.hasComponent(CoinComponent.class)) {
+                CoinComponent coin = (CoinComponent)entity.getComponent(CoinComponent.class);
+                if (coin.CoinPoint > 0) {
+                    float range = 50;
+                    if ((x - range) < coin.getX() && coin.getX() < (x + range)) {
+                        if ((y - range) < coin.getY() && coin.getY() < (y + range)) {
+                            coin.CoinPoint = 0;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
 
     public ScoreSystem(){
@@ -639,10 +656,9 @@ class GameSystem extends System{
         Entity Coin3 = new Entity();
       //  Entity Coin4 = new Entity();
       //  Entity Coin5 = new Entity();
-        //Coin1.addComponent(new CoinComponent(5,5,5,5,5));
-        Coin1.addComponent(new PositionComponent(1150, 260,  0));
-        Coin2.addComponent(new PositionComponent(750, 260,  0));
-        Coin3.addComponent(new PositionComponent(350, 260,  0));
+        Coin1.addComponent(new CoinComponent(1, 1150, 260, 0, 0));
+        Coin2.addComponent(new CoinComponent(1, 750, 260,  0, 0));
+        Coin3.addComponent(new CoinComponent(1, 350, 260,  0, 0));
 
         //RenderSystem.LoadPicturesToEntity(Coin1,"Pictures/platform/Coin1.png");
         Image spritesheet = null;
@@ -773,23 +789,30 @@ class MovementSystem extends System {
                 // Get Position & Velocity Components
                 PositionComponent position = (PositionComponent)entity.getComponent(PositionComponent.class);
                 VelocityComponent velocity = (VelocityComponent)entity.getComponent(VelocityComponent.class);
+                PointComponent point = (PointComponent)entity.getComponent(PointComponent.class);
 
+                
                 // Change Position based on Velocity
                 position.setX(position.getX() + velocity.Get_VelocityX() * (float)dt);
                 position.setY(position.getY() + velocity.Get_VelocityY() * (float)dt);
 
+
+                boolean catchCoin = ScoreSystem.CatchCoin(entities, position.getX(), position.getY());
+                if (catchCoin){
+                    point.GainOnePoint();
+                }
+
                 //java.lang.System.out.println("Velocity: " + velocity.Get_VelocityX());
 
 
-                if(gravity == true) {
+                if(gravity == true && velocity.Get_VelocityY() == 0) {
                     // velocity.setY(-10);
                     VelocityComponent.setY(-300);
                     //if(position.getY() < 320 ){
                       //  VelocityComponent.setY(100);
                         //java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
                     //}
-                }
-                if(gravity == false){
+                } else {
                     if(position.getY() < 100.0f ){
                         VelocityComponent.setY(300);
                         //await
@@ -798,7 +821,7 @@ class MovementSystem extends System {
                     if(position.getY() > 590.0f && velocity.Get_VelocityY() > 0){
                         velocity.setY(0);
                     }
-                    java.lang.System.out.println("position Y: " +position.getY());
+                    // java.lang.System.out.println("position Y: " +position.getY());
                 }
                    //java.lang.System.out.println("jumping");
                    //new Thread(new thread()).start();
@@ -859,8 +882,25 @@ class RenderSystem extends System {
 
     public void Process(ArrayList<Entity> entities, Graphics2D g) {
         for (Entity entity : entities) {
-            // Need a Position & a Render Component
-            if(entity.hasComponent(PositionComponent.class) && entity.hasComponent(RenderComponent.class)) {
+            if (entity.hasComponent(CoinComponent.class) && entity.hasComponent(RenderComponent.class)) {
+                CoinComponent coin = (CoinComponent)entity.getComponent(CoinComponent.class);
+                if (coin.CoinPoint > 0) {
+                    RenderComponent render     = (RenderComponent)entity.getComponent(RenderComponent.class);
+
+                    // Save current transform
+                    AffineTransform transform = g.getTransform();
+
+                    // Move into correct position
+                    g.translate(coin.getX(), coin.getY());
+
+                    // Draw the Render component
+                    g.drawImage(render.getImage(), 0, 0, null);
+
+                    // Reset Transform
+                    g.setTransform(transform);
+                }
+            } else if(entity.hasComponent(PositionComponent.class) && entity.hasComponent(RenderComponent.class)) {
+                // Need a Position & a Render Component
                 //java.lang.System.out.println("This Entity has an image:"+entity.getComponent(RenderComponent.class));
                 // Get Position & Render Components
                 PositionComponent position = (PositionComponent)entity.getComponent(PositionComponent.class);
