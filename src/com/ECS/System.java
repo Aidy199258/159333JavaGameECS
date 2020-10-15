@@ -905,8 +905,18 @@ class MovementSystem extends System {
 
                 if (velocity.Get_VelocityX() < 0) {
                     playerMoveLeft = true;
+                    if (!playerStatus.equals("jump")) {
+                        playerStatus = "run";
+                    }
                 } else if (velocity.Get_VelocityX() > 0) {
                     playerMoveLeft = false;
+                    if (!playerStatus.equals("jump")) {
+                        playerStatus = "run";
+                    }
+                } else {
+                    if (!playerStatus.equals("jump")) {
+                        playerStatus = "idle";
+                    }
                 }
 
                 RenderSystem.UpdatePicturesToEntity(entity,"Pictures/player/"+playerStatus+String.valueOf(playerMovement)+".png",playerMoveLeft);
