@@ -317,6 +317,7 @@ class AudioManagement extends System{
     }
     public static  void play(){
         clip.setFramePosition(0);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.start();
     }
 }
@@ -325,7 +326,7 @@ class AudioManagement extends System{
 //Incomplete
 
 class KeyEventSystem extends System {
-
+    private boolean SpaceReleased = true;
 
     public KeyEventSystem() {
 
@@ -357,6 +358,7 @@ class KeyEventSystem extends System {
                 if ((e.getKeyCode() == KeyEvent.VK_SPACE)) {
                     // velocity.setX(velocity.Get_VelocityX() * -1);
                     gravity = false;
+                    SpaceReleased = true;
                    // java.lang.System.out.println("Releasing");
 
                     //VelocityComponent.setY(100);
@@ -396,7 +398,10 @@ class KeyEventSystem extends System {
                 }
 
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)) {
-                    gravity = true;
+                    if (SpaceReleased) {
+                        SpaceReleased = false;
+                        gravity = true;
+                    }
                    // java.lang.System.out.println("Gravity is now:" + gravity);
                 }
 
@@ -460,7 +465,7 @@ class ScoreSystem extends System{
             if(entity.hasComponent(CoinComponent.class)) {
                 CoinComponent coin = (CoinComponent)entity.getComponent(CoinComponent.class);
                 if (coin.CoinPoint > 0) {
-                    float range = 50;
+                    float range = 30;
                     if ((x - range) < coin.getX() && coin.getX() < (x + range)) {
                         if ((y - range) < coin.getY() && coin.getY() < (y + range)) {
                             coin.CoinPoint = 0;
@@ -482,10 +487,8 @@ class ScoreSystem extends System{
     public void AddScore(ArrayList<Entity> entities){
         for(Entity entity: entities){
             //Player gains one point if touches coin
-            if(entity.hasComponent(CoinComponent.class)&&(entity.hasComponent(PointComponent.class))){
-                CoinComponent coinComponent = (CoinComponent)entity.getComponent(CoinComponent.class);
+            if(entity.hasComponent(PointComponent.class)){
                 PointComponent pointComponent = (PointComponent)entity.getComponent(PointComponent.class);
-
                 pointComponent.GainOnePoint();
             }
 
@@ -621,7 +624,7 @@ class GameSystem extends System{
 
 
     }
-    public void AddPlatformEntity(){
+        public void AddPlatformEntity(){
 
         Entity Platform1 = new Entity();
         Entity Platform2 = new Entity();
@@ -629,12 +632,12 @@ class GameSystem extends System{
         Entity Platform4 = new Entity();
         Entity Platform5 = new Entity();
         Entity Platform6 = new Entity();
-        Platform1.addComponent(new PositionComponent(1100, 300, 0));
-        Platform2.addComponent(new PositionComponent(700, 300, 0));
-        Platform3.addComponent(new PositionComponent(300, 300, 0));
-        Platform4.addComponent(new PositionComponent(0, 500, 0));
-        Platform5.addComponent(new PositionComponent(100, 300, 20));
-        Platform6.addComponent(new PositionComponent(200,50,0));
+        Platform1.addComponent(new PlatformComponent(100, 500, 100, 20));
+        Platform2.addComponent(new PlatformComponent(350, 350, 80, 20));
+        Platform3.addComponent(new PlatformComponent(600, 300, 60, 20));
+        Platform4.addComponent(new PlatformComponent(850, 350, 40, 20));
+        Platform5.addComponent(new PlatformComponent(1000, 300, 20, 20));
+        Platform6.addComponent(new PlatformComponent(1200, 200, 10, 20));
         //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
         RenderSystem.LoadPicturesToEntity(Platform1,"Pictures/platform/platform.png");
         RenderSystem.LoadPicturesToEntity(Platform2,"Pictures/platform/platform.png");
@@ -645,20 +648,53 @@ class GameSystem extends System{
         entities.add(Platform1);
         entities.add(Platform2);
         entities.add(Platform3);
-        //entities.add(Platform4);
-        //entities.add(Platform5);
-        //entities.add(Platform6);
+        entities.add(Platform4);
+        entities.add(Platform5);
+        entities.add(Platform6);
 
     }
+    // public void AddPlatformEntity(){
+
+    //     Entity Platform1 = new Entity();
+    //     Entity Platform2 = new Entity();
+    //     Entity Platform3 = new Entity();
+    //     Entity Platform4 = new Entity();
+    //     Entity Platform5 = new Entity();
+    //     Entity Platform6 = new Entity();
+    //     Platform1.addComponent(new PlatformComponent(1100, 450, 140, 20));
+    //     Platform2.addComponent(new PlatformComponent(700, 400, 140, 20));
+    //     Platform3.addComponent(new PlatformComponent(300, 500, 140, 20));
+    //     Platform4.addComponent(new PlatformComponent(0, 500, 140, 20));
+    //     Platform5.addComponent(new PlatformComponent(100, 300, 140, 20));
+    //     Platform6.addComponent(new PlatformComponent(200,50, 140, 20));
+    //     //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
+    //     RenderSystem.LoadPicturesToEntity(Platform1,"Pictures/platform/platform.png");
+    //     RenderSystem.LoadPicturesToEntity(Platform2,"Pictures/platform/platform.png");
+    //     RenderSystem.LoadPicturesToEntity(Platform3,"Pictures/platform/platform.png");
+    //     RenderSystem.LoadPicturesToEntity(Platform4,"Pictures/platform/platform.png");
+    //     RenderSystem.LoadPicturesToEntity(Platform5,"Pictures/platform/platform.png");
+    //     RenderSystem.LoadPicturesToEntity(Platform6,"Pictures/platform/platform.png");
+    //     entities.add(Platform1);
+    //     entities.add(Platform2);
+    //     entities.add(Platform3);
+    //     //entities.add(Platform4);
+    //     //entities.add(Platform5);
+    //     //entities.add(Platform6);
+
+    // }
     public void AddCoinEntity() {
         Entity Coin1 = new Entity();
         Entity Coin2 = new Entity();
         Entity Coin3 = new Entity();
-      //  Entity Coin4 = new Entity();
-      //  Entity Coin5 = new Entity();
-        Coin1.addComponent(new CoinComponent(1, 1150, 260, 0, 0));
-        Coin2.addComponent(new CoinComponent(1, 750, 260,  0, 0));
-        Coin3.addComponent(new CoinComponent(1, 350, 260,  0, 0));
+        Entity Coin4 = new Entity();
+        Entity Coin5 = new Entity();
+        Entity Coin6 = new Entity();
+        Coin1.addComponent(new CoinComponent(1, 50, 260, 0, 0));
+        Coin2.addComponent(new CoinComponent(1, 350, 100,  0, 0));
+        Coin3.addComponent(new CoinComponent(1, 750, 80,  0, 0));
+        Coin4.addComponent(new CoinComponent(1, 1000, 260, 0, 0));
+        Coin5.addComponent(new CoinComponent(1, 1150, 100,  0, 0));
+        Coin6.addComponent(new CoinComponent(1, 1300, 50,  0, 0));
 
         //RenderSystem.LoadPicturesToEntity(Coin1,"Pictures/platform/Coin1.png");
         Image spritesheet = null;
@@ -683,9 +719,15 @@ class GameSystem extends System{
         RenderSystem.LoadPicturesToEntity1(Coin1,coin[0]);
         RenderSystem.LoadPicturesToEntity1(Coin2,coin[0]);
         RenderSystem.LoadPicturesToEntity1(Coin3,coin[0]);
+        RenderSystem.LoadPicturesToEntity1(Coin4,coin[0]);
+        RenderSystem.LoadPicturesToEntity1(Coin5,coin[0]);
+        RenderSystem.LoadPicturesToEntity1(Coin6,coin[0]);
         entities.add(Coin1);
         entities.add(Coin2);
         entities.add(Coin3);
+        entities.add(Coin4);
+        entities.add(Coin5);
+        entities.add(Coin6);
 
     }
 
@@ -780,8 +822,23 @@ class GameSystem extends System{
 class MovementSystem extends System {
 
     //public static long jumpingTime = 200;
-
-
+    public static float LandedPlatform(ArrayList<Entity> entities, float x, float y){
+        for(Entity entity: entities){
+            if(entity.hasComponent(PlatformComponent.class)) {
+                PlatformComponent platform = (PlatformComponent)entity.getComponent(PlatformComponent.class);
+                if ((platform.getX() - 50) < x && x < (platform.getX() - 15 + platform.getW())) {
+                    float platformY = platform.getY() - ( platform.getH() * 3);
+                    if (platformY < y && y < platformY + 50) {
+                        return platformY;
+                    }
+                }
+            }
+        }
+        return 590;
+    }
+    private int playerMovement = 1;
+    private String playerStatus = "idle";
+    private boolean playerMoveLeft = false;
     public void Process(ArrayList<Entity> entities, double dt) {
         for (Entity entity : entities) {
             // Need a Position & a Velocity Component
@@ -793,36 +850,78 @@ class MovementSystem extends System {
 
                 
                 // Change Position based on Velocity
-                position.setX(position.getX() + velocity.Get_VelocityX() * (float)dt);
+                position.setX(position.getX() + velocity.Get_VelocityX() * (float)dt * 3);
                 position.setY(position.getY() + velocity.Get_VelocityY() * (float)dt);
 
-
+                // Catch Coin
                 boolean catchCoin = ScoreSystem.CatchCoin(entities, position.getX(), position.getY());
                 if (catchCoin){
                     point.GainOnePoint();
                 }
+
+                float landed = this.LandedPlatform(entities, position.getX(), position.getY());
+
+
 
                 //java.lang.System.out.println("Velocity: " + velocity.Get_VelocityX());
 
 
                 if(gravity == true && velocity.Get_VelocityY() == 0) {
                     // velocity.setY(-10);
-                    VelocityComponent.setY(-300);
+                    gravity = false; // Stop keep jumping
+                    velocity.setY(-500);
+                    playerStatus = "jump";
                     //if(position.getY() < 320 ){
                       //  VelocityComponent.setY(100);
                         //java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
                     //}
                 } else {
-                    if(position.getY() < 100.0f ){
-                        VelocityComponent.setY(300);
-                        //await
-                        // java.lang.System.out.println("velocity Y: " +velocity.Get_VelocityY() );
+                    if (velocity.Get_VelocityY() < 0) { // Going Up
+                        if (velocity.Get_VelocityY() < -420) {
+                            velocity.setY(velocity.Get_VelocityY() + 3); // Slow down
+                        } else {
+                            velocity.setY(1); 
+                        }
+                    } else if (velocity.Get_VelocityY() > 0) { // Going Down
+                        // Hit the floor
+                        if(position.getY() > landed){
+                            velocity.setY(0);
+                            playerStatus = "idle";
+                            position.setY(landed);
+                        } else {
+                            velocity.setY(velocity.Get_VelocityY() + 15); // Speed Up
+                        }
+                    } else if (velocity.Get_VelocityY() == 0) { // Drop Down
+                        if(position.getY() < landed){
+                            velocity.setY(50);
+                        }
                     }
-                    if(position.getY() > 590.0f && velocity.Get_VelocityY() > 0){
-                        velocity.setY(0);
-                    }
-                    // java.lang.System.out.println("position Y: " +position.getY());
                 }
+
+                playerMovement++;
+                if (playerMovement > 8){
+                    playerMovement = 1;
+                }
+
+                if (velocity.Get_VelocityX() < 0) {
+                    playerMoveLeft = true;
+                    if (!playerStatus.equals("jump")) {
+                        playerStatus = "run";
+                    }
+                } else if (velocity.Get_VelocityX() > 0) {
+                    playerMoveLeft = false;
+                    if (!playerStatus.equals("jump")) {
+                        playerStatus = "run";
+                    }
+                } else {
+                    if (!playerStatus.equals("jump")) {
+                        playerStatus = "idle";
+                    }
+                }
+
+                RenderSystem.UpdatePicturesToEntity(entity,"Pictures/player/"+playerStatus+String.valueOf(playerMovement)+".png",playerMoveLeft);
+
+                
                    //java.lang.System.out.println("jumping");
                    //new Thread(new thread()).start();
                     //VelocityComponent.setY(-100);
@@ -861,7 +960,18 @@ class MovementSystem extends System {
 }
 
 class RenderSystem extends System {
-
+    private static boolean moveLeft = false;
+    public static void UpdatePicturesToEntity(Entity entity,String filepath,boolean left){
+        Image image=null;
+        try {
+            image = ImageIO.read(new File(filepath));
+            RenderComponent renderComponent = (RenderComponent) entity.getComponent(RenderComponent.class);
+            renderComponent.updateImage(image);
+            moveLeft = left;
+        }catch(IOException e) {
+            java.lang.System.out.println("Ops..Problem loading picture");
+        }
+    }
     public static void LoadPicturesToEntity(Entity entity,String filepath){
         Image image=null;
         try {
@@ -882,7 +992,23 @@ class RenderSystem extends System {
 
     public void Process(ArrayList<Entity> entities, Graphics2D g) {
         for (Entity entity : entities) {
-            if (entity.hasComponent(CoinComponent.class) && entity.hasComponent(RenderComponent.class)) {
+            if (entity.hasComponent(PlatformComponent.class) && entity.hasComponent(RenderComponent.class)) {
+                PlatformComponent platform = (PlatformComponent)entity.getComponent(PlatformComponent.class);
+                RenderComponent render     = (RenderComponent)entity.getComponent(RenderComponent.class);
+
+                // Save current transform
+                AffineTransform transform = g.getTransform();
+
+                // Move into correct position
+                g.translate(platform.getX(), platform.getY());
+
+                // Draw the Render component
+                g.drawImage(render.getImage(), 0, 0, (int)platform.getW(), (int)platform.getH(), null);
+
+                // Reset Transform
+                g.setTransform(transform);
+
+            } else if (entity.hasComponent(CoinComponent.class) && entity.hasComponent(RenderComponent.class)) {
                 CoinComponent coin = (CoinComponent)entity.getComponent(CoinComponent.class);
                 if (coin.CoinPoint > 0) {
                     RenderComponent render     = (RenderComponent)entity.getComponent(RenderComponent.class);
@@ -912,9 +1038,15 @@ class RenderSystem extends System {
                 // Move into correct position
                 g.translate(position.getX(), position.getY());
 
-                // Draw the Render component
-                g.drawImage(render.getImage(), 0, 0, null);
-
+                if(entity.hasComponent(VelocityComponent.class) && moveLeft) {
+                    Image image = render.getImage();
+                    int width = image.getWidth(null);
+                    int height = image.getHeight(null);
+                    g.drawImage(image, 0 + width, 0, -width, height, null);
+                } else {
+                    // Draw the Render component
+                    g.drawImage(render.getImage(), 0, 0, null);
+                }
                 // Reset Transform
                 g.setTransform(transform);
             }

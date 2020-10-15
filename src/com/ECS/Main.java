@@ -15,15 +15,15 @@ public class Main {
     static int mScore;
     static boolean mGameOver;
     long mStartTime, mEndTime;
+    static GameSystem gameSystem;
+    static Game_Panel game_panel;
     // Array of entities
-    static ArrayList<Entity> entities= new ArrayList<Entity>();
+    static ArrayList<Entity> entities;
 
+    public static void restart() {
+        entities= new ArrayList<Entity>();
 
-    // Main Function
-    public static void main(String args[]) throws IOException {
-
-        // Create the Game
-        GameSystem gameSystem = new GameSystem();
+        gameSystem = new GameSystem();
         gameSystem.createGame(gameSystem,30);
         //Adding Default Entities
         gameSystem.AddBackgroundEntity();//Including adding background sound//Index0
@@ -33,17 +33,25 @@ public class Main {
         //gameSystem.AddFloorEntity();
         gameSystem.AddPlayerEntity();//Index7
 
+    }
 
-        //Testing
-        PointComponent score=(PointComponent) entities.get(7).getComponent(PointComponent.class);
-        System.out.println("Testing current Score: " + score.GetPoint());
+    // Main Function
+    public static void main(String args[]) throws IOException {
+        entities= new ArrayList<Entity>();
 
-
-
-
+        // Create the Game
+        gameSystem = new GameSystem();
+        gameSystem.createGame(gameSystem,30);
+        //Adding Default Entities
+        gameSystem.AddBackgroundEntity();//Including adding background sound//Index0
+        //AudioSystem audioSystem = new AudioSystem(entities);
+        gameSystem.AddPlatformEntity();//Index1-3
+        gameSystem.AddCoinEntity();//Index4-6
+        //gameSystem.AddFloorEntity();
+        gameSystem.AddPlayerEntity();//Index7
 
         //Run Game Panel
-        Game_Panel game_panel= new Game_Panel(1500,750);
+        game_panel= new Game_Panel(1500,750);
         game_panel.startGamePanel(game_panel);
 
 
