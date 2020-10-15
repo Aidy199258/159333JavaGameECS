@@ -245,34 +245,31 @@ class PositionComponent extends  Component {
 
 
 class PlatformComponent extends Component {
-
     // Shape
-    protected double mW, mH, mX, mY;
-    // Bounding Box
-    Area mBoundingBox, mArea;
-    AffineTransform mTransform;
+    protected float mW, mH, mX, mY;
 
-    // Sprite
-    Image sprite;
-
-    public PlatformComponent(double x, double y, double w, double h) {
-        // Set Position and Size
-        mX = x;
-        mY = y;
-        mW = w;
-        mH = h;
-
-        // Initialise Bounding Box
-        mBoundingBox = new Area(new Rectangle2D.Double(-mW / 2, -mH / 2, mW, mH));
-        mArea = new Area();
-        mTransform = new AffineTransform();
-        mTransform.translate(mX, mY);
-
-        // Load sprite
-        //sprite = LoadImageSystem("Pictures/platform/platform.png");
+    public float getX() {
+        return mX;
     }
 
+    public float getY() {
+        return mY;
+    }
+    public float getW() {
+        return mW;
+    }
 
+    public float getH() {
+        return mH;
+    }
+    //Constructor
+    public PlatformComponent(float x, float y, float w, float h){
+        mW=w;
+        mH=h;
+        mX=x;
+        mY=y;
+
+    }
 }
 
 
@@ -494,8 +491,6 @@ class RenderComponent extends Component {
         mImage = image;
     }
 
-
-
     //Window image
     private Graphics2D mGraphics;
 
@@ -513,6 +508,10 @@ class RenderComponent extends Component {
         // Rendering settings
         mGraphics.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
 
+    }
+
+    public void updateImage(Image image) {
+        mImage = image;
     }
 
 
@@ -547,8 +546,8 @@ class GraphicComponent extends Component{
 
     Graphics2D mGraphics;
     //Constructor
-    public GraphicComponent(){
-
+    public GraphicComponent(Graphics graphics){
+        mGraphics = (Graphics2D) graphics;
     }
     //-------------------------------------------------------
     // Graphics Functions
