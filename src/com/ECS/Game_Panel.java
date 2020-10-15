@@ -39,6 +39,7 @@ public class Game_Panel extends JPanel {
     ScoreSystem scoreSystem;
     static AudioInputStream audioIS;
 
+    GraphicComponent graphicComponent;
 
 
 
@@ -58,6 +59,17 @@ public class Game_Panel extends JPanel {
     public static float player_iniy = 400;// initital y position
 
     public AudioManagement am = new AudioManagement();
+
+    private int x = 0;
+    private int winningScore = 6;
+    private int curScore = -1;
+    private String msg = "";
+
+    public void restart() {
+        Main.restart();
+        curScore = -1;
+        msg = "";
+    }
 
     public Game_Panel(int width, int height) {
 
@@ -140,7 +152,9 @@ public class Game_Panel extends JPanel {
             //     LastUpdateTime = now - TBU;
             // }
 
-            update(dt);
+            if (curScore < winningScore) {
+                update(dt);
+            }
             input();
             draw();
 
@@ -161,29 +175,46 @@ public class Game_Panel extends JPanel {
 
         }
     }
-    private int x = 0;
 
     public void update(double dt){
 
         //entities= GameSystem.GetGameEntities();
         movementSystem.Process(Main.entities, dt);
         scoreSystem.ScoreUpdate(Main.entities,dt);
-        PointComponent player = (PointComponent)Main.entities.get(7).getComponent(PointComponent.class);//Get playerEntity from entities ArrayList
-        int gameScore =player.GetPoint();
 
-        if(gameScore==0){
-            System.out.println("Game just started. Time to collect coins!");
-        }else if (gameScore>0&&gameScore<4){
-            if(gameScore==3){
-                System.out.println("You won!");
-            }else {
-                System.out.println("Game running. Enjoy!");
+        for(Entity entity: Main.entities){
+            if(entity.hasComponent(PointComponent.class)) {
+                PointComponent score=(PointComponent) entity.getComponent(PointComponent.class);
+                int newScore = score.GetPoint();
+
+                if(curScore < 0){
+                    curScore = 0;
+                    msg = "Game just started. Time to collect coins!";
+                    System.out.println(msg);
+                } else if ( newScore > 0 && curScore != newScore){
+                    curScore = newScore;
+                    if (newScore == 1) {
+                        msg = "Good Start";
+                        System.out.println(msg);
+                    } else if (newScore == 2) {
+                        msg = "Nice!";
+                        System.out.println(msg);
+                    } else if (newScore == 3) {
+                        msg = "Well Done!";
+                        System.out.println(msg);
+                    } else if (newScore == 4) {
+                        msg = "Almost There!";
+                        System.out.println(msg);
+                    } else if (newScore == 5) {
+                        msg = "One More!";
+                        System.out.println(msg);
+                    } else if (newScore == 6) {
+                        msg = "OMG (@ v @) You WON!";
+                        System.out.println(msg);
+                    }
+                }
             }
-        }else {
-            System.out.println("Ops. Game Score Error!");
         }
-
-
     }
 
     public void render(){
@@ -207,6 +238,14 @@ public class Game_Panel extends JPanel {
     public void paintComponent(Graphics graphics) {
         //entities=GameSystem.GetGameEntities();
         renderSystem.Process(Main.entities, (Graphics2D)graphics);
+        graphicComponent = new GraphicComponent(graphics);
+        graphicComponent.drawText(50, 50, "Score: " + String.valueOf(curScore));
+        if (curScore >= winningScore) {
+            graphicComponent.drawText(350, 50, msg);
+            graphicComponent.drawText(500, 500, "Press R to start a new game");
+        } else {
+            graphicComponent.drawText(350, 50, msg);
+        }
     }
 
     public void input(){
@@ -260,6 +299,9 @@ public class Game_Panel extends JPanel {
                             case KeyEvent.KEY_PRESSED:
                                 // keyEventSystem.KeyPressed(entities, e);
                                 Key_Press(e);
+                                if((e.getKeyCode() == KeyEvent.VK_R)) {
+                                    restart();
+                                }
                                 // System.out.println("Pressed");
                                 // GameEngine.this.keyPressed(e);
                                 return true;
