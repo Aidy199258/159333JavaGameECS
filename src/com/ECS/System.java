@@ -868,7 +868,7 @@ class MovementSystem extends System {
 
                 if(gravity == true && velocity.Get_VelocityY() == 0) {
                     // velocity.setY(-10);
-                    gravity = false; // Stop keep jumping
+                    //gravity = false; // Stop keep jumping
                     velocity.setY(-500);
                     playerStatus = "jump";
                     //if(position.getY() < 320 ){
