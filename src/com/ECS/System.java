@@ -624,64 +624,64 @@ class GameSystem extends System{
 
 
     }
-        public void AddPlatformEntity(){
+//        public void AddPlatformEntity(){
+//
+//        Entity Platform1 = new Entity();
+//        Entity Platform2 = new Entity();
+//        Entity Platform3 = new Entity();
+//        Entity Platform4 = new Entity();
+//        Entity Platform5 = new Entity();
+//        Entity Platform6 = new Entity();
+//        Platform1.addComponent(new PlatformComponent(100, 500, 100, 20));
+//        Platform2.addComponent(new PlatformComponent(350, 350, 80, 20));
+//        Platform3.addComponent(new PlatformComponent(600, 300, 60, 20));
+//        Platform4.addComponent(new PlatformComponent(850, 350, 40, 20));
+//        Platform5.addComponent(new PlatformComponent(1000, 300, 20, 20));
+//        Platform6.addComponent(new PlatformComponent(1200, 200, 10, 20));
+//        //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
+//        RenderSystem.LoadPicturesToEntity(Platform1,"Pictures/platform/platform.png");
+//        RenderSystem.LoadPicturesToEntity(Platform2,"Pictures/platform/platform.png");
+//        RenderSystem.LoadPicturesToEntity(Platform3,"Pictures/platform/platform.png");
+//        RenderSystem.LoadPicturesToEntity(Platform4,"Pictures/platform/platform.png");
+//        RenderSystem.LoadPicturesToEntity(Platform5,"Pictures/platform/platform.png");
+//        RenderSystem.LoadPicturesToEntity(Platform6,"Pictures/platform/platform.png");
+//        entities.add(Platform1);
+//        entities.add(Platform2);
+//        entities.add(Platform3);
+//        entities.add(Platform4);
+//        entities.add(Platform5);
+//        entities.add(Platform6);
+//
+//    }
+     public void AddPlatformEntity(){
 
-        Entity Platform1 = new Entity();
-        Entity Platform2 = new Entity();
-        Entity Platform3 = new Entity();
-        Entity Platform4 = new Entity();
-        Entity Platform5 = new Entity();
-        Entity Platform6 = new Entity();
-        Platform1.addComponent(new PlatformComponent(100, 500, 100, 20));
-        Platform2.addComponent(new PlatformComponent(350, 350, 80, 20));
-        Platform3.addComponent(new PlatformComponent(600, 300, 60, 20));
-        Platform4.addComponent(new PlatformComponent(850, 350, 40, 20));
-        Platform5.addComponent(new PlatformComponent(1000, 300, 20, 20));
-        Platform6.addComponent(new PlatformComponent(1200, 200, 10, 20));
-        //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
-        RenderSystem.LoadPicturesToEntity(Platform1,"Pictures/platform/platform.png");
-        RenderSystem.LoadPicturesToEntity(Platform2,"Pictures/platform/platform.png");
-        RenderSystem.LoadPicturesToEntity(Platform3,"Pictures/platform/platform.png");
-        RenderSystem.LoadPicturesToEntity(Platform4,"Pictures/platform/platform.png");
-        RenderSystem.LoadPicturesToEntity(Platform5,"Pictures/platform/platform.png");
-        RenderSystem.LoadPicturesToEntity(Platform6,"Pictures/platform/platform.png");
-        entities.add(Platform1);
-        entities.add(Platform2);
-        entities.add(Platform3);
-        entities.add(Platform4);
-        entities.add(Platform5);
-        entities.add(Platform6);
+         Entity Platform1 = new Entity();
+         Entity Platform2 = new Entity();
+         Entity Platform3 = new Entity();
+         Entity Platform4 = new Entity();
+         Entity Platform5 = new Entity();
+         Entity Platform6 = new Entity();
+         Platform1.addComponent(new PlatformComponent(1100, 450, 140, 20));
+         Platform2.addComponent(new PlatformComponent(700, 400, 140, 20));
+         Platform3.addComponent(new PlatformComponent(300, 500, 140, 20));
+         Platform4.addComponent(new PlatformComponent(0, 500, 140, 20));
+         Platform5.addComponent(new PlatformComponent(100, 300, 140, 20));
+         Platform6.addComponent(new PlatformComponent(200,50, 140, 20));
+         //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
+         RenderSystem.LoadPicturesToEntity(Platform1,"Pictures/platform/platform.png");
+         RenderSystem.LoadPicturesToEntity(Platform2,"Pictures/platform/platform.png");
+         RenderSystem.LoadPicturesToEntity(Platform3,"Pictures/platform/platform.png");
+         RenderSystem.LoadPicturesToEntity(Platform4,"Pictures/platform/platform.png");
+         RenderSystem.LoadPicturesToEntity(Platform5,"Pictures/platform/platform.png");
+         RenderSystem.LoadPicturesToEntity(Platform6,"Pictures/platform/platform.png");
+         entities.add(Platform1);
+         entities.add(Platform2);
+         entities.add(Platform3);
+         entities.add(Platform4);
+         entities.add(Platform5);
+         entities.add(Platform6);
 
-    }
-    // public void AddPlatformEntity(){
-
-    //     Entity Platform1 = new Entity();
-    //     Entity Platform2 = new Entity();
-    //     Entity Platform3 = new Entity();
-    //     Entity Platform4 = new Entity();
-    //     Entity Platform5 = new Entity();
-    //     Entity Platform6 = new Entity();
-    //     Platform1.addComponent(new PlatformComponent(1100, 450, 140, 20));
-    //     Platform2.addComponent(new PlatformComponent(700, 400, 140, 20));
-    //     Platform3.addComponent(new PlatformComponent(300, 500, 140, 20));
-    //     Platform4.addComponent(new PlatformComponent(0, 500, 140, 20));
-    //     Platform5.addComponent(new PlatformComponent(100, 300, 140, 20));
-    //     Platform6.addComponent(new PlatformComponent(200,50, 140, 20));
-    //     //Below is equal to Platforms.addComponent(new RenderComponent(SelectedImage));
-    //     RenderSystem.LoadPicturesToEntity(Platform1,"Pictures/platform/platform.png");
-    //     RenderSystem.LoadPicturesToEntity(Platform2,"Pictures/platform/platform.png");
-    //     RenderSystem.LoadPicturesToEntity(Platform3,"Pictures/platform/platform.png");
-    //     RenderSystem.LoadPicturesToEntity(Platform4,"Pictures/platform/platform.png");
-    //     RenderSystem.LoadPicturesToEntity(Platform5,"Pictures/platform/platform.png");
-    //     RenderSystem.LoadPicturesToEntity(Platform6,"Pictures/platform/platform.png");
-    //     entities.add(Platform1);
-    //     entities.add(Platform2);
-    //     entities.add(Platform3);
-    //     //entities.add(Platform4);
-    //     //entities.add(Platform5);
-    //     //entities.add(Platform6);
-
-    // }
+     }
     public void AddCoinEntity() {
         Entity Coin1 = new Entity();
         Entity Coin2 = new Entity();
@@ -689,12 +689,12 @@ class GameSystem extends System{
         Entity Coin4 = new Entity();
         Entity Coin5 = new Entity();
         Entity Coin6 = new Entity();
-        Coin1.addComponent(new CoinComponent(1, 50, 260, 0, 0));
-        Coin2.addComponent(new CoinComponent(1, 350, 100,  0, 0));
-        Coin3.addComponent(new CoinComponent(1, 750, 80,  0, 0));
-        Coin4.addComponent(new CoinComponent(1, 1000, 260, 0, 0));
-        Coin5.addComponent(new CoinComponent(1, 1150, 100,  0, 0));
-        Coin6.addComponent(new CoinComponent(1, 1300, 50,  0, 0));
+        Coin1.addComponent(new CoinComponent(1, 40, 320, 0, 0));
+        Coin2.addComponent(new CoinComponent(1, 240, 180,  0, 0));
+        Coin3.addComponent(new CoinComponent(1, 500, 400,  0, 0));
+        Coin4.addComponent(new CoinComponent(1, 750, 260, 0, 0));
+        Coin5.addComponent(new CoinComponent(1, 950, 400,  0, 0));
+        Coin6.addComponent(new CoinComponent(1, 1200, 250,  0, 0));
 
         //RenderSystem.LoadPicturesToEntity(Coin1,"Pictures/platform/Coin1.png");
         Image spritesheet = null;
