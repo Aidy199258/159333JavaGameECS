@@ -311,6 +311,10 @@ class AudioManagement extends System{
             AudioInputStream sound = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
             clip.open(sound);
+
+            clip.setFramePosition(0);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
         }catch (Exception e){
 
         }

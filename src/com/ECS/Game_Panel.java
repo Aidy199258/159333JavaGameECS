@@ -37,6 +37,7 @@ public class Game_Panel extends JPanel {
     MovementSystem movementSystem;
     KeyEventSystem keyEventSystem;
     ScoreSystem scoreSystem;
+    AudioManagement audioManagement;
     static AudioInputStream audioIS;
 
     GraphicComponent graphicComponent;
@@ -60,6 +61,7 @@ public class Game_Panel extends JPanel {
 
     public AudioManagement am = new AudioManagement();
 
+    public static String Audio_Clip = "Audios/BackgroundAudio.wav";
     private int x = 0;
     private int winningScore = 6;
     private int curScore = -1;
@@ -95,10 +97,9 @@ public class Game_Panel extends JPanel {
         movementSystem = new MovementSystem();
         keyEventSystem = new KeyEventSystem();
         scoreSystem = new ScoreSystem();
-
-        String Audio_Clip = "Audios/BackgroundAudio.wav";
-        am.AudioManagement(Audio_Clip);
-        am.play();
+        audioManagement = new AudioManagement();
+        audioManagement.AudioManagement(Audio_Clip);
+        audioManagement.play();
 
     }
 
