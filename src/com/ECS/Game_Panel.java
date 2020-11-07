@@ -20,16 +20,6 @@ import static com.ECS.VelocityComponent.gravity;
 
 
 public class Game_Panel extends JPanel {
-    // Array of entities
-    //public static ArrayList<Entity> entities= new ArrayList<Entity>();
-
-    //Initialising default Entities via GameSystem
-
-    //GameSystem gameSystem;
-
-
-    //Create a local reference for main Entities ListArray from main Game
-    //ArrayList<Entity> entities;
 
 
     // Render System
@@ -41,8 +31,6 @@ public class Game_Panel extends JPanel {
     static AudioInputStream audioIS;
 
     GraphicComponent graphicComponent;
-
-
 
 
     private static final long serialVersionUID = 1L;
@@ -136,11 +124,6 @@ public class Game_Panel extends JPanel {
             double now = java.lang.System.nanoTime();
             int UpdateCount = 0;
 
-            // while(((now - LastUpdateTime)>TBU)&&(UpdateCount<MUBR)){
-            // update();
-            // input();
-            // render();
-            // draw();
 
             while((now - LastUpdateTime) < TBU) {
                 now = java.lang.System.nanoTime();
@@ -149,9 +132,7 @@ public class Game_Panel extends JPanel {
 
 
             LastUpdateTime = now;
-            // if((now - LastUpdateTime)>TBU){
-            //     LastUpdateTime = now - TBU;
-            // }
+
 
             if (curScore < winningScore) {
                 update(dt);
@@ -159,19 +140,7 @@ public class Game_Panel extends JPanel {
             input();
             draw();
 
-            // LastRenderTime = now;
             FrameCount++;
-
-            // int ThisSecond = (int) (LastUpdateTime/1000000000);
-            // if (ThisSecond > LastSecondTime){
-            //     if(FrameCount!=OldFrameCount){
-            //         java.lang.System.out.println("New Second"+ThisSecond+" "+FrameCount);
-            //         OldFrameCount = FrameCount;
-            //     }
-            //     FrameCount = 0;
-            //     LastSecondTime = ThisSecond;
-            // }
-
 
 
         }
@@ -179,7 +148,6 @@ public class Game_Panel extends JPanel {
 
     public void update(double dt){
 
-        //entities= GameSystem.GetGameEntities();
         movementSystem.Process(Main.entities, dt);
         scoreSystem.ScoreUpdate(Main.entities,dt);
 
@@ -218,26 +186,15 @@ public class Game_Panel extends JPanel {
         }
     }
 
-    public void render(){
-        // if(g2d!=null){
-        //     g2d.setColor(new Color(66,136,244));
-        //     g2d.fillRect(0,0,width,height);
 
-        //     // Ask RenderSystem to render all the entities
-        //     renderSystem.Process(entities, g2d);
-        // }
-    }
 
     public void draw(){
-        // // System.out.println("Drawing");
-        // Graphics g2 = (Graphics)this.getGraphics();
-        // g2.drawImage(img,0,0,width,height,null);
-        // g2.dispose();
+
         repaint();
     }
 
     public void paintComponent(Graphics graphics) {
-        //entities=GameSystem.GetGameEntities();
+
         renderSystem.Process(Main.entities, (Graphics2D)graphics);
         graphicComponent = new GraphicComponent(graphics);
         graphicComponent.drawText(50, 50, "Score: " + String.valueOf(curScore));
@@ -254,26 +211,19 @@ public class Game_Panel extends JPanel {
     }
 
     public void Key_Released(KeyEvent e) {
-        //keyEventSystem.KeyPressed(entities, e);
+
         keyEventSystem.KeyReleased(Main.entities, e);
     }
 
    public void Key_Press(KeyEvent e) {
         keyEventSystem.KeyPressed(Main.entities, e);
-        //keyEventSystem.KeyReleased(entities, e);
+
     }
 
     public void startGamePanel(Game_Panel gamepanel){
-        //Testing
 
 
         JFrame frame = new JFrame();
-        ////Default WIDTH and HEIGHT
-        //gamepanel = new Game_Panel(Game_Panel.WIDTH,Game_Panel.HEIGHT);
-        //audioSystem = new AudioSystem();
-
-
-
 
         frame.add(gamepanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -282,13 +232,9 @@ public class Game_Panel extends JPanel {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        // Able to resize for testing for now
-        // Frame.setResizable(false);
+
 
         gamepanel.setDoubleBuffered(true);
-        //game_panel.addMouseListener(this);
-        //game_panel.addMouseMotionListener(this);
-
 
         // Register a key event dispatcher to get a turn in handling all
         // key events, independent of which component currently has the focus
@@ -318,10 +264,6 @@ public class Game_Panel extends JPanel {
                         }
                     }
                 });
-        // // Resize the window (insets are just the boarders that the Operating System puts on the board)
-        // Insets insets = Frame.getInsets();
-        // Frame.setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
-
 
 
 
