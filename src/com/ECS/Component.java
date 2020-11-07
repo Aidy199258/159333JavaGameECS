@@ -115,132 +115,8 @@ class PositionComponent extends  Component {
         mA = A;
 
 
-
-
-        //Player's Position - Codes from original game for guidance
-        /*
-        // Direction
-        enum Direction {Left, Right};
-        Direction mDirection;
-
-        // State
-        enum State {Standing, Running, Jumping};
-        State mState;
-
-        // Size
-        double mW, mH;
-
-        // Position (inherited from Entity)
-        // double mX, mY;
-
-        // Velocity
-        double mVX, mVY;
-
-        // Bounding Box
-        Area mBoundingBox, mArea;
-        AffineTransform mTransform;
-
-    Needs implementation for image
-    // Sprites
-    Image resting[];
-    Image walking[];
-    Image jumping[];
-
-    // Frame Counters
-    int restingFrame;
-    int walkingFrame;
-    int jumpingFrame;
-
-
-        // Jump Timer
-        long jumpStart;
-        boolean left, right;
-
-        //public PlayerComponent(Game game, double x, double y, double w, double h) {
-    public PlayerComponent(double x, double y, double w, double h) {
-            // Player Constructor
-
-            // Initialise Position and Size
-            mX = x;
-            mY = y;
-            mW = w;
-            mH = h;
-
-            // Initialise Bounding Box
-            mBoundingBox = new Area(new Rectangle2D.Double(-mW/3, -mH/2, mW*2.0/3.0, mH));
-            mArea = new Area();
-            mTransform = new AffineTransform();
-
-            // Initialise Velocity
-            mVX = 0;
-            mVY = 0;
-
-            // Initialise left/right
-            left  = false;
-            right = false;
-
-            // Initialise State
-            mDirection = Direction.Left;
-            mState = State.Standing;
-
-            // Resting Sprits
-            //resting = new Image[10];
-            //restingFrame = 0;
-
-            // Load Sprites
-            for(int i = 0; i < 10; i++) {
-                // Sprite X,Y
-                int sx = (i % 4) * 256;
-                int sy = (i / 4) * 256;
-
-                // Get Sprite
-                //resting[i] = loadImage("Pictures/player/idle" + (i+1) + ".png");
-            }
-
-            // Walking Sprits
-            //walking = new Image[8];
-            //walkingFrame = 0;
-
-            // Load Sprites
-            for(int i = 0; i < 8; i++) {
-                // Sprite X,Y
-                int sx = (i % 4) * 256;
-                int sy = (i / 4) * 256;
-
-                // Get Sprite
-                //walking[i] = loadImage("Pictures/player/run" + (i+1) + ".png");
-            }
-
-            // Jumping Sprits
-            //jumping = new Image[10];
-            //jumpingFrame = 0;
-
-            // Load Sprites
-            for(int i = 0; i < 10; i++) {
-                // Sprite X,Y
-                int sx = (i % 4) * 256;
-                int sy = (i / 4) * 256;
-
-                // Get Sprite
-                //jumping[i] = loadImage("Pictures/player/jump" + (i+1) + ".png");
-            }
-        }
-
-         */
     }
 }
-
-
-/*class Collide extends  Component{
-        //get bounding shape of Entity
-        Area shape;
-        public Area getShape() {
-            return shape;
-        }
-
-        //two object collide, eg: player collide item, platforms..
-        void collide(Collidable other);
-}*/
 
 
 
@@ -499,16 +375,6 @@ class RenderComponent extends Component {
     }
 
 
-    //Constructor
-    public RenderComponent(Entity entity, Graphics graphics) {
-        // Get the graphics object
-        mGraphics = (Graphics2D) graphics;
-    }
-    public void RenderSettings(){
-        // Rendering settings
-        mGraphics.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
-
-    }
 
     public void updateImage(Image image) {
         mImage = image;
@@ -522,24 +388,6 @@ class RenderComponent extends Component {
     }
 
 
-
-    // This function rotates the drawing context by a degrees
-    void rotate(double a) {
-        // Rotate the drawing context
-        mGraphics.rotate(Math.toRadians(a));
-    }
-
-    // This function scales the drawing context by (x,y)
-    void scale(double x, double y) {
-        // Scale the drawing context
-        mGraphics.scale(x, y);
-    }
-
-    // This function shears the drawing context by (x,y)
-    void shear(double x, double y) {
-        // Shear the drawing context
-        mGraphics.shear(x, y);
-    }
 }
 
 class GraphicComponent extends Component{
